@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="login()">
+    <div class="form-group">
+        <md-input required
+                  formControlName="name"
+                  autocomplete="off"
+                  placeholder="Login"></md-input>
+        <div *ngIf="form.controls.name.touched && form.controls.name.errors">
+            <div *ngIf="form.controls.name.hasError('required')">
+                Login is required.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <md-input required
+                  formControlName="password"
+                  autocomplete="off"
+                  type="password"
+                  placeholder="Password"></md-input>
+        <div *ngIf="form.controls.password.touched && form.controls.password.errors">
+            <div *ngIf="form.controls.password.hasError('required')">
+                Password is required.
+            </div>
+            <div *ngIf="form.controls.password.hasError('invalid')">
+                Password is invalid.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div *ngIf="!loading">
+            <button md-raised-button class="md-raised md-primary" type="submit" [disabled]="!form.valid">
+                Log in
+            </button>
+        </div>
+        <!--<md-spinner ></md-spinner>-->
+        <p>
+            <md-progress-circle *ngIf="loading" mode="indeterminate" color="primary"></md-progress-circle>
+        </p>
+    </div>
+
+</form>

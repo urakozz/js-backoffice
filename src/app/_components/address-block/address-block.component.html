@@ -1,0 +1,67 @@
+<form (ngSubmit)="save()" #addressForm="ngForm">
+
+    <div class="form-group">
+        <md-input required name="fullname" [(ngModel)]="address.fullname" [disabled]="!editable"
+                  placeholder="Full Name"></md-input>
+        <!--<div  *ngIf="form.controls.fullname.touched && form.controls.fullname.errors">-->
+        <!--<div *ngIf="form.controls.fullname.hasError('required')">-->
+        <!--FIO is required.-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <div class="form-group">
+        <md-input required name="zip" [(ngModel)]="address.zip" [disabled]="!editable" placeholder="Zip"></md-input>
+        <!--<div  *ngIf="form.controls.zip.touched && form.controls.zip.errors">-->
+        <!--<div *ngIf="form.controls.zip.hasError('required')">-->
+        <!--Zip is required.-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <div class="form-group">
+        <md-input required name="city" [(ngModel)]="address.city" [disabled]="!editable" placeholder="City"></md-input>
+        <!--<div *ngIf="form.controls.city.touched && form.controls.city.errors">-->
+        <!--<div *ngIf="form.controls.city.hasError('required')">-->
+        <!--city is required.-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <div class="form-group">
+        <md-input required name="address" [(ngModel)]="address.address" [disabled]="!editable"
+                  placeholder="Address"></md-input>
+        <!--<div  *ngIf="form.controls.address.touched && form.controls.address.errors">-->
+        <!--<div *ngIf="form.controls.address.hasError('required')">-->
+        <!--address is required.-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <div class="form-group">
+        <md-input name="address2" [(ngModel)]="address.address2" [disabled]="!editable"
+                  placeholder="Address 2"></md-input>
+        <!--<div  *ngIf="form.controls.address2.touched && form.controls.address2.errors">-->
+        <!--<div *ngIf="form.controls.address2.hasError('required')">-->
+        <!--address2 is required.-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+
+
+    <div class="form-group">
+        <md-checkbox [(ngModel)]="address.default" aria-label="Default address"
+                     [disabled]="!editable || !addressDefaultEditable" name="cb">
+            Use this address as default
+        </md-checkbox>
+    </div>
+
+    <div layout="row" *ngIf="editable">
+        <button md-raised-button class="md-raised md-primary" type="submit" [disabled]="!addressForm.form.valid">
+            Save
+        </button>
+        <button md-button class="md-raised" (click)="cancel()">
+            Cancel
+        </button>
+    </div>
+</form>

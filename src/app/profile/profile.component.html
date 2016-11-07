@@ -1,0 +1,138 @@
+<md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+
+<md-card>
+    <md-card-title><h1>Profile</h1></md-card-title>
+    <md-card-content>
+        <md-card class="msc-v-margin">
+            <button md-raised-button color="warn" (click)="logout()">
+                Logout
+            </button>
+        </md-card>
+
+        <h4>Personal details</h4>
+        <md-card class="msc-v-margin">
+            <md-card-content>
+
+                <form #userForm="ngForm">
+                    <div class="form-group">
+                        <md-input [ngModel]="user.name" name="name" disabled></md-input>
+                    </div>
+                    <div class="form-group">
+                        <md-input [(ngModel)]="user.realname"
+                                  required
+                                  name="realname"
+                                  [disabled]="!editmode"
+                                  autocomplete="off"
+                                  placeholder="Real Name" ></md-input>
+                        <div *ngIf="userForm.controls.realname && userForm.controls.realname.touched && userForm.controls.realname.errors">
+                            <div *ngIf="userForm.controls.realname.hasError('required')">
+                                Real Name is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <md-input [(ngModel)]="user.password"
+                                  required
+                                  autocomplete="off"
+                                  type="password"
+                                  name="password"
+                                  [disabled]="!(editmode && editpass)"
+                                  placeholder="Password">
+
+                        </md-input>
+                        <a md-mini-fab (click)="editpass = !editpass" *ngIf="editmode">
+                            <md-icon *ngIf="!editpass" class="md-24">mode_edit</md-icon>
+                            <md-icon *ngIf="editpass" class="md-24">done</md-icon>
+                        </a>
+                        <div *ngIf="userForm.controls.password && userForm.controls.password.touched && userForm.controls.password.errors">
+                            <div *ngIf="userForm.controls.password.hasError('required')">
+                                Password is required.
+                            </div>
+                            <div *ngIf="userForm.controls.password.hasError('invalid')">
+                                Password is invalid.
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </form>
+                <div layout="row" *ngIf="!saving">
+                    <a md-raised-button class="md-raised md-primary" (click)="toggleMode()">
+                        {{ editmode ? "Cancel" : "Edit"}}
+                    </a>
+                    <a md-raised-button *ngIf="editmode" class="md-raised md-primary" (click)="submit(userForm)"
+                       [disabled]="!userForm.valid || saving">
+                        Save changes
+                    </a>
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <h4>Address</h4>
+
+        <div layout="row">
+
+            <div flex="100" flex-gt-sm="50" *ngFor="let item of user.address; let index = index">
+
+                <md-card #container class="msc-v-margin">
+                    <md-card-header>
+                        #{{index + 1}} {{item.fullname}}
+                    </md-card-header>
+
+                    <md-card-content>
+                        <app-address-block
+                                [address]="item"
+                                [editable]="container.__editing"
+                                [addressDefaultEditable]="!item.default"
+                                (saved)="saveAddress(index, container)"
+                                (canceled)="container.__editing = false">
+                        </app-address-block>
+                    </md-card-content>
+
+                    <md-card-actions *ngIf="!container.__editing" layout="row" layout-align="end center">
+                        <button md-mini-fab
+                                color="primary"
+                                (click)="container.__editing = !container.__editing"
+                                [disabled]="saving">
+                            <md-icon class="md-24">{{container.__editing ? "done" : "edit"}}</md-icon>
+                        </button>
+
+                        <button md-mini-fab
+                                *ngIf="!item.default"
+                                color="warn"
+                                (click)="deleteAddress(index)"
+                                [disabled]="saving">
+                            <md-icon class="md-24">remove</md-icon>
+                        </button>
+
+
+                    </md-card-actions>
+                </md-card>
+
+
+            </div>
+
+            <button *ngIf="!add_address" md-raised-button color="primary" (click)="add_address = !add_address">
+                {{ add_address ? "Cancel" : "+ Add address"}}
+            </button>
+
+            <md-card *ngIf="add_address" class="msc-v-margin">
+                <md-card-header>
+                    <md-card-title>Add new address</md-card-title>
+                </md-card-header>
+                <md-card-content>
+                    <app-address-block
+                            [addressDefaultEditable]="hasDefaultAddress()"
+                            (saved)="addAddress($event)"
+                            (canceled)="add_address = false">
+                    </app-address-block>
+                </md-card-content>
+            </md-card>
+        </div>
+
+    </md-card-content>
+</md-card>
+
