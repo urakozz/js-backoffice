@@ -1,0 +1,62 @@
+<md-card class="msc-v-margin">
+    <md-card-title-group>
+        <!--<img [imageZoom]="item.image" [src]="item.image" [style.width.px]="width" [style.height.px]="height">-->
+
+        <img md-card-lg-image [src]="item.image">
+        <md-card-title>{{item.name}}</md-card-title>
+        <md-card-subtitle>{{item.sku}}</md-card-subtitle>
+
+    </md-card-title-group>
+    <md-card-content>
+        <p>Price: RUR <b>{{item.getPrice()}}</b></p>
+        <p><span [innerHTML]="item.description | linkly"></span></p>
+    </md-card-content>
+
+    <md-card-actions>
+
+        <section>Amount:
+            <select [(ngModel)]="selectedAmount">
+                <option disabled value>Amount</option>
+                <option *ngFor="let i of amount" [value]="i">
+                    {{i}}
+                </option>
+            </select>
+        </section>
+        <!--<section>-->
+            <!--<div layout="row" layout-align="end center"><b>Цвет</b></div>-->
+        <!--</section>-->
+        <section *ngFor="let attr of listAttributes">
+            <div layout="row" layout-align="end center">
+                <section>{{attr.readableName}}:
+                    <select [ngModel]="defaultSelectedColor" (change)="changeColor(attr, $event.target.value)">
+                        <option disabled value>Color</option>
+                        <option *ngFor="let i of colorOptions" [value]="i">
+                            {{i}}
+                        </option>
+                    </select>
+                </section>
+            </div>
+        </section>
+        <button md-mini-fab [color]="justSaved ? 'primary' : 'accent'" (click)="add()">
+            <i class="material-icons">{{justSaved ? "done" : "add_shopping_cart"}}</i>
+        </button>
+    </md-card-actions>
+    <md-card-actions >
+        <button md-icon-button class="md-primary" [routerLink]="['/product-edit', item.id ]" >
+            <md-icon>edit</md-icon>
+        </button>
+    </md-card-actions>
+</md-card>
+<!--<md-card class="msc-v-margin">-->
+    <!--<md-card-header>-->
+        <!--<md-card-title>{{item.name}}</md-card-title>-->
+        <!--<md-card-subtitle>{{item.sku}}</md-card-subtitle>-->
+        <!--<md-card-subtitle>{{getCategory()}}</md-card-subtitle>-->
+    <!--</md-card-header>-->
+    <!--<img md-card-image src="{{item.image}}">-->
+    <!--<md-card-content>-->
+        <!--<p>Price: RUR <b>{{item.getPrice()}}</b></p>-->
+        <!--<span [innerHTML]="item.description | linkly"></span>-->
+
+    <!--</md-card-content>-->
+<!--</md-card>-->

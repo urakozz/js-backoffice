@@ -1,3 +1,20 @@
-<p>
-  main works!
-</p>
+<md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+
+<md-card class="msc-v-margin">
+    <md-card-content>
+        <md-input #term (keyup)="asyncSearch(term.value)" [(ngModel)]="searchTerm" placeholder="Search" class="msc-full-width"></md-input>
+    </md-card-content>
+    <div flex="100">
+        <button md-raised-button
+                *ngFor="let c of categoryList"
+                [disabled]="loading"
+                (click)=categoryChange(c.key)
+                class="md-raised msc-button-margin"
+                [class.md-primary]="c.key === selectedCategory">{{c.name}}
+        </button>
+    </div>
+</md-card>
+
+<div *ngFor="let item of products" class="msc-v-margin">
+        <app-product-block [item]="item" (loginPopup)="loginPopup($event);" (palette)="showPalette()"></app-product-block>
+</div>

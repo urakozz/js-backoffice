@@ -127,6 +127,17 @@ export class UserService implements IUserService {
         return Observable.of(true);
     }
 
+    getHeaders(): Observable<Headers> {
+        return Observable.of(this._user).switchMap(u => {
+            if (u) {
+                return Observable.of(u);
+            }
+            return this._loginStream;
+        }).first().switchMap(u => {
+            return Observable.of(this._getHeaders());
+        });
+    }
+
     private _getHeaders(): Headers {
         let h = new Headers({"Content-Type": "application/json"});
         if (this._user) {

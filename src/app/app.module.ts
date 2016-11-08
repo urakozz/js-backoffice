@@ -16,17 +16,24 @@ import {RegistrationComponent} from './registration/registration.component';
 import {RouterModule} from '@angular/router';
 import {UserService} from "./_services/user.service";
 import { LoginComponent } from './login/login.component';
-import { LoginBlockComponent as LB } from './_components/login/login.component';
+import { LoginBlockComponent as LB } from './_components/login-block/login.component';
 import { RegistrationBlockComponent } from './_components/registration-block/registration-block.component';
 import { AddressBlockComponent } from './_components/address-block/address-block.component';
+import {BackendProductService} from "./_services/backend-product.service";
+import {BackendOrderService} from "./_services/backend-order.service";
+import {BackendService} from "./_services/backend.service";
+import { ProductBlockComponent } from "./_components/product-block/product-block.component";
+import { LinklyPipe } from "./_infrastructure/pipes/linkly.pipe";
+import {OrderService} from "./_services/order.service";
+import {CartService} from "./_services/cart.service";
 
 const ROUTES = [
     {
-        path: '',
+        path: "",
         component: MainComponent
     },
     {
-        path: 'login',
+        path: "login",
         component: LoginComponent
     },
     {
@@ -58,7 +65,7 @@ const ROUTES = [
         path: 'product-edit/:id',
         component: ProductEditComponent
     },
-    {path: '**', component: Page404Component}
+    {path: "**", component: Page404Component}
 ];
 
 @NgModule({
@@ -76,7 +83,9 @@ const ROUTES = [
         LoginComponent,
         LB,
         RegistrationBlockComponent,
-        AddressBlockComponent
+        AddressBlockComponent,
+        ProductBlockComponent,
+        LinklyPipe,
     ],
     imports: [
         BrowserModule,
@@ -86,7 +95,7 @@ const ROUTES = [
         RouterModule.forRoot(ROUTES),
         MaterialModule.forRoot(),
     ],
-    providers: [UserService],
+    providers: [UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

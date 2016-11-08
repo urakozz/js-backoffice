@@ -6,3 +6,12 @@ md-card.msc-v-margin {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+.msc-full-width {
+    width: 100%;
+}
+
+.msc-app-spinner {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+}

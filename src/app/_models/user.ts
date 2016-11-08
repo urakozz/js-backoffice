@@ -19,7 +19,7 @@ export class User implements Serializable<User> {
     }
 
 
-    deserialize(o) {
+    deserialize(o): User {
         o.orders = Array.isArray(o.orders) ? o.orders : [];
         o.address = Array.isArray(o.address) ? o.address : [];
         o.address = o.address.map(a => Address.newFromJSON(a));
@@ -41,12 +41,12 @@ export class User implements Serializable<User> {
 
     removeAddress(i: number) {
         if (this.address.length < i) {
-            throw new Error('invalid address position');
+            throw new Error("invalid address position");
         }
         if (this.address[i].default) {
-            throw new Error('unable delete default address');
+            throw new Error("unable delete default address");
         }
-        this.address = this.address.filter((_, ix) => ix != i);
+        this.address = this.address.filter((_, ix) => ix !== i);
     }
 }
 
@@ -92,12 +92,12 @@ export class Address implements Serializable<Address> {
         }
     }
 
-    deserialize(o) {
+    deserialize(o): Address {
         return Object.assign(new Address(), o);
     }
 
     toString() {
-        return this.fullname + ', ' + this.zip + ', ' + this.city + ', ' + this.address + ' ' + (this.address2 || '')
+        return [this.fullname, this.zip, this.city, (this.address + " " + (this.address2 || ""))].join(", ");
     }
 
 }
