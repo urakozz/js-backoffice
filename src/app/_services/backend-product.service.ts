@@ -29,27 +29,27 @@ export class BackendProductService {
 
     }
 
-    getAll(): Observable<Product[]> {
-        return this.getAllStream().toArray();
-    }
+    // getAll(): Observable<Product[]> {
+    //     return this.getAllStream().toArray();
+    // }
 
 
-    getAllStream(): Observable<Product> {
-        return this.getDocsList()
-            .flatMap((x: number[], i: number) => {
-                return this.getByKeys(x);
-            });
-    }
+    // getAllStream(): Observable<Product> {
+    //     return this.getDocsList()
+    //         .flatMap((x: number[], i: number) => {
+    //             return this.getByKeys(x);
+    //         });
+    // }
 
     getUpdatesList() {
         return this.backend.get(this.DB + "_changes?descending=true")
-            .map(res => res.json()["rows"].map(r => parseInt(r["key"]), 10));
+            .map(res => res.json()["rows"].map(r => parseInt(r["key"], 10)));
     }
 
-    getDocsList(): Observable<number[]> {
-        return this.backend.get(this.DB + "_all_docs?descending=true&skip=1")
-            .map(res => res.json()["rows"].map(r => parseInt(r["key"]), 10));
-    }
+    // getDocsList(): Observable<number[]> {
+    //     return this.backend.get(this.DB + "_all_docs?descending=true&skip=1")
+    //         .map(res => res.json()["rows"].map(r => parseInt(r["key"])));
+    // }
 
     getAllDocs(): Observable<Product[]> {
         let p = this.DB + "_all_docs?descending=true&include_docs=true";
@@ -66,11 +66,11 @@ export class BackendProductService {
             .map(res => res.json());
     }
 
-    getByKeys(x: number[]): Observable<Product> {
-        return Observable.from(x).map(k => {
-            console.log("stream, from array", k);
-            return this.get(k);
-        }).concatAll();
-    }
+    // getByKeys(x: number[]): Observable<Product> {
+    //     return Observable.from(x).map(k => {
+    //         console.log("stream, from array", k);
+    //         return this.get(k);
+    //     }).concatAll();
+    // }
 
 }

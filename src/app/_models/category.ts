@@ -72,7 +72,7 @@ export class ProductSelectableAttributeList implements Serializable<ProductSelec
         o.list.forEach((v, k) => {
             o.list[k] = ProductSelectableAttribute.newFromJSON(v);
         });
-        return this;
+        return o;
     }
 
     constructor(list?: ProductSelectableAttribute[]) {

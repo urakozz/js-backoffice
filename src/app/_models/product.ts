@@ -36,7 +36,7 @@ export class Product implements Serializable<Product> {
                 }
             }
             if (propName === "selectableAttributes") {
-                p[propName] = ProductSelectableAttributeList.newFromJSON(this[propName]);
+                p[propName] = ProductSelectableAttributeList.newFromJSON(p[propName]);
             }
         }
         p.applyDefaultAttributes();
@@ -51,6 +51,6 @@ export class Product implements Serializable<Product> {
     }
 
     getPrice(): number {
-        return parseFloat(<any>this.price);
+        return Number.parseFloat(<any>this.price);
     }
 }
