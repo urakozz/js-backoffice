@@ -35,7 +35,7 @@ export class ProductSelectableAttribute implements Serializable<ProductSelectabl
 
     get readableName() {
         if (this.name === "color") {
-            return "Основной цвет";
+            return "Основной";
         }
         return this.name;
     }

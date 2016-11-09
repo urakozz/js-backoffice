@@ -2,7 +2,8 @@
 
 <md-card class="msc-v-margin">
     <md-card-content>
-        <md-input #term (keyup)="asyncSearch(term.value)" [(ngModel)]="searchTerm" placeholder="Search" class="msc-full-width"></md-input>
+        <md-input #term (keyup)="asyncSearch(term.value)" [(ngModel)]="searchTerm" placeholder="Search"
+                  class="msc-full-width"></md-input>
     </md-card-content>
     <div flex="100">
         <button md-raised-button
@@ -15,6 +16,14 @@
     </div>
 </md-card>
 
-<div *ngFor="let item of products" class="msc-v-margin">
-        <app-product-block [item]="item" (loginPopup)="loginPopup($event);" (palette)="showPalette()"></app-product-block>
+<div class="row">
+    <div *ngFor="let item of products" class="col-xs-12
+                col-sm-6
+                col-md-4
+                col-lg-3">
+            <app-product-block [item]="item"
+                               (loginPopup)="loginPopup($event);"
+                               (palette)="showPalette()"></app-product-block>
+
+    </div>
 </div>

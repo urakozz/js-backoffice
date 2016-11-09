@@ -1,10 +1,16 @@
+@import "~flexboxgrid/dist/flexboxgrid.css";
+
 /* You can add global styles to this file, and also import other style files */
 body {
     margin: 0;
 }
 md-card.msc-v-margin {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+md-card.msc-h-margin {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .msc-full-width {
     width: 100%;

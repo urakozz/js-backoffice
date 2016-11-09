@@ -20,32 +20,48 @@ export class CartService {
                 private service: OrderService,
                 private userService: UserService) {
 
-        this.userService.getLoginStream().subscribe((u: User) => {
-            this.cart = new Order(u.name);
-            this._initFromLocal();
-        });
+        Observable.concat(Observable.of(userService.getUser()), userService.getLoginStream())
+            .filter((u: User) => !!u)
+            .subscribe((u: User) => {
+                this.cart = new Order(u.name);
+                this._initFromLocal();
+                console.log("stream, cart for", u);
+            });
     }
 
     private _initFromLocal() {
         let uuid = localStorage.getItem(this.LSKey);
         if (uuid) {
-            this.backend.getOrder(uuid).subscribe(c => {
-                this.setCart(c);
-            }, err => {
-                localStorage.removeItem(this.LSKey);
-            });
+            this._loadLocalCart(uuid);
         } else {
-            this.backend.getAllOrders().switchMap((o: Order[]) => {
-                o = o.filter((c: Order) => c.authorName === this.userService.getUser().name);
-                o = o.filter((c: Order) => c.status === OrderStatuses.CART);
-                if (o.length === 0) {
-                    return Observable.empty();
-                }
-                return Observable.of(o[0]);
-            }).subscribe((c: Order) => {
-                this.setCart(c);
-            });
+            this._loadLastCart();
         }
+    }
+
+    private _loadLocalCart(uuid) {
+        console.log("loc uuid", uuid);
+        this.backend.getOrder(uuid).switchMap(c => {
+            if (c.authorName !== this.userService.getUser().name) {
+                throw new Error("cart belongs to other user");
+            }
+            return Observable.of(c);
+        }).subscribe(c => {
+            this.setCart(c);
+        }, err => {
+            localStorage.removeItem(this.LSKey);
+        });
+    }
+
+    private _loadLastCart() {
+        this.backend.getUserOrders(this.userService.getUser().name).switchMap((o: Order[]) => {
+            o = o.filter((c: Order) => c.status === OrderStatuses.CART);
+            if (o.length === 0) {
+                return Observable.empty();
+            }
+            return Observable.of(o[0]);
+        }).subscribe((c: Order) => {
+            this.setCart(c);
+        });
     }
 
     changeStatus(s: OrderStatus) {
