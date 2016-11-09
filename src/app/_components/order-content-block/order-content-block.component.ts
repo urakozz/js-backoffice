@@ -19,7 +19,7 @@ import {ColorOptions} from "../../_models/category";
         trigger('flyInOut', [
             state('in', style({height: '*', opacity: 1, transform: 'translateX(0)'})),
             transition('* => void', [
-                animate('0.3s ease-in-out', style({height: 0, opacity: 0, transform: 'translateX(-100%)'}))
+                animate('0.3s ease-out', style({height: 0, opacity: 0, transform: 'translateX(-100%)'}))
             ])
         ])
     ]

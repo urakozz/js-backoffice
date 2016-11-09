@@ -3,7 +3,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common'
 import {CartService} from "../_services/cart.service";
 import {BackendOrderService} from "../_services/backend-order.service";
-import {MdDialog} from "@angular/material";
+import {MdDialog, MdDialogRef, MdDialogConfig} from "@angular/material";
 import {UserService} from "../_services/user.service";
 import {Observable} from "rxjs";
 import {Order} from "../_models/order";
@@ -18,6 +18,7 @@ export class CartComponent implements OnInit {
 
     cartc: any = {};
     loading: boolean;
+    private _dialogClear:MdDialogRef<ClearCartDialog>;
 
     constructor(protected cart: CartService,
                 protected viewContainerRef: ViewContainerRef,
@@ -70,7 +71,18 @@ export class CartComponent implements OnInit {
     }
 
     showClearConfirm(ev){
+        console.log("cart clear");
+        let config = new MdDialogConfig();
+        config.viewContainerRef = this.viewContainerRef;
 
+        this._dialogClear = this.dialog.open(ClearCartDialog, config);
+
+        this._dialogClear.afterClosed().subscribe(result => {
+            this._dialogClear = null;
+            if(result){
+                this.cart.clear();
+            }
+        });
     }
 
     showSaveConfirm(ev){
@@ -78,4 +90,28 @@ export class CartComponent implements OnInit {
     }
 
 
+}
+
+@Component({
+    selector: 'clear-cart-dialog',
+    template: `
+  <md-card >
+    <md-card-title>
+       Empty cart?
+    </md-card-title>
+    <md-card-content>
+    <p>This will clear the cart and will save it as empty one.</p>
+    </md-card-content>
+    <md-card-actions>
+        <button md-button (click)="dialogRef.close(true)">Yes, empty cart.</button>
+        <button md-button (click)="dialogRef.close(false)">Oh, no</button>
+    </md-card-actions>
+  </md-card>
+
+  
+  `
+})
+export class ClearCartDialog {
+    constructor(public dialogRef: MdDialogRef<ClearCartDialog>) {
+    }
 }

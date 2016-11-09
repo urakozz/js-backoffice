@@ -111,8 +111,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
 
     public showPalette(e) {
-        // let config = new MdDialogConfig().targetEvent(e);
-        // this.dialog.open(DialogPalette, this.element, config)
         console.log("main show palette");
         let config = new MdDialogConfig();
         config.viewContainerRef = this.viewContainerRef;
