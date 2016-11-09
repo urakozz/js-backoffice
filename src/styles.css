@@ -21,3 +21,9 @@ md-card.msc-h-margin {
     width: 30px;
     display: inline-block;
 }
+.msc-inherit-font{
+    font-size: inherit;
+}
+.msc-cursor-pointer{
+    cursor: pointer;
+}

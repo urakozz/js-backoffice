@@ -5,7 +5,7 @@ import {HttpModule} from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
 import {AppComponent} from './app.component';
-import {MainComponent} from './main/main.component';
+import {MainComponent, PaletteDialog, LoginDialog} from './main/main.component';
 import {Page404Component} from './page-404/page-404.component';
 import {CartComponent} from './cart/cart.component';
 import {OrdersComponent} from './orders/orders.component';
@@ -86,6 +86,8 @@ const ROUTES = [
         AddressBlockComponent,
         ProductBlockComponent,
         LinklyPipe,
+        PaletteDialog,
+        LoginDialog,
     ],
     imports: [
         BrowserModule,
@@ -95,6 +97,7 @@ const ROUTES = [
         RouterModule.forRoot(ROUTES),
         MaterialModule.forRoot(),
     ],
+    entryComponents:[PaletteDialog, LoginDialog],
     providers: [UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService],
     bootstrap: [AppComponent]
 })

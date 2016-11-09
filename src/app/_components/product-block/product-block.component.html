@@ -23,7 +23,10 @@
                 </select>
             </div>
             <div class="col-xs">
-                <section><b>Color</b></section>
+                <section>
+                    <b>Color</b>
+                        <md-icon class="msc-inherit-font msc-cursor-pointer" (click)="showPalette()">info_outline</md-icon>
+                </section>
                 <section *ngFor="let attr of listAttributes">
                     <section>{{attr.readableName}}</section>
                     <select [ngModel]="defaultSelectedColor"
