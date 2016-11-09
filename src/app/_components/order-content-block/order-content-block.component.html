@@ -1,0 +1,41 @@
+<md-card *ngFor="let item of order.asList" class="msc-v-margin" #container [@flyInOut]="true">
+    <md-card-header>
+        <img md-card-avatar [src]="item.product.image">
+        <md-card-title>{{item.product.name}}</md-card-title>
+        <!--<md-card-subtitle><span [innerHTML]="item.product.description | linkly"></span></md-card-subtitle>-->
+    </md-card-header>
+    <md-card-content>
+        <div class="row">
+            <div class="col-xs">
+                <section>
+                    <b>Color</b></section>
+                <section *ngFor="let attr of listAttributes(item)">
+                    <span>{{attr.attribute.readableName}}: <b>{{attr.value}}</b></span>
+                </section>
+            </div>
+            <div class="col-xs">
+                <section><b>Amount:</b> <b>{{item.amount}}</b></section>
+                <select *ngIf="container.__editing" (change)="changeAmount(item.product, $event.target.value, item.selectedAttributes)">
+                    <option disabled value>Amount</option>
+                    <option *ngFor="let i of amount" [value]="i" [selected]="i == item.amount">
+                        {{i}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-xs">
+                <button md-mini-fab
+                        *ngIf="editable"
+                        [color]="container.__editing ? 'primary' : 'accent'"
+                        (click)="container.__editing = !container.__editing">
+                    <md-icon>{{container.__editing ? "done" : "edit"}}</md-icon>
+                </button>
+                <button md-mini-fab
+                        *ngIf="editable" color="warn"
+                        (click)="changeAmount(item.product, 0, item.selectedAttributes)">
+                    <md-icon>remove_shopping_cart</md-icon>
+                </button>
+            </div>
+        </div>
+    </md-card-content>
+</md-card>
+

@@ -28,11 +28,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // this.form = this._fb.group({
-        //     realname: new FormControl({value: "", disabled: true}, Validators.required),
-        //     password: new FormControl({value: "", disabled: true}, Validators.required),
-        // });
-
         this._subscription = this._userService.loadUser().subscribe(u => {
             console.log("load profile", u);
             this.user = u;

@@ -1,3 +1,77 @@
-<p>
-  cart works!
-</p>
+<md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+
+<md-card>
+    <md-card-header>
+        <md-card-title>Cart</md-card-title>
+        <md-card-subtitle>Id: {{cartUuid}}</md-card-subtitle>
+    </md-card-header>
+
+    <md-card-content *ngIf="isEmptyCart">
+        <p >No items</p>
+    </md-card-content>
+    <md-card-content *ngIf="!isEmptyCart">
+        <app-order-content-block [order]="order"></app-order-content-block>
+    <!--<div hide-xs>-->
+        <!--<order-list [order]="order"></order-list>-->
+    <!--</div>-->
+
+    <!--<div hide-gt-xs>-->
+        <!--<order-cards [order]="order"></order-cards>-->
+    <!--</div>-->
+    </md-card-content>
+
+    <md-card-actions *ngIf="cartc.__saving">
+        <md-progress-bar mode="indeterminate"></md-progress-bar>
+    </md-card-actions>
+    <md-card-actions *ngIf="!cartc.__saving">
+
+        <button md-raised-button
+                [disabled]="cart.count == 0"
+                [class.md-warn]="cart.count"
+                (click)="showClearConfirm()">Empty cart
+        </button>
+        <button md-raised-button color="primary"
+                [disabled]="cart.count == 0"
+                (click)="showSaveConfirm()">Confirm order
+        </button>
+        <button md-raised-button color="primary" *ngIf="isAdmin"
+                [disabled]="cart.count == 0"
+                (click)="newCart()">Exit from this order
+        </button>
+    </md-card-actions>
+
+</md-card>
+
+
+
+<section layout="row">
+
+</section>
+
+
+<table class="cart-table md-padding" cellpadding="0" cellspacing="0" hide-xs *ngIf="isAdmin">
+    <tr>
+        <td>sku</td>
+        <td>name</td>
+        <td>amount</td>
+        <td>color</td>
+        <td>price_one</td>
+        <td>price</td>
+    </tr>
+    <tr *ngFor="let item of cart.asList">
+        <td>{{ item.product.sku }}</td>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.color }}</td>
+        <td>{{ item.product.price }}</td>
+        <td>{{ item.product.price * item.amount }}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Total</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{cart.cost }}</td>
+    </tr>
+</table>

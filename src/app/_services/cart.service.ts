@@ -79,13 +79,7 @@ export class CartService {
 
 
     add(p: Product, l: OrderSelectedAttributeList, q?: number) {
-        this.cart.add(p, l, q);
-        this.persist();
-    }
-
-
-    changeAmount2(p: Product, l: OrderSelectedAttributeList, q?: number) {
-        this.cart.changeAmount(p, l, q);
+        this.cart.add(p, l.clone(), q);
         this.persist();
     }
 

@@ -26,6 +26,7 @@ import { ProductBlockComponent } from "./_components/product-block/product-block
 import { LinklyPipe } from "./_infrastructure/pipes/linkly.pipe";
 import {OrderService} from "./_services/order.service";
 import {CartService} from "./_services/cart.service";
+import { OrderContentBlockComponent } from './_components/order-content-block/order-content-block.component';
 
 const ROUTES = [
     {
@@ -88,6 +89,7 @@ const ROUTES = [
         LinklyPipe,
         PaletteDialog,
         LoginDialog,
+        OrderContentBlockComponent,
     ],
     imports: [
         BrowserModule,

@@ -83,7 +83,6 @@ export class ProductBlockComponent implements OnInit {
             });
             return;
         }
-        console.log(this.selectedAttributes);
         this.basket.add(this.item, this.selectedAttributes, this.selectedAmount);
         this.justSaved = true;
         Observable.of(false).delay(500).subscribe(b => {

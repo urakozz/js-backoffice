@@ -119,6 +119,10 @@ export class OrderSelectedAttributeList implements Serializable<OrderSelectedAtt
         return new OrderSelectedAttributeList().deserialize(jsonObj);
     }
 
+    constructor(list?: OrderSelectedAttribute[]) {
+        this.list = list || [];
+    }
+
     deserialize(jsonObj: Object): OrderSelectedAttributeList {
         let o = new OrderSelectedAttributeList();
         o.list = (<any>jsonObj).list || [];
@@ -127,9 +131,8 @@ export class OrderSelectedAttributeList implements Serializable<OrderSelectedAtt
         });
         return o;
     }
-
-    constructor(list?: OrderSelectedAttribute[]) {
-        this.list = list || [];
+    clone(){
+        return this.deserialize(JSON.parse(JSON.stringify(this)))
     }
 
     getByName(n: string): OrderSelectedAttribute {
