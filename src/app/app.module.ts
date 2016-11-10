@@ -7,7 +7,7 @@ import { MaterialModule } from '@angular/material';
 import {AppComponent} from './app.component';
 import {MainComponent, PaletteDialog, LoginDialog} from './main/main.component';
 import {Page404Component} from './page-404/page-404.component';
-import {CartComponent, ClearCartDialog} from './cart/cart.component';
+import {CartComponent, ClearCartDialog, ConfirmOrderDialog} from './cart/cart.component';
 import {OrdersComponent} from './orders/orders.component';
 import {ProductComponent} from './product/product.component';
 import {ProductEditComponent} from './product-edit/product-edit.component';
@@ -27,6 +27,7 @@ import { LinklyPipe } from "./_infrastructure/pipes/linkly.pipe";
 import {OrderService} from "./_services/order.service";
 import {CartService} from "./_services/cart.service";
 import { OrderContentBlockComponent } from './_components/order-content-block/order-content-block.component';
+import { CartConfirmComponent } from './cart-confirm/cart-confirm.component';
 
 const ROUTES = [
     {
@@ -44,6 +45,10 @@ const ROUTES = [
     {
         path: 'cart/:id',
         component: CartComponent
+    },
+    {
+        path: 'cart/:id/confirm',
+        component: CartConfirmComponent
     },
     {
         path: 'orders',
@@ -91,6 +96,8 @@ const ROUTES = [
         LoginDialog,
         ClearCartDialog,
         OrderContentBlockComponent,
+        ConfirmOrderDialog,
+        CartConfirmComponent,
     ],
     imports: [
         BrowserModule,
@@ -100,7 +107,7 @@ const ROUTES = [
         RouterModule.forRoot(ROUTES),
         MaterialModule.forRoot(),
     ],
-    entryComponents:[PaletteDialog, LoginDialog, ClearCartDialog],
+    entryComponents:[PaletteDialog, LoginDialog, ClearCartDialog, ConfirmOrderDialog],
     providers: [UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService],
     bootstrap: [AppComponent]
 })

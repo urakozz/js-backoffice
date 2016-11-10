@@ -9,7 +9,6 @@ import {OrderStatuses} from "../../_models/enums/order-status.enum";
 import {OrderService} from "../../_services/order.service";
 import {UserService} from "../../_services/user.service";
 import {Product} from "../../_models/product";
-import {ColorOptions} from "../../_models/category";
 
 @Component({
     selector: 'app-order-content-block',

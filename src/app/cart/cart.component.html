@@ -1,10 +1,8 @@
 <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
 <md-card>
-    <md-card-header>
-        <md-card-title>Cart</md-card-title>
-        <md-card-subtitle>Id: {{cartUuid}}</md-card-subtitle>
-    </md-card-header>
+    <md-card-title>Cart</md-card-title>
+    <md-card-subtitle>Id: {{cartUuid}}</md-card-subtitle>
 
     <md-card-content *ngIf="isEmptyCart">
         <p >No items</p>
@@ -32,7 +30,7 @@
         </button>
         <button md-raised-button color="primary"
                 [disabled]="cart.count == 0"
-                (click)="showSaveConfirm()">Confirm order
+                [routerLink]="['confirm']">Confirm order
         </button>
         <button md-raised-button color="primary" *ngIf="isAdmin"
                 [disabled]="cart.count == 0"

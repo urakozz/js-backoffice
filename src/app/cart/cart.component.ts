@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewContainerRef, ElementRef} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from '@angular/common'
 import {CartService} from "../_services/cart.service";
 import {BackendOrderService} from "../_services/backend-order.service";
 import {MdDialog, MdDialogRef, MdDialogConfig} from "@angular/material";
 import {UserService} from "../_services/user.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Order} from "../_models/order";
+import {User, Address} from "../_models/user";
 
 @Component({
     selector: 'app-cart',
@@ -19,12 +20,12 @@ export class CartComponent implements OnInit {
     cartc: any = {};
     loading: boolean;
     private _dialogClear:MdDialogRef<ClearCartDialog>;
+    private _dialogConfirm:MdDialogRef<ConfirmOrderDialog>;
 
     constructor(protected cart: CartService,
                 protected viewContainerRef: ViewContainerRef,
                 protected backend: BackendOrderService,
                 protected dialog: MdDialog,
-                protected element: ElementRef,
                 protected userService: UserService,
                 protected route: ActivatedRoute) {
     }
@@ -86,7 +87,17 @@ export class CartComponent implements OnInit {
     }
 
     showSaveConfirm(ev){
+        let config = new MdDialogConfig();
+        config.viewContainerRef = this.viewContainerRef;
 
+        this._dialogConfirm = this.dialog.open(ConfirmOrderDialog, config);
+
+        this._dialogConfirm.afterClosed().subscribe(result => {
+            this._dialogClear = null;
+            if(result){
+                this.cart.clear();
+            }
+        });
     }
 
 
@@ -114,4 +125,71 @@ export class CartComponent implements OnInit {
 export class ClearCartDialog {
     constructor(public dialogRef: MdDialogRef<ClearCartDialog>) {
     }
+}
+
+
+@Component({
+    selector: 'confirm-order-dialog',
+    template: `
+  <md-card >
+    <md-card-title>
+       Confirm order
+    </md-card-title>
+    <md-card-content>
+    <p>Please select the address and confirm the order</p>
+    </md-card-content>
+    <md-card-actions>
+        <button md-button (click)="dialogRef.close(true)">Yes, empty cart.</button>
+        <button md-button (click)="dialogRef.close(false)">Oh, no</button>
+    </md-card-actions>
+  </md-card>
+
+
+  `
+})
+export class ConfirmOrderDialog {
+    private user:User;
+    private showOptions = false;
+    private loading:boolean = true;
+    private _sub:Subscription;
+
+    private address:Address;
+    private name:string;
+
+    constructor(public dialogRef: MdDialogRef<ConfirmOrderDialog>,
+                private _userService:UserService,
+                private _router: Router) {
+        this.user = _userService.getUser()
+
+    }
+
+    ngOnInit(){
+        this._sub = this._userService.loadUser().first().subscribe(u => {
+            this.loading = false;
+            this.user = u;
+            this.user.address.forEach(a => {
+                if(!this.address && a.default){
+                    this.address = a
+                }
+            });
+            this._sub.unsubscribe()
+        })
+    }
+
+    save(){
+        this.dialogRef.close({address:this.address, name:this.name})
+    }
+
+    get isAdmin(){
+        return this._userService.isAdmin
+    }
+
+    get addresses(){
+        return this.user.address || []
+    }
+
+    addAddress(){
+        this._router.navigate(["/profile", {user: 'me'}])
+    }
+
 }

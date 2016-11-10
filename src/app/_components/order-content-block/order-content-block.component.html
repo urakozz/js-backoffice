@@ -3,6 +3,7 @@
         <img md-card-avatar [src]="item.product.image">
         <md-card-title>{{item.product.name}}</md-card-title>
         <!--<md-card-subtitle><span [innerHTML]="item.product.description | linkly"></span></md-card-subtitle>-->
+        <md-card-subtitle><span>Price: </span><b>{{item.product.price * item.amount}}</b> Rub</md-card-subtitle>
     </md-card-header>
     <md-card-content>
         <div class="row">
@@ -37,5 +38,10 @@
             </div>
         </div>
     </md-card-content>
+</md-card>
+<md-card>
+    <md-card-title>
+        <span>Total Price: </span><b>{{totalCost}}</b> Rub
+    </md-card-title>
 </md-card>
 

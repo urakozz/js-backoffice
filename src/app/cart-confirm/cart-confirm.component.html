@@ -1,0 +1,79 @@
+<md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+
+<md-card>
+    <md-card-title>Cart</md-card-title>
+    <md-card-subtitle>Id: {{cartUuid}}</md-card-subtitle>
+
+    <md-card-content>
+        <md-card>
+            <md-card-content>
+                <md-list>
+                    <md-list-item *ngFor="let item of cart.getOrder().asList">
+                        <img md-list-avatar [src]="item.product.image" [alt]="item.product.name">
+                        <h3 md-line> {{item.product.name}} </h3>
+                        <p md-line><span>Amount:</span><b>{{item.amount}}</b></p>
+                        <p md-line><span>Price: </span><b>{{item.product.price * item.amount}}</b> Rub</p>
+                        <p md-line>
+                            <span>Color: </span>
+                            <span *ngFor="let attr of listAttributes(item)">
+                        <span>{{attr.attribute.readableName}}: <b>{{attr.value}}</b></span>
+                    </span>
+                        </p>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+            <md-card-content>
+                <p>Total Price: <b>{{totalCost}}</b> Rub</p>
+            </md-card-content>
+        </md-card>
+    </md-card-content>
+
+    <md-card-title *ngIf="!isAdmin">Address</md-card-title>
+
+    <md-card-content *ngIf="!isAdmin">
+        <div class="row">
+            <div *ngFor="let item of addresses; let index = index"
+                 class="col-xs-12
+                        col-sm-6
+                        col-md-4
+                        col-lg-3">
+                <md-card (click)="address = item">
+
+                    <md-card-title>
+                        #{{index + 1}} {{item.fullname}}
+                    </md-card-title>
+                    <md-card-content>
+                        <p>{{item}}</p>
+                    </md-card-content>
+                    <md-card-actions>
+                        <md-radio-button [checked]="item == address" [disabled]="loading">
+                            <span *ngIf="item == address"> Item will be shipped to this address </span>
+                            <span *ngIf="item != address"> Ship to this address </span>
+                        </md-radio-button>
+
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </div>
+    </md-card-content>
+
+    <md-card-content *ngIf="isAdmin">
+        <md-card>
+            <md-card-title>Order Name</md-card-title>
+            <md-card-content>
+                <md-input [(ngModel)]="name" autocomplete="off" placeholder="Order Name" [disabled]="loading"
+                          class="msc-full-width"></md-input>
+            </md-card-content>
+        </md-card>
+    </md-card-content>
+
+    <md-card-actions>
+
+        <button md-raised-button [routerLink]="['/cart', cartUuid]" [disabled]="loading">Back</button>
+        <button md-raised-button color="primary"
+                [disabled]="loading"
+                (click)="confirm()">Confirm order
+        </button>
+    </md-card-actions>
+</md-card>
+
