@@ -12,7 +12,7 @@ import {User, Address} from "../_models/user";
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
-    styleUrls: ['./cart.component.css']
+    styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
 
@@ -35,17 +35,16 @@ export class CartComponent implements OnInit {
 
         let id = "";
         this.route.params.forEach((params: Params) => {
-            let id = params['id']; // (+) converts string 'id' to a number
-            console.log('product', id);
+            id = params['id'];
         });
-
         Observable.of(id).switchMap(uuid => {
             if (!uuid || uuid === "current") {
                 this.loading = false;
                 return Observable.empty()
             }
+            console.log("loading", uuid);
             return this.backend.getOrder(uuid)
-        }).subscribe((c: Order) => {
+        }).delay(300).subscribe((c: Order) => {
             this.loading = false;
             this.cart.setCart(c);
         })

@@ -128,6 +128,10 @@ export class Order {
         });
         return l;
     }
+
+    get totalPrice() {
+        return this.asList.reduce((caret, item) => caret + item.amount * item.product.price, 0)
+    }
 }
 
 

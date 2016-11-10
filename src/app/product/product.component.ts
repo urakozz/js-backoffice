@@ -14,9 +14,9 @@ export class ProductComponent implements OnInit {
     }
 
     ngOnInit() {
+        let id = "";
         this.route.params.forEach((params: Params) => {
-            let id = +params['id']; // (+) converts string 'id' to a number
-            console.log('product', id);
+            id = params['id'];
         });
 
     }

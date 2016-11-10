@@ -1,5 +1,5 @@
 import {CategoryType} from "./enums/category.enum";
-import {ProductSelectableAttributeList, ProductAttributes} from "./category";
+import {ProductSelectableAttributeList, ProductAttributes, ProductAttributeName} from "./category";
 import {Serializable} from "./serializable";
 
 
@@ -43,8 +43,12 @@ export class Product implements Serializable<Product> {
         return p;
     }
 
+    hasOnlyDefaultAttributes():boolean{
+        return this.selectableAttributes.length === 1 && !!this.selectableAttributes.getByName(ProductAttributeName)
+    }
+
     private applyDefaultAttributes() {
-        let attr = this.selectableAttributes.getByName("color");
+        let attr = this.selectableAttributes.getByName(ProductAttributeName);
         if (!attr && this.selectableAttributes.length === 0) {
             this.selectableAttributes.push(ProductAttributes.getNewColorAttribute());
         }

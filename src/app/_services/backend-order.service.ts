@@ -38,7 +38,7 @@ export class BackendOrderService {
     getOrder(uuid: string): Observable<Order> {
         return this.backend.get(this.DB + uuid).map(res => res.json()).map(data => {
             let o = Order.newFromJSON(data);
-            console.log("getOrder", o);
+            console.log("getOrder", uuid);
             return o;
         });
     }
@@ -49,6 +49,7 @@ export class BackendOrderService {
             return c;
         });
     }
+
 
     delete(c: Order): Observable<boolean> {
         let params = new URLSearchParams();

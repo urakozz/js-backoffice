@@ -48,7 +48,7 @@ export class OrderContentBlockComponent implements OnInit {
     }
 
     get totalCost(): number {
-        return this.order.asList.reduce((caret, item) => caret + item.amount * item.product.price, 0)
+        return this.order.totalPrice
     }
 
     get editable() {

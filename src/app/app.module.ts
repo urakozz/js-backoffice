@@ -28,6 +28,8 @@ import {OrderService} from "./_services/order.service";
 import {CartService} from "./_services/cart.service";
 import { OrderContentBlockComponent } from './_components/order-content-block/order-content-block.component';
 import { CartConfirmComponent } from './cart-confirm/cart-confirm.component';
+import { UppercaseDirective } from './_infrastructure/directives/uppercase.directive';
+import { AllowNumbersDirective } from './_infrastructure/directives/allow-numbers.directive';
 
 const ROUTES = [
     {
@@ -98,6 +100,8 @@ const ROUTES = [
         OrderContentBlockComponent,
         ConfirmOrderDialog,
         CartConfirmComponent,
+        UppercaseDirective,
+        AllowNumbersDirective,
     ],
     imports: [
         BrowserModule,

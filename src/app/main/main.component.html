@@ -5,12 +5,12 @@
         <md-input #term (keyup)="asyncSearch(term.value)" [(ngModel)]="searchTerm" placeholder="Search"
                   class="msc-full-width"></md-input>
     </md-card-content>
-    <div flex="100">
+    <div>
         <button md-raised-button
                 *ngFor="let c of categoryList"
                 [disabled]="loading"
                 (click)=categoryChange(c.key)
-                class="md-raised msc-button-margin"
+                class="msc-button-margin"
                 [class.md-primary]="c.key === selectedCategory">{{c.name}}
         </button>
     </div>

@@ -1,3 +1,67 @@
-<p>
-  orders works!
-</p>
+<md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+
+<md-card>
+    <md-card-title>Orders</md-card-title>
+    <div>
+        <button md-raised-button
+                *ngFor="let s of statusList"
+                [disabled]="loading"
+                (click)=changeFilterStatus(s)
+                class="msc-button-margin"
+                [class.md-primary]="s === selectedStatus">{{getStatusName(s)}}
+        </button>
+        <button md-icon-button (click)="refresh()" [disabled]="loading">
+            <md-icon>refresh</md-icon>
+        </button>
+    </div>
+
+    <md-card-content *ngIf="!loading && !orders.length">
+        <p>No items</p>
+    </md-card-content>
+    <md-card-content *ngIf="orders.length">
+        <md-card *ngFor="let order of orders" class="msc-v-margin" #orderc>
+            <md-card-header>
+                <md-card-title>{{getTitle(order)}}</md-card-title>
+                <md-card-subtitle>
+                    <span *ngIf="isAdmin">{{ order.authorName }}</span>
+                    <span>{{ order.uuid }}</span></md-card-subtitle>
+            </md-card-header>
+            <md-card-content>
+                <div class="row">
+                    <div class="col-xs">
+                        <p>Order date: {{getReadableTime(order)}}</p>
+                        <p>Price: {{order.totalPrice}} Rub</p>
+                    </div>
+                    <div class="col-xs" *ngIf="isAdmin">
+                        <button md-mini-fab
+                                color="accent"
+                                [routerLink]="['/cart',order.uuid]">
+                            <md-icon>mode_edit</md-icon>
+                        </button>
+                        <button md-mini-fab
+                                color="warn"
+                                [disabled]="isActive(order)"
+                                (click)="delete(order, orderc)">
+                            <md-icon *ngIf="!isActive(order)">remove</md-icon>
+                            <md-icon *ngIf="isActive(order)">done</md-icon>
+                        </button>
+                        <!--<button  md-mini-fab color="accent" (click)="preview(order)">-->
+                        <!--<md-icon>visibility</md-icon>-->
+                        <!--</button>-->
+                    </div>
+                    <div class="col-xs">
+                        <section>Status: <b>{{getStatusName(order.status)}}</b></section>
+                        <button md-raised-button
+                                class="msc-button-margin"
+                                *ngFor="let s of getPossibleStatuses(order)"
+                                (click)="changeOrderStatus(order, s, orderc)">
+                            {{getStatusActionName(s)}}
+                        </button>
+                    </div>
+                </div>
+            </md-card-content>
+            <md-progress-bar mode="indeterminate" *ngIf="orderc.__loading"></md-progress-bar>
+        </md-card>
+    </md-card-content>
+
+</md-card>
