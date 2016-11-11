@@ -15,7 +15,10 @@
         <!--<button md-icon-button (click)="sidenav.toggle()">-->
             <!--<md-icon class="md-24">menu</md-icon>-->
         <!--</button>-->
-        <a md-button routerLink="/">Madam Scrap</a>
+        <!--<button md-icon-button routerLink="/">-->
+            <!--<md-icon>home</md-icon>-->
+        <!--</button>-->
+        <button md-button routerLink="/">Madam Scrap</button>
 
         <button *ngIf="isAdmin" md-button routerLink="/orders">Orders</button>
 
@@ -44,10 +47,10 @@
                 <md-icon>assignment</md-icon>
                 <span> My Orders</span>
             </button>
-            <button md-menu-item (click)="logout()" color="warn">
-                <md-icon>exit_to_app</md-icon>
-                <span> Logout</span>
-            </button>
+            <!--<button md-menu-item (click)="logout()" color="warn">-->
+                <!--<md-icon>exit_to_app</md-icon>-->
+                <!--<span> Logout</span>-->
+            <!--</button>-->
         </md-menu>
 
     </md-toolbar>

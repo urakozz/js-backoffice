@@ -3,7 +3,7 @@
         <md-input required
                   formControlName="name"
                   autocomplete="off"
-                  placeholder="Login"></md-input>
+                  placeholder="Email / Login"></md-input>
         <div *ngIf="form.controls.name.touched && form.controls.name.errors">
             <div *ngIf="form.controls.name.hasError('required')">
                 Login is required.

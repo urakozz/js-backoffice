@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
 import {UserService} from "../../_services/user.service";
 
 @Component({
@@ -17,10 +17,33 @@ export class RegistrationBlockComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.fb.group({
-            name: ["", Validators.required],
-            realname: ["", Validators.required],
-            password: ["", Validators.required],
+            name: new FormControl("", [Validators.required, RegistrationBlockComponent.validateEmail]),
+            realname: new FormControl("", [Validators.required]),
+            passwordGroup: new FormGroup({
+                password: new FormControl("", [Validators.required, Validators.minLength(8)]),
+                password2: new FormControl("", [Validators.required])
+            }, RegistrationBlockComponent.areEqual)
         });
+    }
+
+    static validateEmail(c: FormControl) {
+        let EMAIL_REGEXP = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+        return EMAIL_REGEXP.test(c.value) ? null : {
+            validateEmail: {
+                valid: false
+            }
+        };
+    }
+
+    static areEqual(group: FormGroup) {
+
+        let passwordInput = group.controls["password"];
+        let passwordConfirmationInput = group.controls["password2"];
+        if (passwordInput.value !== passwordConfirmationInput.value) {
+            passwordConfirmationInput.setErrors({notEquivalent: true});
+        }
+        return null;
     }
 
     register() {
