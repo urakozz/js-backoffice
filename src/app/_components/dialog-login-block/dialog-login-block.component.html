@@ -1,0 +1,27 @@
+<md-card>
+    <md-card-header>
+        <md-card-title>
+            {{signup ? "Registration" : "Login" }}
+        </md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <section *ngIf="!signup">
+            <app-login-block></app-login-block>
+            <p>
+                Do not have an account yet? Let's register&nbsp;<a href="javascript:void(0)" (click)="signup = !signup">now</a>!
+            </p>
+        </section>
+        <section *ngIf="signup">
+            <app-registration-block></app-registration-block>
+            <p>
+                Already have an account? Let's login&nbsp;<a href="javascript:void(0)"
+                                                             (click)="signup = !signup">now</a>!
+            </p>
+        </section>
+    </md-card-content>
+    <md-card-actions>
+        <button md-button (click)="dialog.close(false)">
+            <span>Cancel</span>
+        </button>
+    </md-card-actions>
+</md-card>

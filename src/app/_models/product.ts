@@ -4,7 +4,7 @@ import {Serializable} from "./serializable";
 
 
 export class Product implements Serializable<Product> {
-    id: number;
+    id: string;
     price: number;
     name: string;
     sku: string;

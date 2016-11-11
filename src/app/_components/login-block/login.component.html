@@ -33,10 +33,7 @@
                 Log in
             </button>
         </div>
-        <!--<md-spinner class="msc-app-spinner" ></md-spinner>-->
-        <p>
-            <md-progress-circle *ngIf="loading" mode="indeterminate" color="primary"></md-progress-circle>
-        </p>
     </div>
+    <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
 </form>

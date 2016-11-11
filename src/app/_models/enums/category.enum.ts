@@ -30,7 +30,7 @@ export const CategoryName = {
     [CategoryType.B]: "Бордюры",
     [CategoryType.VET]: "Веточки",
     [CategoryType.DET]: "Детское",
-    [CategoryType.D]: "Дома, здания",
+    [CategoryType.D]: "Город и быт",
     [CategoryType.J]: "Женское",
     [CategoryType.JI]: "Животные",
     [CategoryType.Z]: "Завитки",

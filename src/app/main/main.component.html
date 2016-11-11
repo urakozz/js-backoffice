@@ -1,19 +1,23 @@
 <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
-<md-card class="msc-v-margin">
+<md-card>
     <md-card-content>
+        <div class="row center-xs">
+            <div class="logo"></div>
+        </div>
         <md-input #term (keyup)="asyncSearch(term.value)" [(ngModel)]="searchTerm" placeholder="Search"
                   class="msc-full-width"></md-input>
+        <div>
+            <button md-raised-button
+                    *ngFor="let c of categoryList"
+                    [disabled]="loading"
+                    (click)=categoryChange(c.key)
+                    class="msc-button-margin"
+                    [class.md-primary]="c.key === selectedCategory">{{c.name}}
+            </button>
+        </div>
     </md-card-content>
-    <div>
-        <button md-raised-button
-                *ngFor="let c of categoryList"
-                [disabled]="loading"
-                (click)=categoryChange(c.key)
-                class="msc-button-margin"
-                [class.md-primary]="c.key === selectedCategory">{{c.name}}
-        </button>
-    </div>
+
 </md-card>
 
 <div class="row">
@@ -21,9 +25,9 @@
                 col-sm-6
                 col-md-4
                 col-lg-3">
-            <app-product-block [item]="item"
-                               (loginPopup)="loginPopup($event);"
-                               (palette)="showPalette()"></app-product-block>
+        <app-product-block [item]="item"
+                           (loginPopup)="loginPopup($event);"
+                           (palette)="showPalette()"></app-product-block>
 
     </div>
 </div>

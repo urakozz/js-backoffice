@@ -8,19 +8,21 @@ import {BackendProductService} from "../_services/backend-product.service";
 import {ProductSorter} from "../_infrastructure/product-sorter";
 import {MdDialog, MdDialogConfig, MdDialogRef} from "@angular/material";
 import {UserService} from "../_services/user.service";
+import {DialogPaletteBlockComponent} from "../_components/dialog-palette-block/dialog-palette-block.component";
+import {DialogLoginBlockComponent} from "../_components/dialog-login-block/dialog-login-block.component";
 
 @Component({
     selector: "app-main",
     templateUrl: "./main.component.html",
-    styleUrls: ["./main.component.css"]
+    styleUrls: ["./main.component.scss"]
 })
 export class MainComponent implements OnInit, OnDestroy {
     private _searchTermStream = new Subject<string>();
     private _searchTerm: string;
     private _lastSelectedCategory: CategoryType;
     private _sub: Subscription;
-    private _dialogPalette: MdDialogRef<PaletteDialog>;
-    private _dialogLogin: MdDialogRef<LoginDialog>;
+    private _dialogPalette: MdDialogRef<DialogPaletteBlockComponent>;
+    private _dialogLogin: MdDialogRef<DialogLoginBlockComponent>;
 
     protected productsAll: Product[] = [];
     categoryList = CategoryList;
@@ -115,7 +117,7 @@ export class MainComponent implements OnInit, OnDestroy {
         let config = new MdDialogConfig();
         config.viewContainerRef = this.viewContainerRef;
 
-        this._dialogPalette = this.dialog.open(PaletteDialog, config);
+        this._dialogPalette = this.dialog.open(DialogPaletteBlockComponent, config);
 
         this._dialogPalette.afterClosed().subscribe(result => {
             console.log('result: ' + result);
@@ -131,81 +133,15 @@ export class MainComponent implements OnInit, OnDestroy {
 
         let config = new MdDialogConfig();
         config.viewContainerRef = this.viewContainerRef;
-        this._dialogLogin = this.dialog.open(LoginDialog, config);
+        this._dialogLogin = this.dialog.open(DialogLoginBlockComponent, config);
         this._dialogLogin.afterClosed().subscribe(result => {
             console.log('result: ' + result);
             this._dialogLogin = null;
-            if(result && typeof(e["successAction"]) === "function" ){
+            if (result && typeof(e["successAction"]) === "function") {
                 console.log(e);
-                e["successAction"]()
+                e["successAction"]();
             }
         });
     }
 }
 
-@Component({
-    selector: 'pizza-dialog',
-    template: `
-  <md-card style="max-width: 300px;">
-
-    <img md-card-image src="https://pp.vk.me/c629305/v629305041/22672/36-00Z7xGiw.jpg">
-    <md-card-actions>
-        <button md-button (click)="dialogRef.close(false)">
-          <span>Close</span>
-        </button>
-    </md-card-actions>
-  </md-card>
-
-  
-  `
-})
-export class PaletteDialog {
-    constructor(public dialogRef: MdDialogRef<PaletteDialog>) {
-    }
-}
-
-@Component({
-    selector: 'login-dialog',
-    template: `
-<md-card>
-    <md-card-header>
-        <md-card-title>
-            {{signup ? "Registration" : "Login" }}
-        </md-card-title>
-    </md-card-header>
-    <md-card-content>
-      <section *ngIf="!signup">
-        <app-login-block></app-login-block>
-        <p>
-            Do not have an account yet? Let's register&nbsp;<a href="javascript:void(0)" (click)="signup = !signup">now</a>!
-        </p>
-      </section>
-      <section *ngIf="signup">
-        <app-registration-block></app-registration-block>
-        <p>
-            Already have an account? Let's login&nbsp;<a href="javascript:void(0)" (click)="signup = !signup">now</a>!
-        </p>
-      </section>
-    </md-card-content>
-    <md-card-actions>
-        <button md-button (click)="dialog.close(false)">
-          <span>Cancel</span>
-        </button>
-    </md-card-actions>
-</md-card>
-`,
-})
-export class LoginDialog {
-    private signup = false;
-
-    constructor(private dialog: MdDialogRef<LoginDialog>, private userService:UserService) {
-
-    }
-
-    ngOnInit(){
-        let s = this.userService.getLoginStream().first().subscribe(e => {
-            this.dialog.close(true);
-            s.unsubscribe()
-        })
-    }
-}

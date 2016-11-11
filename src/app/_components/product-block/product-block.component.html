@@ -1,11 +1,11 @@
 <md-card class="msc-v-margin">
-    <md-card-header>
+    <md-card-header class="msc-cursor-pointer" (click)="toPdp()">
         <md-card-title>{{item.name}}</md-card-title>
         <md-card-subtitle>{{item.sku}}</md-card-subtitle>
         <md-card-subtitle>{{getCategory()}}</md-card-subtitle>
     </md-card-header>
 
-    <img md-card-image src="{{item.image}}">
+    <img md-card-image src="{{item.image}}"  class="msc-cursor-pointer" (click)="toPdp()">
 
     <md-card-content>
         <div>

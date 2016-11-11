@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Location} from '@angular/common';
+import {Component, OnInit} from "@angular/core";
+import {Location} from "@angular/common";
 import {Product} from "../_models/product";
 import {Subject, Observable} from "rxjs";
 import {FormGroup, FormBuilder, Validators, FormControl, FormArray} from "@angular/forms";
@@ -7,15 +7,16 @@ import {Router, ActivatedRoute, Params} from "@angular/router";
 import {AttributeTypes, ProductSelectableAttribute} from "../_models/category";
 import {CategoryList} from "../_models/enums/category.enum";
 import {BackendProductService} from "../_services/backend-product.service";
+import {Uuid} from "../_infrastructure/uuid";
 
 @Component({
-    selector: 'app-product-edit',
-    templateUrl: './product-edit.component.html',
-    styleUrls: ['./product-edit.component.css']
+    selector: "app-product-edit",
+    templateUrl: "./product-edit.component.html",
+    styleUrls: ["./product-edit.component.css"]
 })
 export class ProductEditComponent implements OnInit {
 
-    private product: Product = new Product();
+    private product: Product;
     private _skuTerm = new Subject<string>();
     private skuSuggest = [];
     private justSaved = false;
@@ -46,28 +47,28 @@ export class ProductEditComponent implements OnInit {
             attributesDefault: this.attributesDefault,
         });
         this.product.selectableAttributes.getList().forEach(a => {
-            this.attributesDefault.push(new FormControl(a.name, Validators.nullValidator))
+            this.attributesDefault.push(new FormControl(a.name, Validators.nullValidator));
         });
 
         this.form.controls["sku"].valueChanges.distinct().filter(v => !!v).subscribe((v: string) => {
-            this._skuTerm.next(v)
+            this._skuTerm.next(v);
         });
         this.attributes.valueChanges.subscribe(e => {
-            if(e.length === 0) {
+            if (e.length === 0) {
                 this.useCustomAttributes = false;
             }
-        })
+        });
         this._initSkuStream();
 
         this._loadProduct().subscribe(p => {
-            this._setProduct(p)
+            this._setProduct(p);
         }, (err) => {
             console.log("error get product: ", err);
-            this._router.navigate(["/product-edit", "new"])
-        })
+            this._router.navigate(["/product-edit", "new"]);
+        });
     }
 
-    applyProduct(){
+    applyProduct() {
         console.log(this.product);
         console.log(this.form.value);
         this.product.name = this.form.value.name;
@@ -78,11 +79,11 @@ export class ProductEditComponent implements OnInit {
         this.product.price = Number.parseInt(this.form.value.price);
 
 
-        let attrs = this.attributes.value.filter(s => (s+'').length > 0);
-        if (attrs.length == 0) {
+        let attrs = this.attributes.value.filter(s => (s + "").length > 0);
+        if (attrs.length === 0) {
             this.useCustomAttributes = false;
         }
-        if(!this.useCustomAttributes) {
+        if (!this.useCustomAttributes) {
             attrs = this.attributesDefault.value;
         }
         console.log(attrs);
@@ -91,7 +92,7 @@ export class ProductEditComponent implements OnInit {
         attrs.forEach(v => {
             this.product.selectableAttributes.push(
                 new ProductSelectableAttribute(AttributeTypes.OPTION, v)
-            )
+            );
         });
     }
 
@@ -99,26 +100,26 @@ export class ProductEditComponent implements OnInit {
         this.applyProduct();
         let wasNew = false;
         if (!this.product.id) {
-            this.product.id = parseInt((Math.random() * 100000000).toFixed());
-            wasNew = true
+            this.product.id = Uuid.random();
+            wasNew = true;
         }
         this._sp.set(this.product).subscribe((p: Product) => {
             this._setProduct(p);
             if (wasNew) {
-                this._router.navigate(["/product-edit", p.id])
+                this._router.navigate(["/product-edit", p.id]);
             }
-            this._justSaved()
-        }, (e)=> {
-            console.log("error on save", e)
-        })
+            this._justSaved();
+        }, (e) => {
+            console.log("error on save", e);
+        });
     }
 
-    get colorKeys(){
+    get colorKeys() {
         return Object.keys(this.attributes.controls);
     }
 
     get catList() {
-        return CategoryList
+        return CategoryList;
     }
 
     delete(e) {
@@ -127,10 +128,10 @@ export class ProductEditComponent implements OnInit {
         this._sp.delete(this.product).subscribe(b => {
             this.product.id = undefined;
             this._location.go("/product-edit/new");
-        })
+        });
     }
 
-    addAttribute(e){
+    addAttribute(e) {
         e.stopPropagation();
         e.preventDefault();
         console.log("add");
@@ -138,53 +139,53 @@ export class ProductEditComponent implements OnInit {
         // this.attributes.updateValueAndValidity({emitEvent: true});
     }
 
-    deleteAttribute(e, i):void{
+    deleteAttribute(e, i): void {
         e.stopPropagation();
         e.preventDefault();
         this.attributes.removeAt(i);
         // this.attributes.updateValueAndValidity({emitEvent: true})
     }
 
-    setUseCustomAttributes(b:boolean){
-        this.useCustomAttributes = b
-        if(b && this.attributes.controls.length == 0){
-            this._addAttributeControl("")
+    setUseCustomAttributes(b: boolean) {
+        this.useCustomAttributes = b;
+        if (b && this.attributes.controls.length === 0) {
+            this._addAttributeControl("");
         }
     }
 
     private _loadProduct(): Observable<Product> {
-        let id: number = 0;
+        let id = 0;
         this._route.params.forEach((params: Params) => {
-            id = +params['id'];
+            id = +params["id"];
         });
         if (!id) {
-            return Observable.of(new Product())
+            return Observable.of(new Product());
         }
-        return this._sp.get(id)
+        return this._sp.get(id);
     }
 
-    private _setDetailsFromProduct(p:Product) {
+    private _setDetailsFromProduct(p: Product) {
         this.form.patchValue({
-            name:p.name,
-            description:p.description,
-            image:p.image,
-            sku:p.sku,
-            category:p.category,
-            price:p.price,
+            name: p.name,
+            description: p.description,
+            image: p.image,
+            sku: p.sku,
+            category: p.category,
+            price: p.price,
         });
     }
 
-    private _setAttributesFromProduct(p:Product) {
+    private _setAttributesFromProduct(p: Product) {
 
-        Object.keys(this.attributes.controls).forEach(()=>{
+        Object.keys(this.attributes.controls).forEach(() => {
             this.attributes.removeAt(0);
         });
-        if(p.hasOnlyDefaultAttributes()){
+        if (p.hasOnlyDefaultAttributes()) {
             this.useCustomAttributes = false;
         } else {
             this.useCustomAttributes = true;
             p.selectableAttributes.getList().forEach(a => {
-                this._addAttributeControl(a.name)
+                this._addAttributeControl(a.name);
             });
         }
 
@@ -192,7 +193,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     private  _addAttributeControl(value: string) {
-        this.attributes.push(new FormControl(value, Validators.nullValidator))
+        this.attributes.push(new FormControl(value, Validators.nullValidator));
     }
 
     private _initSkuStream() {
@@ -200,23 +201,22 @@ export class ProductEditComponent implements OnInit {
             .debounceTime(100)
             .distinctUntilChanged()
             .switchMap(term => {
-                let t = (<string>term).toLowerCase()
-                console.log("stream", term)
+                let t = (<string>term).toLowerCase();
+                console.log("stream", term);
                 return this._sp.getAllDocs()
                     .map(docs => docs.map(doc => doc.sku))
                     .map(docs => docs.filter(sku => sku && sku.toLowerCase().indexOf(t) === 0))
                     .map(docs => {
                         if (docs.length > 10) {
-                            return docs.slice(0, 10)
+                            return docs.slice(0, 10);
                         }
-                        return docs
-                    })
+                        return docs;
+                    });
             })
             .subscribe(data => {
-                this.skuSuggest = <string[]>data
-            })
+                this.skuSuggest = <string[]>data;
+            });
     }
-
 
 
     private _setProduct(p: Product) {
@@ -229,7 +229,7 @@ export class ProductEditComponent implements OnInit {
         this.justSaved = true;
         Observable.of(false).delay(1000).subscribe(b => {
             this.justSaved = b;
-        })
+        });
     }
 
 }

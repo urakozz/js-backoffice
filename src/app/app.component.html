@@ -12,51 +12,67 @@
     </md-sidenav>
 
     <md-toolbar color="primary">
-        <button md-icon-button (click)="sidenav.toggle()">
-            <md-icon class="md-24">menu</md-icon>
-        </button>
+        <!--<button md-icon-button (click)="sidenav.toggle()">-->
+            <!--<md-icon class="md-24">menu</md-icon>-->
+        <!--</button>-->
         <a md-button routerLink="/">Madam Scrap</a>
-        <span flex></span>
-        <button md-icon-button routerLink="/">
-            <md-icon class="md-24">home</md-icon>
-        </button>
 
-        <button *ngIf="!isGuest" md-button routerLink="/orders">Orders</button>
+        <button *ngIf="isAdmin" md-button routerLink="/orders">Orders</button>
+
         <section *ngIf="!isGuest" class="msc-badge-button">
             <button md-icon-button routerLink="/cart/current">
                 <md-icon>shopping_cart</md-icon>
+                <span routerLink="/cart/current" *ngIf="cart.count" class="msc-badge-button__text">{{cart.count}}</span>
             </button>
-            <!--<span [routerLink]="['./Cart', {uuid:'current'}]" *ngIf="basket.count" class="msc-badge-button__text">{{basket.count}}</span>-->
         </section>
-        <button *ngIf="isAdmin" md-icon-button routerLink="/product-edit/new">
-            <md-icon>add</md-icon>
-        </button>
         <button *ngIf="isGuest" md-icon-button routerLink="/login">
             <md-icon>person</md-icon>
         </button>
-        <button *ngIf="!isGuest" md-icon-button routerLink="/profile/me">
+        <button *ngIf="!isGuest" md-icon-button [md-menu-trigger-for]="menu">
             <md-icon>person</md-icon>
         </button>
 
+        <md-menu #menu="mdMenu">
+            <button md-menu-item routerLink="/profile/me">
+                <md-icon>person</md-icon>
+                <span> My Profile</span>
+            </button>
+            <button md-menu-item routerLink="/cart/current">
+                <md-icon>shopping_cart</md-icon>
+                <span> My Cart ({{cart.count}})</span></button>
+            <button md-menu-item routerLink="/orders">
+                <md-icon>assignment</md-icon>
+                <span> My Orders</span>
+            </button>
+            <button md-menu-item (click)="logout()" color="warn">
+                <md-icon>exit_to_app</md-icon>
+                <span> Logout</span>
+            </button>
+        </md-menu>
+
     </md-toolbar>
     <div class="app-content">
-        <h1>
-            {{title}}
-        </h1>
-        <nav>
-            <a routerLink="/">Main</a>
-            <a routerLink="/registration">Registration</a>
-            <a routerLink="/login">Login</a>
-            <a routerLink="/orders">Orders</a>
-            <a routerLink="/cart/current">Cart</a>
-            <a routerLink="/product/new">Product</a>
-            <a routerLink="/profile/1">Profile</a>
-            <a routerLink="/product-edit/1">Product Edit</a>
-        </nav>
-
         <router-outlet></router-outlet>
     </div>
+    <footer>
+        <md-toolbar>
+            <div class="row end-xs">
+                <div class="col">
+                    <span class="footer__item">&copy; Madam Scrap</span>
+                    <span class="footer__item">
+                        Made in Germany
+                        <!--by <a href="https://www.linkedin.com/in/urakozz" target="_blank">@urakozz</a>-->
+                    </span>
+                </div>
+            </div>
+        </md-toolbar>
+    </footer>
 </md-sidenav-layout>
+
+
+<span class="app-action" *ngIf="isAdmin">
+  <button md-fab routerLink="/product-edit/new"><md-icon>add circle</md-icon></button>
+</span>
 
 
 

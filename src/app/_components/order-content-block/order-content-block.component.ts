@@ -1,8 +1,10 @@
-import {Component, OnInit, Input, trigger,
+import {
+    Component, OnInit, Input, trigger,
     state,
     style,
     transition,
-    animate} from '@angular/core';
+    animate, OnDestroy
+} from '@angular/core';
 import {Order} from "../../_models/order";
 import {OrderItem} from "../../_models/order-item";
 import {OrderStatuses} from "../../_models/enums/order-status.enum";
@@ -23,7 +25,7 @@ import {Product} from "../../_models/product";
         ])
     ]
 })
-export class OrderContentBlockComponent implements OnInit {
+export class OrderContentBlockComponent implements OnInit, OnDestroy {
     @Input() order: Order;
     states = [];
 
@@ -35,12 +37,17 @@ export class OrderContentBlockComponent implements OnInit {
     }
 
     ngOnInit() {
+        // console.log("init");
         // this.states = Array.apply(null, Array(this.order.asList.length)).map(i => "in")
+    }
+
+    ngOnDestroy() {
+        // console.log("destroy");
     }
 
     getSelectedAttributeValue(item: OrderItem, a: string) {
         let attr = item.selectedAttributes.getByName("color");
-        return attr ? attr.value : null
+        return attr ? attr.value : null;
     }
 
     listAttributes(item: OrderItem) {
@@ -48,16 +55,16 @@ export class OrderContentBlockComponent implements OnInit {
     }
 
     get totalCost(): number {
-        return this.order.totalPrice
+        return this.order.totalPrice;
     }
 
     get editable() {
-        return this.order.status === OrderStatuses.CART || this._userService.isAdmin
+        return this.order.status === OrderStatuses.CART || this._userService.isAdmin;
     }
 
     changeAmount(p: Product, q, attrs) {
         this.order.changeAmount(p, attrs, Number.parseInt(q));
-        this.service.persist(this.order)
+        this.service.persist(this.order);
     }
 
 }

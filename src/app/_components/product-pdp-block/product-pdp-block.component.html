@@ -1,0 +1,78 @@
+<md-card class="msc-v-margin">
+    <md-card-header>
+        <md-card-title>{{item.name}}</md-card-title>
+        <md-card-subtitle>{{item.sku}}</md-card-subtitle>
+        <md-card-subtitle>{{getCategory()}}</md-card-subtitle>
+    </md-card-header>
+
+    <md-card-content>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <md-card>
+                    <img md-card-image src="{{item.image}}">
+                    <md-card-content></md-card-content>
+                </md-card>
+            </div>
+            <div class="col-xs-12 col-sm-6 ">
+                <h3>Price</h3>
+                <p>RUR <b>{{item.getPrice()}}</b></p>
+                <md-card>
+                    <md-card-content>
+                        <div class="row end-xs">
+                            <div class="col-xs">
+                                <section><b>Amount</b></section>
+                                <select [(ngModel)]="selectedAmount">
+                                    <option disabled value>Amount</option>
+                                    <option *ngFor="let i of amount" [value]="i">
+                                        {{i}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-xs">
+                                <section>
+                                    <b>Color</b>
+                                    <md-icon md-tooltip="Show color palette" tooltip-position="below"
+                                             class="msc-inherit-font msc-cursor-pointer" (click)="showPalette()">
+                                        info_outline
+                                    </md-icon>
+                                </section>
+                                <section *ngFor="let attr of listAttributes">
+                                    <section>{{attr.readableName}}</section>
+                                    <select [ngModel]="defaultSelectedColor"
+                                            (change)="changeColor(attr, $event.target.value)">
+                                        <option disabled value>Color</option>
+                                        <option *ngFor="let i of colorOptions" [value]="i">
+                                            {{i}}
+                                        </option>
+                                    </select>
+                                </section>
+                            </div>
+                            <div class="col-xs">
+                                <button md-fab [color]="justSaved ? 'primary' : 'accent'" (click)="add()">
+                                    <i class="material-icons">{{justSaved ? "done" : "add_shopping_cart"}}</i>
+                                </button>
+                            </div>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </md-card-content>
+
+    <md-card-content>
+        <md-card>
+            <md-card-content>
+                <div>
+                    <h3>Description</h3>
+                    <p><span [innerHTML]="item.description | linkly"></span></p>
+                </div>
+            </md-card-content>
+        </md-card>
+    </md-card-content>
+
+    <md-card-actions *ngIf="isAdmin">
+        <button md-icon-button class="md-primary" [routerLink]="['/product-edit', item.id ]">
+            <md-icon>edit</md-icon>
+        </button>
+    </md-card-actions>
+</md-card>

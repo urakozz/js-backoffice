@@ -8,6 +8,7 @@ import {CategoryName} from "../../_models/enums/category.enum";
 import {UserService} from "../../_services/user.service";
 import {CartService} from "../../_services/cart.service";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
     selector: "app-product-block",
@@ -28,8 +29,9 @@ export class ProductBlockComponent implements OnInit {
     @Output() loginPopup = new EventEmitter();
     @Output() palette = new EventEmitter();
 
-    constructor(private basket: CartService,
-                private _userService: UserService) {
+    constructor(protected basket: CartService,
+                protected router:Router,
+                protected _userService: UserService) {
     }
 
     ngOnInit() {
@@ -68,6 +70,9 @@ export class ProductBlockComponent implements OnInit {
             return "";
         }
         return CategoryName[this.item.category];
+    }
+    toPdp(){
+        this.router.navigate(["/product",this.item.id])
     }
 
     showPalette() {

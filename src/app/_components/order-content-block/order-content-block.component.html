@@ -1,4 +1,4 @@
-<md-card *ngFor="let item of order.asList" class="msc-v-margin" #container [@flyInOut]="true">
+<md-card *ngFor="let item of order.asList" class="msc-v-margin" #container ><!-- [@flyInOut]="true" -->
     <md-card-header>
         <img md-card-avatar [src]="item.product.image">
         <md-card-title>{{item.product.name}}</md-card-title>

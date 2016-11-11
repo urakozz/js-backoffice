@@ -5,7 +5,7 @@ import {HttpModule} from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
 import {AppComponent} from './app.component';
-import {MainComponent, PaletteDialog, LoginDialog} from './main/main.component';
+import {MainComponent} from './main/main.component';
 import {Page404Component} from './page-404/page-404.component';
 import {CartComponent, ClearCartDialog, ConfirmOrderDialog} from './cart/cart.component';
 import {OrdersComponent} from './orders/orders.component';
@@ -30,6 +30,9 @@ import { OrderContentBlockComponent } from './_components/order-content-block/or
 import { CartConfirmComponent } from './cart-confirm/cart-confirm.component';
 import { UppercaseDirective } from './_infrastructure/directives/uppercase.directive';
 import { AllowNumbersDirective } from './_infrastructure/directives/allow-numbers.directive';
+import { ProductPdpBlockComponent } from './_components/product-pdp-block/product-pdp-block.component';
+import { DialogPaletteBlockComponent } from './_components/dialog-palette-block/dialog-palette-block.component';
+import { DialogLoginBlockComponent } from './_components/dialog-login-block/dialog-login-block.component';
 
 const ROUTES = [
     {
@@ -94,14 +97,16 @@ const ROUTES = [
         AddressBlockComponent,
         ProductBlockComponent,
         LinklyPipe,
-        PaletteDialog,
-        LoginDialog,
+        DialogPaletteBlockComponent,
         ClearCartDialog,
         OrderContentBlockComponent,
         ConfirmOrderDialog,
         CartConfirmComponent,
         UppercaseDirective,
         AllowNumbersDirective,
+        ProductPdpBlockComponent,
+        DialogPaletteBlockComponent,
+        DialogLoginBlockComponent,
     ],
     imports: [
         BrowserModule,
@@ -111,7 +116,7 @@ const ROUTES = [
         RouterModule.forRoot(ROUTES),
         MaterialModule.forRoot(),
     ],
-    entryComponents:[PaletteDialog, LoginDialog, ClearCartDialog, ConfirmOrderDialog],
+    entryComponents:[DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog],
     providers: [UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService],
     bootstrap: [AppComponent]
 })
