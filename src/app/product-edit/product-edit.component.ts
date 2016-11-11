@@ -16,7 +16,7 @@ import {Uuid} from "../_infrastructure/uuid";
 })
 export class ProductEditComponent implements OnInit {
 
-    private product: Product;
+    private product: Product = new Product();
     private _skuTerm = new Subject<string>();
     private skuSuggest = [];
     private justSaved = false;
