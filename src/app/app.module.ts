@@ -33,6 +33,7 @@ import { AllowNumbersDirective } from './_infrastructure/directives/allow-number
 import { ProductPdpBlockComponent } from './_components/product-pdp-block/product-pdp-block.component';
 import { DialogPaletteBlockComponent } from './_components/dialog-palette-block/dialog-palette-block.component';
 import { DialogLoginBlockComponent } from './_components/dialog-login-block/dialog-login-block.component';
+import { LowercaseDirective } from './_infrastructure/directives/lowercase.directive';
 
 const ROUTES = [
     {
@@ -107,6 +108,7 @@ const ROUTES = [
         ProductPdpBlockComponent,
         DialogPaletteBlockComponent,
         DialogLoginBlockComponent,
+        LowercaseDirective,
     ],
     imports: [
         BrowserModule,

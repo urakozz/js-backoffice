@@ -15,12 +15,15 @@
         <!--<button md-icon-button (click)="sidenav.toggle()">-->
             <!--<md-icon class="md-24">menu</md-icon>-->
         <!--</button>-->
-        <!--<button md-icon-button routerLink="/">-->
-            <!--<md-icon>home</md-icon>-->
-        <!--</button>-->
-        <button md-button routerLink="/">Madam Scrap</button>
+        <button md-icon-button routerLink="/">
+            <md-icon>home</md-icon>
+        </button>
+        <!--<button md-icon-button routerLink="/">Madam Scrap</button>-->
+        Madam Scrap
 
-        <button *ngIf="isAdmin" md-button routerLink="/orders">Orders</button>
+        <button *ngIf="isAdmin" md-icon-button routerLink="/orders">
+            <md-icon>assignment</md-icon>
+        </button>
 
         <section *ngIf="!isGuest" class="msc-badge-button">
             <button md-icon-button routerLink="/cart/current">
@@ -35,7 +38,7 @@
             <md-icon>person</md-icon>
         </button>
 
-        <md-menu #menu="mdMenu">
+        <md-menu x-position="before" #menu="mdMenu">
             <button md-menu-item routerLink="/profile/me">
                 <md-icon>person</md-icon>
                 <span> My Profile</span>
