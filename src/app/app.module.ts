@@ -34,6 +34,8 @@ import { ProductPdpBlockComponent } from './_components/product-pdp-block/produc
 import { DialogPaletteBlockComponent } from './_components/dialog-palette-block/dialog-palette-block.component';
 import { DialogLoginBlockComponent } from './_components/dialog-login-block/dialog-login-block.component';
 import { LowercaseDirective } from './_infrastructure/directives/lowercase.directive';
+import {I18nService} from "./_services/i18n.service";
+import { I18nPipe } from './_infrastructure/pipes/i18n.pipe';
 
 const ROUTES = [
     {
@@ -109,6 +111,7 @@ const ROUTES = [
         DialogPaletteBlockComponent,
         DialogLoginBlockComponent,
         LowercaseDirective,
+        I18nPipe,
     ],
     imports: [
         BrowserModule,
@@ -119,7 +122,7 @@ const ROUTES = [
         MaterialModule.forRoot(),
     ],
     entryComponents:[DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog],
-    providers: [UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService],
+    providers: [UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService, I18nService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
