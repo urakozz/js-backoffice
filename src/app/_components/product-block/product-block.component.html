@@ -13,9 +13,9 @@
         </div>
         <div class="row end-xs">
             <div class="col-xs">
-                <section><b>Amount</b></section>
+                <section><b i18n>Amount</b></section>
                 <select [(ngModel)]="selectedAmount">
-                    <option disabled value>Amount</option>
+                    <option disabled value i18n>Amount</option>
                     <option *ngFor="let i of amount" [value]="i">
                         {{i}}
                     </option>

@@ -6,13 +6,13 @@
                   autocomplete="off"
                   placeholder="Email"></md-input>
         <div *ngIf="form.controls.name.touched && form.controls.name.errors">
-            <div *ngIf="form.controls.name.hasError('required')">
-                Login is required.
+            <div i18n *ngIf="form.controls.name.hasError('required')">
+                Email is required.
             </div>
-            <div *ngIf="form.controls.name.hasError('exists')">
-                Login already exists
+            <div i18n *ngIf="form.controls.name.hasError('exists')">
+                Email already exists
             </div>
-            <div *ngIf="form.controls.name.hasError('validateEmail')">
+            <div i18n *ngIf="form.controls.name.hasError('validateEmail')">
                 Invalid email
             </div>
         </div>
@@ -22,7 +22,7 @@
         <md-input required
                   formControlName="realname"
                   autocomplete="off"
-                  placeholder="Full Name"></md-input>
+                  placeholder="{{'Full Name' | i18n}}"></md-input>
         <div *ngIf="form.controls.realname.touched && form.controls.realname.errors">
             <div *ngIf="form.controls.realname.hasError('required')">
                 Full Name is required.
@@ -37,12 +37,12 @@
                       formControlName="password"
                       autocomplete="off"
                       type="password"
-                      placeholder="Password"></md-input>
+                      placeholder="{{'Password' | i18n}}"></md-input>
             <div *ngIf="form.controls.passwordGroup.controls.password.touched && form.controls.passwordGroup.controls.password.errors">
-                <div *ngIf="form.controls.passwordGroup.controls.password.hasError('required')">
+                <div i18n *ngIf="form.controls.passwordGroup.controls.password.hasError('required')">
                     Password is required.
                 </div>
-                <div *ngIf="form.controls.passwordGroup.controls.password.hasError('minlength')">
+                <div i18n *ngIf="form.controls.passwordGroup.controls.password.hasError('minlength')">
                     Password is too short.
                 </div>
             </div>
@@ -55,10 +55,10 @@
                       type="password"
                       placeholder="Repeat password"></md-input>
             <div *ngIf="form.controls.passwordGroup.controls.password2.touched && form.controls.passwordGroup.controls.password2.errors">
-                <div *ngIf="form.controls.passwordGroup.controls.password2.hasError('required')">
+                <div i18n *ngIf="form.controls.passwordGroup.controls.password2.hasError('required')">
                     Password is required.
                 </div>
-                <div *ngIf="form.controls.passwordGroup.controls.password2.hasError('notEquivalent')">
+                <div i18n *ngIf="form.controls.passwordGroup.controls.password2.hasError('notEquivalent')">
                     Passwords should match.
                 </div>
             </div>
@@ -68,7 +68,7 @@
     <div class="form-group">
         <div *ngIf="!loading">
             <button md-raised-button class="md-raised md-primary" type="submit" [disabled]="!form.valid">
-                Register
+                <span i18n>Register</span>
             </button>
         </div>
     </div>

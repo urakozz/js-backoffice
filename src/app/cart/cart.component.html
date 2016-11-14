@@ -1,11 +1,11 @@
 <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
 <md-card>
-    <md-card-title>Cart</md-card-title>
+    <md-card-title><span i18n>Cart</span></md-card-title>
     <md-card-subtitle>Id: {{cartUuid}}</md-card-subtitle>
 
     <md-card-content *ngIf="isEmptyCart">
-        <p >No items</p>
+        <p i18n>No products</p>
     </md-card-content>
     <md-card-content *ngIf="!isEmptyCart">
         <app-order-content-block [order]="order"></app-order-content-block>

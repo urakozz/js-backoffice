@@ -1,7 +1,7 @@
 <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
 <md-card *ngIf="!loading">
-    <md-card-title>Cart</md-card-title>
+    <md-card-title><span i18n>Edit product</span></md-card-title>
     <md-card-content>
 
 
@@ -46,6 +46,9 @@
                 </div>
             </div>
             <div class="row">
+                <h4 i18n>Category</h4>
+            </div>
+            <div class="row">
                 <select formControlName="category" required>
                     <option disabled>Category</option>
                     <option *ngFor="let c of catList" [value]="c.key">{{c.name}} | {{c.codes.join(", ")}}</option>
@@ -64,6 +67,9 @@
                         Image is required.
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <h4 i18n>Description</h4>
             </div>
             <div class="row">
                 <textarea md-input formControlName="description" placeholder="Description"></textarea>
@@ -161,12 +167,11 @@
             <md-icon>refresh</md-icon>
         </button>
     </div></div>
-<div class="row" >
+<div class="row center-xs" >
     <div class="col-xs-12
-                col-sm-6 col-sm-offset-3
-                col-md-4 col-sm-offset-4
-                col-lg-3 col-lg-offset-4">
+                col-sm-6
+                col-md-4
+                col-lg-3">
         <app-product-block [item]="product"></app-product-block>
-
     </div>
 </div>

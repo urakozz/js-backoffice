@@ -1,7 +1,7 @@
 <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
 <md-card>
-    <md-card-title>Cart</md-card-title>
+    <md-card-title><span i18n>Cart</span></md-card-title>
     <md-card-subtitle>Id: {{cartUuid}}</md-card-subtitle>
 
     <md-card-content>
@@ -14,7 +14,7 @@
                         <p md-line><span>Amount:</span><b>{{item.amount}}</b></p>
                         <p md-line><span>Price: </span><b>{{item.product.price * item.amount}}</b> Rub</p>
                         <p md-line>
-                            <span>Color: </span>
+                            <span><span i18n>Color</span>: </span>
                             <span *ngFor="let attr of listAttributes(item)">
                         <span>{{attr.attribute.readableName}}: <b>{{attr.value}}</b></span>
                     </span>
@@ -23,12 +23,12 @@
                 </md-list>
             </md-card-content>
             <md-card-content>
-                <p>Total Price: <b>{{totalCost}}</b> Rub</p>
+                <p><span i18n>Total Price</span>: <b>{{totalCost}}</b> Rub</p>
             </md-card-content>
         </md-card>
     </md-card-content>
 
-    <md-card-title *ngIf="!isAdmin">Address</md-card-title>
+    <md-card-title *ngIf="!isAdmin"><span i18n>Address</span></md-card-title>
 
     <md-card-content *ngIf="!isAdmin">
         <div class="row">
@@ -59,7 +59,7 @@
 
     <md-card-content *ngIf="isAdmin">
         <md-card>
-            <md-card-title>Order Name</md-card-title>
+            <md-card-title><span i18n>Order Name</span></md-card-title>
             <md-card-content>
                 <md-input [(ngModel)]="name" autocomplete="off" placeholder="Order Name" [disabled]="loading"
                           class="msc-full-width"></md-input>
@@ -69,10 +69,13 @@
 
     <md-card-actions>
 
-        <button md-raised-button [routerLink]="['/cart', cartUuid]" [disabled]="loading">Back</button>
+        <button md-raised-button [routerLink]="['/cart', cartUuid]" [disabled]="loading">
+             <span i18n>Back</span>
+        </button>
         <button md-raised-button color="primary"
                 [disabled]="loading"
-                (click)="confirm()">Confirm order
+                (click)="confirm()">
+            <span i18n>Confirm order</span>
         </button>
     </md-card-actions>
 </md-card>

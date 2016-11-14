@@ -1,15 +1,15 @@
 <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
 <md-card>
-    <md-card-title><h1>Profile</h1></md-card-title>
+    <md-card-title><h2 i18n>Profile</h2></md-card-title>
     <md-card-content>
         <md-card class="msc-v-margin">
-            <button md-raised-button color="warn" (click)="logout()">
-                Logout
+            <button md-raised-button  color="warn" (click)="logout()">
+                <span i18n>Logout</span>
             </button>
         </md-card>
 
-        <h4>Personal details</h4>
+        <h4>{{"Personal details" | i18n}}</h4>
         <md-card class="msc-v-margin">
             <md-card-content>
 
@@ -23,10 +23,10 @@
                                   name="realname"
                                   [disabled]="!editmode"
                                   autocomplete="off"
-                                  placeholder="Real Name" ></md-input>
+                                  placeholder="{{'Full Name' | i18n}}" ></md-input>
                         <div *ngIf="userForm.controls.realname && userForm.controls.realname.touched && userForm.controls.realname.errors">
-                            <div *ngIf="userForm.controls.realname.hasError('required')">
-                                Real Name is required.
+                            <div i18n *ngIf="userForm.controls.realname.hasError('required')">
+                                Full Name is required.
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                                   type="password"
                                   name="password"
                                   [disabled]="!(editmode && editpass)"
-                                  placeholder="Password">
+                                  placeholder="{{'Password' | i18n}}">
 
                         </md-input>
                         <a md-mini-fab (click)="editpass = !editpass" *ngIf="editmode">
@@ -46,10 +46,10 @@
                             <md-icon *ngIf="editpass" class="md-24">done</md-icon>
                         </a>
                         <div *ngIf="userForm.controls.password && userForm.controls.password.touched && userForm.controls.password.errors">
-                            <div *ngIf="userForm.controls.password.hasError('required')">
+                            <div i18n *ngIf="userForm.controls.password.hasError('required')">
                                 Password is required.
                             </div>
-                            <div *ngIf="userForm.controls.password.hasError('invalid')">
+                            <div i18n *ngIf="userForm.controls.password.hasError('invalid')">
                                 Password is invalid.
                             </div>
                         </div>
@@ -71,7 +71,7 @@
             </md-card-content>
         </md-card>
 
-        <h4>Address</h4>
+        <h4>{{"Address"| i18n}}</h4>
 
         <div layout="row">
 
@@ -121,7 +121,7 @@
 
             <md-card *ngIf="add_address" class="msc-v-margin">
                 <md-card-header>
-                    <md-card-title>Add new address</md-card-title>
+                    <md-card-title>{{"Add new address"| i18n}}</md-card-title>
                 </md-card-header>
                 <md-card-content>
                     <app-address-block

@@ -2,7 +2,7 @@
 
     <div class="form-group">
         <md-input required name="fullname" [(ngModel)]="address.fullname" [disabled]="!editable"
-                  placeholder="Full Name"></md-input>
+                  placeholder="{{'Full Name' | i18n}}"></md-input>
         <!--<div  *ngIf="form.controls.fullname.touched && form.controls.fullname.errors">-->
         <!--<div *ngIf="form.controls.fullname.hasError('required')">-->
         <!--FIO is required.-->
@@ -11,7 +11,8 @@
     </div>
 
     <div class="form-group">
-        <md-input required name="zip" [(ngModel)]="address.zip" [disabled]="!editable" placeholder="Zip"></md-input>
+        <md-input required name="zip" [(ngModel)]="address.zip" [disabled]="!editable"
+                  placeholder="{{'Zip' | i18n}}"></md-input>
         <!--<div  *ngIf="form.controls.zip.touched && form.controls.zip.errors">-->
         <!--<div *ngIf="form.controls.zip.hasError('required')">-->
         <!--Zip is required.-->
@@ -52,16 +53,16 @@
     <div class="form-group">
         <md-checkbox [(ngModel)]="address.default" aria-label="Default address"
                      [disabled]="!editable || !addressDefaultEditable" name="cb">
-            Use this address as default
+            <span i18n>Use this address as default</span>
         </md-checkbox>
     </div>
 
     <div layout="row" *ngIf="editable">
         <button md-raised-button class="md-raised md-primary" type="submit" [disabled]="!addressForm.form.valid">
-            Save
+            <span i18n>Save</span>
         </button>
         <button md-button class="md-raised" (click)="cancel()">
-            Cancel
+            <span i18n>Cancel</span>
         </button>
     </div>
 </form>

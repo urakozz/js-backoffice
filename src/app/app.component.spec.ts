@@ -2,12 +2,13 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {RegistrationBlockComponent} from "./_components/registration-block/registration-block.component";
 
 describe('App: MadamScrapLive', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
       ],
     });
   });

@@ -3,13 +3,13 @@
         <img md-card-avatar [src]="item.product.image">
         <md-card-title>{{item.product.name}}</md-card-title>
         <!--<md-card-subtitle><span [innerHTML]="item.product.description | linkly"></span></md-card-subtitle>-->
-        <md-card-subtitle><span>Price: </span><b>{{item.product.price * item.amount}}</b> Rub</md-card-subtitle>
+        <md-card-subtitle><span i18n>Price</span>: <b>{{item.product.price * item.amount}}</b> Rub</md-card-subtitle>
     </md-card-header>
     <md-card-content>
         <div class="row">
             <div class="col-xs">
                 <section>
-                    <b>Color</b></section>
+                    <b i18n>Color</b></section>
                 <section *ngFor="let attr of listAttributes(item)">
                     <span>{{attr.attribute.readableName}}: <b>{{attr.value}}</b></span>
                 </section>
@@ -41,7 +41,7 @@
 </md-card>
 <md-card>
     <md-card-title>
-        <span>Total Price: </span><b>{{totalCost}}</b> Rub
+        <span i18n>Total Price</span>: <b>{{totalCost}}</b> Rub
     </md-card-title>
 </md-card>
 

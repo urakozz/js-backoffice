@@ -41,14 +41,14 @@
         <md-menu x-position="before" #menu="mdMenu">
             <button md-menu-item routerLink="/profile/me">
                 <md-icon>person</md-icon>
-                <span> My Profile</span>
+                <span i18n>My Profile</span>
             </button>
             <button md-menu-item routerLink="/cart/current">
                 <md-icon>shopping_cart</md-icon>
-                <span> My Cart ({{cart.count}})</span></button>
+                <span>{{"My Cart" | i18n }} ({{cart.count}})</span></button>
             <button md-menu-item routerLink="/orders">
                 <md-icon>assignment</md-icon>
-                <span> My Orders</span>
+                <span i18n>My Orders</span>
             </button>
             <!--<button md-menu-item (click)="logout()" color="warn">-->
                 <!--<md-icon>exit_to_app</md-icon>-->

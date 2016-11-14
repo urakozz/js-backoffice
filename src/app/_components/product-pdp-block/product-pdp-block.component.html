@@ -14,13 +14,13 @@
                 </md-card>
             </div>
             <div class="col-xs-12 col-sm-6 ">
-                <h3>Price</h3>
+                <h3 i18n>Price</h3>
                 <p>RUR <b>{{item.getPrice()}}</b></p>
                 <md-card>
                     <md-card-content>
                         <div class="row end-xs">
                             <div class="col-xs">
-                                <section><b>Amount</b></section>
+                                <section><b i18n>Amount</b></section>
                                 <select [(ngModel)]="selectedAmount">
                                     <option disabled value>Amount</option>
                                     <option *ngFor="let i of amount" [value]="i">
@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-xs">
                                 <section>
-                                    <b>Color</b>
+                                    <b i18n>Color</b>
                                     <md-icon md-tooltip="Show color palette" tooltip-position="below"
                                              class="msc-inherit-font msc-cursor-pointer" (click)="showPalette()">
                                         info_outline
@@ -63,7 +63,7 @@
         <md-card>
             <md-card-content>
                 <div>
-                    <h3>Description</h3>
+                    <h3 i18n>Description</h3>
                     <p><span [innerHTML]="item.description | linkly"></span></p>
                 </div>
             </md-card-content>
