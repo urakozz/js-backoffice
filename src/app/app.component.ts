@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {UserService} from "./_services/user.service";
 import {Router} from "@angular/router";
 import {CartService} from "./_services/cart.service";
@@ -8,12 +8,19 @@ import {CartService} from "./_services/cart.service";
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
 
     constructor(private userService: UserService,
                 private router: Router,
                 private cart: CartService) {
 
+    }
+
+    ngOnInit(): void {
+        window.Pace.stop();
+        window.Pace = null;
+        document.querySelector("app-loading").remove();
     }
 
     get isAdmin() {

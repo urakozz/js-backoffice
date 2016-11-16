@@ -1,0 +1,37 @@
+.pace {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.pace-inactive {
+    display: none;
+}
+
+.pace .pace-progress {
+    background: #80CBC4;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    height: 3px;
+}
+
+.pace.pace-inactive {
+    display: none;
+}
+
+.msc-loading__logo{
+    display: block;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+
+    width: 310px;
+    height: 200px;
+    background-image: -webkit-image-set( url("/assets/madam-scrap-logo.png") 1x, url("/assets/madam-scrap-logo@2x.png") 2x);
+}

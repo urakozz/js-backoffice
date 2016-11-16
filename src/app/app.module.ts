@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {MaterialModule} from "@angular/material";
-import {APP_BASE_HREF} from '@angular/common';
+import {APP_BASE_HREF} from "@angular/common";
 
 import {AppComponent} from "./app.component";
 import {MainComponent} from "./main/main.component";
@@ -38,7 +38,8 @@ import {LowercaseDirective} from "./_infrastructure/directives/lowercase.directi
 import {I18nService} from "./_services/i18n.service";
 import {I18nPipe} from "./_infrastructure/pipes/i18n.pipe";
 import {TRANSLATION} from "./_infrastructure/translations/translation";
-import { I18nDirective } from './_infrastructure/directives/i18n.directive';
+import { I18nDirective } from "./_infrastructure/directives/i18n.directive";
+import { AutogrowDirective } from "./_infrastructure/directives/autogrow.directive";
 
 export const ROUTES = [
     {
@@ -116,6 +117,7 @@ export const ROUTES = [
         LowercaseDirective,
         I18nPipe,
         I18nDirective,
+        AutogrowDirective,
     ],
     imports: [
         BrowserModule,
