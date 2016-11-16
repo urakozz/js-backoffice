@@ -2,16 +2,16 @@ export const TRANSLATION = {
     defaultLang: "ru",
     lang: {
         "My Profile": {
-            ru: "Профиль"
+            ru: "Мой профиль"
         },
         "Profile": {
             ru: "Профиль"
         },
         "My Orders": {
-            ru: "Заказы"
+            ru: "Мои заказы"
         },
         "My Cart": {
-            ru: "Корзина"
+            ru: "Моя корзина"
         },
         "here": {
             ru: "здесь"
@@ -20,10 +20,10 @@ export const TRANSLATION = {
             ru: "сейчас"
         },
         "Logout": {
-            ru: "Выход"
+            ru: "Выйти"
         },
         "Login": {
-            ru: "Вход"
+            ru: "Войти"
         },
         "Registration": {
             ru: "Регистрация"
@@ -34,41 +34,110 @@ export const TRANSLATION = {
         "Close": {
             ru: "Закрыть"
         },
-        "Register": {},
-        "Already have an account? Login": {},
-        "Already have an account? Let's login": {},
-        "Do not have an account yet? Register": {},
-        "Do not have an account yet? Let's register": {},
-        "Personal details": {},
-        "Full Name": {},
-        "Full Name is required.": {},
-        "Password": {},
-        "Password is required.": {},
-        "Password is too short.": {},
-        "Passwords should match.": {},
-        "Email is required.": {},
-        "Email already exists": {},
-        "Invalid email": {},
-        "Description": {},
-        "Category": {},
-        "No orders": {},
-        "No products": {},
-        "Order date": {},
-        "Price": {},
-        "Amount": {},
-        "Status": {},
-        "Cart": {},
-        "Color": {},
-        "Total Price": {},
-        "Address": {},
-        "Order Name": {},
-        "Confirm order": {},
-        "Back": {},
-        "Zip": {},
-        "City": {},
-        "Address 2": {},
-        "Save": {},
-        "Use this address as default": {},
-
+        "Register": {
+            ru: "Зарегистрироваться"
+        },
+        "Already have an account? Login": {
+            ru: "Вы уже зарегистрированы? Войти"
+        },
+        "Already have an account? Let's login": {
+            ru: "Вы уже зарегистрированы? Войти"
+        },
+        "Do not have an account yet? Register": {
+            ru: "Вы еще не зарегистрированы? Зарегистрироваться"
+        },
+        "Do not have an account yet? Let's register": {
+            ru: "Вы еще не зарегистрированы? Зарегистрироваться"
+        },
+        "Personal details": {
+            ru: "Личные данные"
+        },
+        "Full Name": {
+            ru: "Полное имя (ФИО)"
+        },
+        "Full Name is required.": {
+            ru: "Необходимо ввести полное имя"
+        },
+        "Password": {
+            ru: "Пароль"
+        },
+        "Password is required.": {
+            ru: "Необходимо ввести пароль"
+        },
+        "Password is too short.": {
+            ru: "Слишком короткий пароль"
+        },
+        "Passwords should match.": {
+            ru: "Пароли должны совпадать"
+        },
+        "Email is required.": {
+            ru: "Необходимо ввести e-mail"
+        },
+        "Email already exists": {
+            ru: "Такой e-mail уже зарегистрирован"
+        },
+        "Invalid email": {
+            ru: "Недопустимый e-mail"
+        },
+        "Description": {
+            ru: "Описание"
+        },
+        "Category": {
+            ru: "Категория"
+        },
+        "No orders": {
+            ru: "Нет заказов"
+        },
+        "No products": {
+            ru: "Нет товаров"
+        },
+        "Order date": {
+            ru: "Дата заказа"
+        },
+        "Price": {
+            ru: "Цена"
+        },
+        "Amount": {
+            ru: "Количество"
+        },
+        "Status": {
+            ru: "Статус"
+        },
+        "Cart": {
+            ru: "Корзина"
+        },
+        "Color": {
+            ru: "Цвет"
+        },
+        "Total Price": {
+            ru: "Общая сумма"
+        },
+        "Address": {
+            ru: "Адрес"
+        },
+        "Order Name": {
+            ru: "Имя заказа"
+        },
+        "Confirm order": {
+            ru: "Подтвердить заказ"
+        },
+        "Back": {
+            ru: "Назад"
+        },
+        "Zip": {
+            ru: "Индекс"
+        },
+        "City": {
+            ru: "Город"
+        },
+        "Address 2": {
+            ru: "Дополнительный адрес"
+        },
+        "Save": {
+            ru: "Сохранить"
+        },
+        "Use this address as default": {
+            ru: "Использовать этот адрес по умолчанию"
+        },
     }
 };

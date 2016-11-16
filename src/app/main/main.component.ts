@@ -43,7 +43,7 @@ export class MainComponent implements OnInit, OnDestroy {
         let search = "";
         this._route.queryParams.forEach((params: Params) => {
             category = +params["category"] || 0;
-            search = params["search"] || "";
+            search = decodeURIComponent(params["search"] || "") ;
         });
         this._storage.getAllDocs().first().subscribe(docs => {
             this.productsAll = docs.sort(ProductSorter.sort);
