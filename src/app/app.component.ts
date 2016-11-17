@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {UserService} from "./_services/user.service";
 import {Router} from "@angular/router";
 import {CartService} from "./_services/cart.service";
+import {Observable} from "rxjs";
 
 @Component({
     selector: "app-root",
@@ -18,9 +19,13 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        window.Pace.stop();
-        window.Pace = null;
-        document.querySelector("app-loading").remove();
+        Observable.of(null).delay(250).subscribe(v => {
+            if (window.Pace) {
+                window.Pace.stop();
+                window.Pace = null;
+            }
+            document.querySelector("app-loading").remove();
+        });
     }
 
     get isAdmin() {

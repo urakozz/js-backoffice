@@ -258,7 +258,11 @@
 
         Bar.prototype.finish = function() {
             var el;
-            el = this.getElement();
+            try{
+                el = this.getElement();
+            } catch (e){
+                return;
+            }
             el.className = el.className.replace('pace-active', '');
             el.className += ' pace-inactive';
             document.body.className = document.body.className.replace('pace-running', '');

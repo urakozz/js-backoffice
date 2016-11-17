@@ -8,7 +8,7 @@
 
     <md-card-content>
         <div>
-            <p>Price: RUR <b>{{item.getPrice()}}</b></p>
+            <p><span i18n>Price</span>: RUR <b>{{item.getPrice()}}</b></p>
             <p><span [innerHTML]="item.description | linkly"></span></p>
         </div>
         <div class="row end-xs">
@@ -23,7 +23,7 @@
             </div>
             <div class="col-xs">
                 <section>
-                    <b>Color</b>
+                    <b i18n>Color</b>
                         <md-icon md-tooltip="Show color palette" tooltip-position="below" class="msc-inherit-font msc-cursor-pointer" (click)="showPalette()">info_outline</md-icon>
                 </section>
                 <section *ngFor="let attr of listAttributes">

@@ -11,6 +11,7 @@ interface Pace {
     stop();
     track();
     ignore();
+    trigger(event: string);
 }
 
 interface Window { Pace: Pace; }
