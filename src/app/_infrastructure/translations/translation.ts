@@ -139,5 +139,8 @@ export const TRANSLATION = {
         "Use this address as default": {
             ru: "Использовать этот адрес по умолчанию"
         },
+        "Show color palette": {
+            ru: "Показать палитру"
+        }
     }
 };
