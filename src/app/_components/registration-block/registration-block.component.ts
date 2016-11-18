@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
 import {UserService} from "../../_services/user.service";
+import {MailService} from "../../_services/mail.service";
+import {User} from "../../_models/user";
 
 @Component({
     selector: "app-registration-block",
@@ -12,7 +14,8 @@ export class RegistrationBlockComponent implements OnInit {
     protected form: FormGroup;
 
     constructor(private fb: FormBuilder,
-                private _userService: UserService) {
+                private _userService: UserService,
+                private _ms: MailService) {
     }
 
     ngOnInit() {
@@ -47,13 +50,28 @@ export class RegistrationBlockComponent implements OnInit {
     }
 
     register() {
+        debugger;
         this.loading = true;
-        this._userService.register(this.form.value).subscribe(d => {
+        let u = Object.assign(new User(), this.form.value);
+        u.password = this.form.value.passwordGroup.password;
+        this._userService.register(u).subscribe(d => {
             console.log("Directive Signup: success");
+            this._sendConfirm();
         }, err => {
             console.log("Err Directive signup", err);
             this.form.controls["name"].setErrors({exists: true});
             this.loading = false;
+        });
+    }
+
+    private _sendConfirm() {
+        this._ms.sendConfirmation(
+            this._userService.getUser().name,
+            this._userService.getUser().realname,
+            this._userService.getUser().details["activationCode"]).subscribe((r) => {
+            console.log("_sendConfirm ok", r);
+        }, (err) => {
+            console.log("_sendConfirm err", err);
         });
     }
 

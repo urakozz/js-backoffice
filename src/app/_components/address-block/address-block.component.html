@@ -21,7 +21,7 @@
     </div>
 
     <div class="form-group">
-        <md-input required name="city" [(ngModel)]="address.city" [disabled]="!editable" placeholder="City"></md-input>
+        <md-input required name="city" [(ngModel)]="address.city" [disabled]="!editable" placeholder="{{'City' | i18n }}"></md-input>
         <!--<div *ngIf="form.controls.city.touched && form.controls.city.errors">-->
         <!--<div *ngIf="form.controls.city.hasError('required')">-->
         <!--city is required.-->
@@ -31,7 +31,7 @@
 
     <div class="form-group">
         <md-input required name="address" [(ngModel)]="address.address" [disabled]="!editable"
-                  placeholder="Address"></md-input>
+                  placeholder="{{'Address' | i18n}}"></md-input>
         <!--<div  *ngIf="form.controls.address.touched && form.controls.address.errors">-->
         <!--<div *ngIf="form.controls.address.hasError('required')">-->
         <!--address is required.-->
@@ -41,7 +41,7 @@
 
     <div class="form-group">
         <md-input name="address2" [(ngModel)]="address.address2" [disabled]="!editable"
-                  placeholder="Address 2"></md-input>
+                  placeholder="{{'Address 2' | i18n }}"></md-input>
         <!--<div  *ngIf="form.controls.address2.touched && form.controls.address2.errors">-->
         <!--<div *ngIf="form.controls.address2.hasError('required')">-->
         <!--address2 is required.-->

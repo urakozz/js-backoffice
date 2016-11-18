@@ -40,6 +40,8 @@ import {I18nPipe} from "./_infrastructure/pipes/i18n.pipe";
 import {TRANSLATION} from "./_infrastructure/translations/translation";
 import { I18nDirective } from "./_infrastructure/directives/i18n.directive";
 import { AutogrowDirective } from "./_infrastructure/directives/autogrow.directive";
+import { RegistrationConfirmationComponent } from "./registration-confirmation/registration-confirmation.component";
+import {MailService} from "./_services/mail.service";
 
 export const ROUTES = [
     {
@@ -53,6 +55,10 @@ export const ROUTES = [
     {
         path: "registration",
         component: RegistrationComponent
+    },
+    {
+        path: "registration/confirmation",
+        component: RegistrationConfirmationComponent
     },
     {
         path: "cart/:id",
@@ -118,6 +124,7 @@ export const ROUTES = [
         I18nPipe,
         I18nDirective,
         AutogrowDirective,
+        RegistrationConfirmationComponent,
     ],
     imports: [
         BrowserModule,
@@ -129,7 +136,7 @@ export const ROUTES = [
     ],
     entryComponents: [DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog],
     providers: [
-        UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService,
+        UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService, MailService,
         {provide: I18nService, useFactory: () => new I18nService().init(TRANSLATION)},
         {provide: APP_BASE_HREF, useValue : "/" }
     ],

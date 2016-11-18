@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {User, LoginUser, RegisterUser} from "../_models/user";
+import {User, LoginUser, SaveUser} from "../_models/user";
 import {Subject, Observable} from "rxjs";
 import {Http, RequestMethod, Headers, Request, RequestOptions} from "@angular/http";
 import {IUserService} from "./i-user-service";
@@ -25,6 +25,12 @@ export class UserService implements IUserService {
         this._initFromLocal();
     }
 
+    activate(): Observable<any> {
+        this._user.active = true;
+        delete this._user.details["activationCode"];
+        return this.save(this._user);
+    }
+
     login(u: User): Observable<boolean> {
         let o = new RequestOptions({
             method: RequestMethod.Post,
@@ -34,6 +40,11 @@ export class UserService implements IUserService {
         });
         return this.http.request(new Request(o)).map(r => r.json()).switchMap((data, ix) => {
             return this._authenticate(u, data);
+        }).switchMap(() => {
+            return this._loadUser();
+        }).switchMap((user: User) => {
+            this._user = user;
+            return Observable.of(true);
         });
     }
 
@@ -46,11 +57,16 @@ export class UserService implements IUserService {
     }
 
     save(u: User): Observable<any> {
+        if (!u.uuid) {
+            u.uuid = Uuid.random();
+            u.details = u.details || {};
+            u.details["activationCode"] = Uuid.random();
+        }
         u.uuid = u.uuid || Uuid.random();
         let o = new RequestOptions({
             method: RequestMethod.Put,
             url: this.host + "/_users/org.couchdb.user:" + u.name,
-            body: JSON.stringify(new RegisterUser(u)),
+            body: JSON.stringify(new SaveUser(u)),
             headers: this._getHeaders(),
         });
         return this.http.request(new Request(o)).map(r => r.json());
@@ -68,7 +84,7 @@ export class UserService implements IUserService {
                 return Observable.of(u);
             }
             return this._loginStream;
-        }).switchMap(u => {
+        }).first().switchMap(u => {
             return this._loadUser();
         });
 
@@ -80,8 +96,8 @@ export class UserService implements IUserService {
             url: this.host + "/_users/org.couchdb.user:" + this._user.name,
             headers: this._getHeaders(),
         });
-        return this.http.request(new Request(o)).map(r => r.json()).switchMap(o => {
-            let u = User.newFromJSON(o);
+        return this.http.request(new Request(o)).map(r => r.json()).switchMap(obj => {
+            let u = User.newFromJSON(obj);
             u.password = this._user.password;
             return Observable.of(u);
         });
@@ -118,7 +134,7 @@ export class UserService implements IUserService {
 
     private _authenticate(u: User, data): Observable<boolean> {
         this._user = u;
-        localStorage.setItem("userObject", JSON.stringify(u))
+        localStorage.setItem("userObject", JSON.stringify(u));
         this._role = Role.User;
         if (data.roles.indexOf("web_write") >= 0) {
             this._role = Role.Admin;
@@ -156,7 +172,7 @@ export class UserService implements IUserService {
             this.login(user).subscribe(c => {
                 console.log("logged from local");
             }, err => {
-                console.log("error logging from local", err)
+                console.log("error logging from local", err);
                 this.logout();
             });
         }

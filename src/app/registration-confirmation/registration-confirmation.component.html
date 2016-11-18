@@ -1,0 +1,14 @@
+<md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+
+<md-card *ngIf="!loading">
+    <md-card-title><h2 i18n>Confirmation</h2></md-card-title>
+    <md-card-content *ngIf="isGuest">
+        <app-login-block></app-login-block>
+    </md-card-content>
+    <md-card-content *ngIf="!isGuest && !isCodeOk">
+        <span i18n>Code is invalid</span>
+    </md-card-content>
+    <md-card-content *ngIf="!isGuest && isCodeOk">
+        <button md-raised-button color="primary" (click)="confirm()"><span i18n>Confirm</span></button>
+    </md-card-content>
+</md-card>

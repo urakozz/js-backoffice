@@ -1,6 +1,4 @@
-interface Serializable<T> {
-    deserialize(input: Object): T;
-}
+import {Serializable} from "./serializable";
 
 export class User implements Serializable<User> {
     name: string;
@@ -9,7 +7,9 @@ export class User implements Serializable<User> {
     address: Address[];
     orders: string[];
     uuid: string;
+    active: boolean;
     _rev: string;
+    details: any;
 
     static newFromJSON(jsonObj: Object): User {
         return new User().deserialize(jsonObj);
@@ -20,6 +20,7 @@ export class User implements Serializable<User> {
 
 
     deserialize(o): User {
+        o.details = o.details || {};
         o.orders = Array.isArray(o.orders) ? o.orders : [];
         o.address = Array.isArray(o.address) ? o.address : [];
         o.address = o.address.map(a => Address.newFromJSON(a));
@@ -50,7 +51,7 @@ export class User implements Serializable<User> {
     }
 }
 
-export class RegisterUser extends User {
+export class SaveUser extends User {
     type: string = "user";
     roles: string[] = [];
 
@@ -58,10 +59,12 @@ export class RegisterUser extends User {
         super();
         this._rev = u._rev;
         this.name = u.name;
+        this.active = u.active;
         this.address = u.address;
         this.password = u.password;
         this.realname = u.realname;
         this.uuid = u.uuid;
+        this.details = u.details;
     }
 }
 
