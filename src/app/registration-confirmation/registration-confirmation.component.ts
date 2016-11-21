@@ -1,6 +1,5 @@
-import {Component, OnInit, ViewContainerRef} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {UserService} from "../_services/user.service";
-import {MdDialog} from "@angular/material";
 import {ActivatedRoute, Params} from "@angular/router";
 import {User} from "../_models/user";
 
@@ -36,7 +35,6 @@ export class RegistrationConfirmationComponent implements OnInit {
     }
 
     get isCodeOk() {
-        // console.log(this._userService.getUser().details, this._code);
         return this._code
             && this._userService.getUser()
             && this._userService.getUser().details

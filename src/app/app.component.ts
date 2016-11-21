@@ -3,6 +3,7 @@ import {UserService} from "./_services/user.service";
 import {Router} from "@angular/router";
 import {CartService} from "./_services/cart.service";
 import {Observable} from "rxjs";
+import {MdMenu} from "@angular/material";
 
 @Component({
     selector: "app-root",
@@ -36,9 +37,12 @@ export class AppComponent implements OnInit {
         return this.userService.isGuest;
     }
 
-    logout() {
-        this.userService.logout();
-        this.router.navigate(["/"]);
+    logout(m: MdMenu) {
+        let s = m.close.subscribe(() => {
+            s.unsubscribe();
+            this.userService.logout();
+            this.router.navigate(["/"]);
+        });
     }
 
 }

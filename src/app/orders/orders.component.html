@@ -60,6 +60,44 @@
                     </div>
                 </div>
             </md-card-content>
+            <md-card-content #actions *ngIf="order.details?.address">
+                <div class="row">
+                    <button md-button (click)="actions.__open = !actions.__open">
+                        <md-icon class="msc-icon-middle" *ngIf="!actions.__open">keyboard_arrow_right</md-icon>
+                        <md-icon class="msc-icon-middle" *ngIf="actions.__open">keyboard_arrow_down</md-icon>
+                        <span i18n>Address</span>
+                    </button>
+                </div>
+                <div class="row" *ngIf="actions.__open">
+                    <form class="msc-full-width">
+                        <div class="form-group">
+                            <md-input name="fullname" [value]="order.details?.address.fullname" disabled
+                                      placeholder="{{'Full Name' | i18n}}" class="msc-full-width"></md-input>
+                        </div>
+
+                        <div class="form-group">
+                            <md-input name="zip" [value]="order.details?.address.zip" disabled
+                                      placeholder="{{'Zip' | i18n}}" class="msc-full-width"></md-input>
+                        </div>
+
+                        <div class="form-group">
+                            <md-input name="city" [value]="order.details?.address.city" disabled
+                                      placeholder="{{'City' | i18n }}" class="msc-full-width"></md-input>
+
+                        </div>
+
+                        <div class="form-group">
+                            <md-input name="address" [value]="order.details?.address.address" disabled
+                                      placeholder="{{'Address' | i18n}}" class="msc-full-width"></md-input>
+                        </div>
+
+                        <div class="form-group">
+                            <md-input name="address2" [value]="order.details?.address.address2" disabled
+                                      placeholder="{{'Address 2' | i18n }}" class="msc-full-width"></md-input>
+                        </div>
+                    </form>
+                </div>
+            </md-card-content>
             <md-progress-bar mode="indeterminate" *ngIf="orderc.__loading"></md-progress-bar>
         </md-card>
     </md-card-content>

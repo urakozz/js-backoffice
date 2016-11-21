@@ -27,3 +27,6 @@ md-card.msc-h-margin {
 .msc-cursor-pointer{
     cursor: pointer;
 }
+.msc-icon-middle{
+    vertical-align: middle;
+}
