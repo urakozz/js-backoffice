@@ -115,6 +115,15 @@ export const TRANSLATION = {
         "Address": {
             ru: "Адрес"
         },
+        "Add new address":{
+            ru: "Добавить адрес"
+        },
+        "Empty cart" : {
+            ru: "Очистить корзину"
+        },
+        "Hint: you can save address for future use in your Profile. Go to the" : {
+            ru: "Совет: вы можете создать и сохранить адреса для в своём профиле. Перейти в "
+        },
         "Order Name": {
             ru: "Имя заказа"
         },

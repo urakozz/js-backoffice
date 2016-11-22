@@ -187,8 +187,4 @@ export class ConfirmOrderDialog {
         return this.user.address || []
     }
 
-    addAddress(){
-        this._router.navigate(["/profile", {user: 'me'}])
-    }
-
 }

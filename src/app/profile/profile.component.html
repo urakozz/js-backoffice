@@ -116,7 +116,7 @@
             </div>
 
             <button *ngIf="!add_address" md-raised-button color="primary" (click)="add_address = !add_address">
-                {{ add_address ? "Cancel" : "+ Add address"}}
+                <span i18n>Add new address</span>
             </button>
 
             <md-card *ngIf="add_address" class="msc-v-margin">

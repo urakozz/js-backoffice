@@ -22,7 +22,7 @@ export class MailService {
             method: RequestMethod.Put,
             url: this.host + "/v3/mail/send",
             headers: this._getHeaders(),
-            body: JSON.stringify(this._getConfirmationBody(email, name, code, {schema: this.document.schema, host: this.document.host})),
+            body: JSON.stringify(this._getConfirmationBody(email, name, code, this.document)),
         })));
     }
 

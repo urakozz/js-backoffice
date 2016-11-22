@@ -13,6 +13,7 @@ export class AddressBlockComponent implements OnInit {
 
     @Input() editable: boolean = true;
     @Input() addressDefaultEditable: boolean = false;
+    @Input() addressDefaultShowCheckbox: boolean = true;
     @Input() address: Address = new Address(true);
     @Output() saved: EventEmitter<Address> = new EventEmitter<Address>();
     @Output() canceled: EventEmitter<any> = new EventEmitter<Address>();

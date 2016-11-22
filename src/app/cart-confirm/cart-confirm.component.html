@@ -28,9 +28,15 @@
         </md-card>
     </md-card-content>
 
-    <md-card-title *ngIf="!isAdmin"><span i18n>Address</span></md-card-title>
+    <md-card-title><span i18n>Address</span></md-card-title>
 
-    <md-card-content *ngIf="!isAdmin">
+    <md-card-content>
+        <!-- Add address button-->
+        <button md-raised-button color="primary" *ngIf="addresses.length < 1 && !add_address && !custom_address" (click)="add_address = true">
+            <span i18n>Add new address</span>
+        </button>
+
+        <!-- User addresses-->
         <div class="row">
             <div *ngFor="let item of addresses; let index = index"
                  class="col-xs-12
@@ -38,7 +44,6 @@
                         col-md-4
                         col-lg-3">
                 <md-card (click)="address = item">
-
                     <md-card-title>
                         #{{index + 1}} {{item.fullname}}
                     </md-card-title>
@@ -50,11 +55,51 @@
                             <span *ngIf="item == address"> Item will be shipped to this address </span>
                             <span *ngIf="item != address"> Ship to this address </span>
                         </md-radio-button>
-
                     </md-card-actions>
                 </md-card>
             </div>
         </div>
+
+        <!-- Custom address-->
+        <div class="row" *ngIf="custom_address">
+            <div class="col-xs-12">
+                <md-card>
+                    <md-card-title>
+                        {{custom_address.fullname}}
+                    </md-card-title>
+                    <md-card-content>
+                        <p>{{custom_address}}</p>
+                    </md-card-content>
+                    <md-card-actions>
+                        <md-radio-button [checked]="true" [disabled]="true">
+                            <span>Item will be shipped to this address</span>
+                        </md-radio-button>
+                    </md-card-actions>
+                    <md-card-actions>
+                        <button md-raised-button (click)="deleteCustomAddress()" color="warn">
+                            <span i18n>Remove</span>
+                        </button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </div>
+
+        <!-- Adding address block-->
+        <md-card *ngIf="add_address" class="msc-v-margin">
+            <md-card-header>
+                <md-card-title>{{"Add new address"| i18n}}</md-card-title>
+            </md-card-header>
+            <md-card-content>
+                <app-address-block
+                        [addressDefaultShowCheckbox]="false"
+                        (saved)="addCustomAddress($event)"
+                        (canceled)="add_address = false">
+                </app-address-block>
+            </md-card-content>
+            <md-card-content *ngIf="!isAdmin">
+                <span i18n>Hint: you can save address for future use in your Profile. Go to the</span> <a routerLink="/profile/me" i18n>Profile</a>.
+            </md-card-content>
+        </md-card>
     </md-card-content>
 
     <md-card-content *ngIf="isAdmin">
@@ -68,12 +113,11 @@
     </md-card-content>
 
     <md-card-actions>
-
         <button md-raised-button [routerLink]="['/cart', cartUuid]" [disabled]="loading">
              <span i18n>Back</span>
         </button>
         <button md-raised-button color="primary"
-                [disabled]="loading"
+                [disabled]="loading || !address"
                 (click)="confirm()">
             <span i18n>Confirm order</span>
         </button>

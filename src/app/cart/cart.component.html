@@ -26,11 +26,13 @@
         <button md-raised-button
                 [disabled]="cart.count == 0"
                 [class.md-warn]="cart.count"
-                (click)="showClearConfirm()">Empty cart
+                (click)="showClearConfirm()">
+            <span i18n>Empty cart</span>
         </button>
         <button md-raised-button color="primary"
                 [disabled]="cart.count == 0"
-                [routerLink]="['confirm']">Confirm order
+                [routerLink]="['confirm']">
+            <span i18n>Confirm order</span>
         </button>
         <button md-raised-button color="primary" *ngIf="isAdmin"
                 [disabled]="cart.count == 0"

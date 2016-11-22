@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-group">
-        <md-input required name="zip" [(ngModel)]="address.zip" [disabled]="!editable"
+        <md-input required name="zip" [(ngModel)]="address.zip" [disabled]="!editable" allow-numbers
                   placeholder="{{'Zip' | i18n}}"></md-input>
         <!--<div  *ngIf="form.controls.zip.touched && form.controls.zip.errors">-->
         <!--<div *ngIf="form.controls.zip.hasError('required')">-->
@@ -50,7 +50,7 @@
     </div>
 
 
-    <div class="form-group">
+    <div class="form-group" *ngIf="addressDefaultShowCheckbox">
         <md-checkbox [(ngModel)]="address.default" aria-label="Default address"
                      [disabled]="!editable || !addressDefaultEditable" name="cb">
             <span i18n>Use this address as default</span>
