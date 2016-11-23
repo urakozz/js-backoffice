@@ -19,7 +19,7 @@ export class OrderItem implements Serializable<OrderItem> {
 
     deserialize(jsonObj: Object): OrderItem {
         let o = new OrderItem();
-        o.product = Product.newFromJSON(jsonObj["product"]);
+        o.product = new Product().deserialize(jsonObj["product"]);
         o.amount = parseInt(jsonObj["amount"], 10);
         if (jsonObj["selectedAttributes"]) {
             o.selectedAttributes = OrderSelectedAttributeList.newFromJSON(jsonObj["selectedAttributes"]);

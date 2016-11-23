@@ -4,6 +4,7 @@ import {Subject, Observable} from "rxjs";
 import {Http, RequestMethod, Headers, Request, RequestOptions} from "@angular/http";
 import {IUserService} from "./i-user-service";
 import {Uuid} from "../_infrastructure/uuid";
+import {SessionResponse, BackendUserService} from "./backend-user-service.service";
 
 export enum Role {
     Guest = 0,
@@ -21,7 +22,7 @@ export class UserService implements IUserService {
 
     private host = "https://couchdb.urakozz.me";
 
-    constructor(private http: Http) {
+    constructor(private backend:BackendUserService) {
         this._initFromLocal();
     }
 
@@ -32,16 +33,10 @@ export class UserService implements IUserService {
     }
 
     login(u: User): Observable<boolean> {
-        let o = new RequestOptions({
-            method: RequestMethod.Post,
-            url: this.host + "/_session",
-            body: JSON.stringify(new LoginUser(u)),
-            headers: this._getHeaders(),
-        });
-        return this.http.request(new Request(o)).map(r => r.json()).switchMap((data, ix) => {
+        return this.backend.session(u).switchMap((data, ix) => {
             return this._authenticate(u, data);
         }).switchMap(() => {
-            return this._loadUser();
+            return this.backend.load(u);
         }).switchMap((user: User) => {
             this._user = user;
             return Observable.of(true);
@@ -49,27 +44,24 @@ export class UserService implements IUserService {
     }
 
     logout(): Observable<boolean> {
+        this.backend.deleteSession(this._user).subscribe();
         this._user = undefined;
         this._role = Role.Guest;
         localStorage.removeItem("userObject");
         this._logoutStream.next(true);
+
         return Observable.of(true);
     }
 
     save(u: User): Observable<any> {
+        // New user
         if (!u.uuid) {
             u.uuid = Uuid.random();
             u.details = u.details || {};
             u.details["activationCode"] = Uuid.random();
+            return this.backend.create(u);
         }
-        u.uuid = u.uuid || Uuid.random();
-        let o = new RequestOptions({
-            method: RequestMethod.Put,
-            url: this.host + "/_users/org.couchdb.user:" + u.name,
-            body: JSON.stringify(new SaveUser(u)),
-            headers: this._getHeaders(),
-        });
-        return this.http.request(new Request(o)).map(r => r.json());
+        return this.backend.update(u);
     }
 
     register(u: User): Observable<any> {
@@ -85,24 +77,9 @@ export class UserService implements IUserService {
             }
             return this._loginStream;
         }).first().switchMap(u => {
-            return this._loadUser();
-        });
-
-    }
-
-    private _loadUser(): Observable<User> {
-        let o = new RequestOptions({
-            method: RequestMethod.Get,
-            url: this.host + "/_users/org.couchdb.user:" + this._user.name,
-            headers: this._getHeaders(),
-        });
-        return this.http.request(new Request(o)).map(r => r.json()).switchMap(obj => {
-            let u = User.newFromJSON(obj);
-            u.password = this._user.password;
-            return Observable.of(u);
+            return this.backend.load(u);
         });
     }
-
 
     getLoginStream(): Observable<User> {
         return this._loginStream;
@@ -132,11 +109,11 @@ export class UserService implements IUserService {
         return this._role === Role.Guest;
     }
 
-    private _authenticate(u: User, data): Observable<boolean> {
+    private _authenticate(u: User, data:SessionResponse): Observable<boolean> {
         this._user = u;
         localStorage.setItem("userObject", JSON.stringify(u));
         this._role = Role.User;
-        if (data.roles.indexOf("web_write") >= 0) {
+        if (data.roles.indexOf("_admin") >= 0) {
             this._role = Role.Admin;
         }
         this._loginStream.next(u);

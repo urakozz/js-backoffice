@@ -11,9 +11,9 @@ export class User implements Serializable<User> {
     _rev: string;
     details: any;
 
-    static newFromJSON(jsonObj: Object): User {
-        return new User().deserialize(jsonObj);
-    }
+    // static newFromJSON(jsonObj: Object): User {
+    //     return new User().deserialize(jsonObj);
+    // }
 
     constructor() {
     }
@@ -23,7 +23,7 @@ export class User implements Serializable<User> {
         o.details = o.details || {};
         o.orders = Array.isArray(o.orders) ? o.orders : [];
         o.address = Array.isArray(o.address) ? o.address : [];
-        o.address = o.address.map(a => Address.newFromJSON(a));
+        o.address = o.address.map(a => new Address().deserialize(a));
         return Object.assign(new User(), o);
     }
 
@@ -68,9 +68,14 @@ export class SaveUser extends User {
     }
 }
 
+export interface LoginUserInterface {
+    name: string;
+    password: string;
+}
+
 export class LoginUser extends User {
 
-    constructor(u: User) {
+    constructor(u: LoginUserInterface) {
         super();
         this.name = u.name;
         this.password = u.password;
@@ -84,10 +89,6 @@ export class Address implements Serializable<Address> {
     address2: string;
     default: boolean;
     fullname: string;
-
-    static newFromJSON(jsonObj: Object): Address {
-        return new Address().deserialize(jsonObj);
-    }
 
     constructor(def?: boolean) {
         if (def) {

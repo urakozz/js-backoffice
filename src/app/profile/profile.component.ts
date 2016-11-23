@@ -1,9 +1,7 @@
-import {Component, OnInit, ElementRef, OnDestroy} from "@angular/core";
+import {Component, OnInit, OnDestroy} from "@angular/core";
 import {User} from "../_models/user";
-import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {Router} from "@angular/router";
 import {UserService} from "../_services/user.service";
-import {MdDialog} from "@angular/material";
 import {Subscription} from "rxjs";
 
 @Component({

@@ -15,9 +15,7 @@ export class BackendProductService {
 
     get(id: number): Observable<Product> {
         return this.backend.get(this.DB + id.toString()).map(res => res.json()).map(data => {
-            let p = Product.newFromJSON(data);
-            console.log(p);
-            return p;
+            return new Product().deserialize(data);
         });
     }
 
@@ -55,7 +53,10 @@ export class BackendProductService {
         let p = this.DB + "_all_docs?descending=true&include_docs=true";
         return this.backend.get(p)
             .map(res => res.json())
-            .map(data => data["rows"].filter(row => !row["id"].startsWith("_")).map(row => Product.newFromJSON(row["doc"])))
+            .map(data => data["rows"]
+                .filter(row => !row["id"].startsWith("_"))
+                .map(row => new Product().deserialize(row["doc"]))
+            )
     }
 
     delete(p: Product): Observable<boolean> {

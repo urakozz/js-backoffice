@@ -147,7 +147,7 @@ export class OrderDetails implements Serializable<OrderDetails> {
     deserialize(o) {
         let d = Object.assign(new OrderDetails(), o);
         if (o.address instanceof Object) {
-            d.address = Address.newFromJSON(o.address);
+            d.address = new Address().deserialize(o.address);
         }
         return d;
     }

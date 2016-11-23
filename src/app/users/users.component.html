@@ -1,0 +1,14 @@
+<md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+
+<md-card *ngIf="!loading">
+    <md-card-title><span i18n>Users</span></md-card-title>
+    <md-card-content>
+
+        <md-list>
+            <md-list-item *ngFor="let user of selectedUsers">
+                <h3 md-line> {{user.name}} </h3>
+                <p md-line> {{user.realname}} </p>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>
