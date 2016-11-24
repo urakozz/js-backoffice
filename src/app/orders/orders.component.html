@@ -8,7 +8,7 @@
                 [disabled]="loading"
                 (click)=changeFilterStatus(s)
                 class="msc-button-margin"
-                [class.md-primary]="s === filterQueryActiveCatalog.status">{{getStatusName(s)}}
+                [class.md-primary]="s === filterQueryActive.status">{{getStatusName(s)}}
         </button>
         <!--<button md-icon-button (click)="refresh()" [disabled]="loading">-->
             <!--<md-icon>refresh</md-icon>-->

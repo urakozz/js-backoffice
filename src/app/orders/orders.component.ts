@@ -7,7 +7,6 @@ import {BackendOrderService} from "../_services/backend-order.service";
 import {OrderService, StateAutomataConfig} from "../_services/order.service";
 import {UserService} from "../_services/user.service";
 import {MdDialog} from "@angular/material";
-import {Location} from "@angular/common";
 import {Observable, Subscription, Subject} from "rxjs";
 
 interface OrdersQueryAttributes {
@@ -24,7 +23,7 @@ export class OrdersComponent implements OnInit {
     private ordersAll: Order[] = [];
     private loading: boolean = true;
 
-    protected filterQueryActive: OrdersQueryAttributes = {user:"", status:null};
+    protected filterQueryActive: OrdersQueryAttributes = {user: "", status: null};
     protected modelUser;
     protected orders: Order[] = [];
 
@@ -52,9 +51,8 @@ export class OrdersComponent implements OnInit {
     }
 
     ngOnInit() {
-        let s = this._filterQuery.first().subscribe((q)=>{
+        this._filterQuery.first().subscribe((q) => {
             this.modelUser = q.user;
-            s.unsubscribe();
         });
 
         this._subscription = this._userService.getUserStream().switchMap(u => {
@@ -82,7 +80,7 @@ export class OrdersComponent implements OnInit {
         this._navigate({user: this.filterQueryActive.user, status: status})
     }
 
-    private _navigate(q:OrdersQueryAttributes){
+    private _navigate(q: OrdersQueryAttributes) {
         this._router.navigate(["/orders"], {queryParams: q});
     }
 

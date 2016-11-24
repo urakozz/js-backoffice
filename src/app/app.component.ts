@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {CartService} from "./_services/cart.service";
 import {Observable} from "rxjs";
 import {MdMenu} from "@angular/material";
+import { environment } from '../environments/environment';
 
 @Component({
     selector: "app-root",
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(environment);
         Observable.of(null).delay(250).subscribe(v => {
             if (window.Pace) {
                 window.Pace.stop();

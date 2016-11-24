@@ -1,13 +1,13 @@
 import {Injectable, Inject} from "@angular/core";
 import {Http, Headers, RequestMethod, RequestOptions, Request} from "@angular/http";
 import {DOCUMENT} from "@angular/platform-browser";
+import {environment} from "../../environments/environment"
 
 export interface HostDetails {
     schema: any;
     host: any;
 }
 
-const KEY = "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";
 @Injectable()
 export class MailService {
 
@@ -29,7 +29,7 @@ export class MailService {
     private _getHeaders(): Headers {
         let h = new Headers({
             "Content-Type": "application/json",
-            "Authorization": "Basic " + KEY
+            "Authorization": "Basic " + environment.MAIL_KEY
         });
 
         return h;
