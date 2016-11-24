@@ -29,16 +29,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        let name = "";
-        this._active.params.forEach((p: Params) => {
-            name = p["id"];
+        this._active.params.subscribe((params: Params)=> {
+            console.log("par", params);
         });
 
-        this._subscription = this._userService.getUserStream().switchMap((u: User) => {
+        this._subscription = this._userService.getUserStream().switchMap(() => {
+            return this._active.params;
+        }).switchMap((p:Params) => {
+            this.loading = true;
+            let name = p["id"];
             if(!name || name === "me") {
-                name = u.name;
+                name = this._userService.getUser().name;
             }
-            return this._backend.load(name, u);
+            return this._backend.load(name, this._userService.getUser());
         }).switchMap((u:User) => {
             if(this._userService.getUser().name === u.name) {
                 u.password = this._userService.getUser().password;

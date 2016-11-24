@@ -8,12 +8,15 @@
                 [disabled]="loading"
                 (click)=changeFilterStatus(s)
                 class="msc-button-margin"
-                [class.md-primary]="s === selectedStatus">{{getStatusName(s)}}
+                [class.md-primary]="s === filterQueryActiveCatalog.status">{{getStatusName(s)}}
         </button>
-        <button md-icon-button (click)="refresh()" [disabled]="loading">
-            <md-icon>refresh</md-icon>
-        </button>
+        <!--<button md-icon-button (click)="refresh()" [disabled]="loading">-->
+            <!--<md-icon>refresh</md-icon>-->
+        <!--</button>-->
     </div>
+    <md-input #term (keyup)="changeName(term.value)" [ngModel]="modelUser" placeholder="User name"
+              *ngIf="isAdmin"
+              class="msc-full-width"></md-input>
 
     <md-card-content *ngIf="!loading && !orders.length">
         <p i18n>No orders</p>

@@ -45,6 +45,7 @@ import {MailService} from "./_services/mail.service";
 import { UsersComponent } from './users/users.component';
 import {BackendUserService} from "./_services/backend-user-service.service";
 import {AddressReadBlockComponent} from "./_components/address-block/address-read-block.component";
+import {AuthGuardService} from "./_services/auth-guard.service";
 
 export const ROUTES = [
     {
@@ -81,7 +82,7 @@ export const ROUTES = [
     },
     {
         path: "users",
-        component: UsersComponent
+        component: UsersComponent, canActivate: [AuthGuardService]
     },
     {
         path: "product",
@@ -94,7 +95,7 @@ export const ROUTES = [
     },
     {
         path: "product-edit/:id",
-        component: ProductEditComponent
+        component: ProductEditComponent, canActivate: [AuthGuardService]
     },
     {path: "**", component: Page404Component}
 ];
@@ -146,6 +147,7 @@ export const ROUTES = [
     entryComponents: [DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog],
     providers: [
         UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService, BackendUserService,
+        AuthGuardService,
         MailService,
         {provide: I18nService, useFactory: () => new I18nService().init(TRANSLATION)},
         {provide: APP_BASE_HREF, useValue : "/" }

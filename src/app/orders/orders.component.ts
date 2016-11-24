@@ -8,8 +8,12 @@ import {OrderService, StateAutomataConfig} from "../_services/order.service";
 import {UserService} from "../_services/user.service";
 import {MdDialog} from "@angular/material";
 import {Location} from "@angular/common";
-import {Observable} from "rxjs";
-import * as Numeral from "numeral";
+import {Observable, Subscription, Subject} from "rxjs";
+
+interface OrdersQueryAttributes {
+    user: string;
+    status: OrderStatus;
+}
 
 @Component({
     selector: 'app-orders',
@@ -17,73 +21,85 @@ import * as Numeral from "numeral";
     styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-    private orders: Order[] = [];
     private ordersAll: Order[] = [];
     private loading: boolean = true;
 
-    protected selectedStatus: OrderStatus;
-    protected statusList: OrderStatus[] = OrderStatuses.asList.filter(s => s !== OrderStatuses.CART);
+    protected filterQueryActive: OrdersQueryAttributes = {user:"", status:null};
+    protected modelUser;
+    protected orders: Order[] = [];
+
+    private _subscription: Subscription;
+    private _filterQuery: Observable<OrdersQueryAttributes>;
 
     constructor(private _router: Router,
                 private _backend: BackendOrderService,
                 private _basket: CartService,
                 private _orderService: OrderService,
                 private _userService: UserService,
-                private _location: Location,
                 public route: ActivatedRoute,
                 public dialog: MdDialog,
                 public element: ElementRef) {
+
+        this._filterQuery = this.route.queryParams
+            .map((params: Params) => {
+                let status = <OrderStatus>params['status'];
+                return {
+                    status: (OrderStatuses.asList.indexOf(status) >= 0) ? status : null,
+                    user: params['user'] || "",
+                };
+            })
+            .distinctUntilChanged();
     }
 
     ngOnInit() {
-
-        let status: OrderStatus = undefined;
-        this.route.params.forEach((params: Params) => {
-            status = <OrderStatus>params['status'];
+        let s = this._filterQuery.first().subscribe((q)=>{
+            this.modelUser = q.user;
+            s.unsubscribe();
         });
 
-        Observable.of(this._userService.getUser()).switchMap(u=> {
-            console.log("Orders, user", u);
-            if (!u) {
-                console.log("Orders, listen login stream");
-                return this._userService.getLoginStream()
-            }
-            return Observable.of(u)
-        }).first().switchMap(u=> {
-            console.log("Orders, have user", u);
-            if (OrderStatuses.asList.indexOf(status) == -1) {
-                status = undefined
-            }
-            return this._loadAndFilterOrders()
-        }).subscribe((o: Order[]) => {
-            this.loading = false
-        })
-    }
-
-    changeFilterStatus(s: OrderStatus){
-        if(s === this.selectedStatus) {
-            this.selectedStatus = undefined
-        } else {
-            this.selectedStatus = s
-        }
-        this._location.go("/orders", "status=" + this.selectedStatus);
-        this._updateVisibleOrders()
-    }
-
-    refresh() {
-        this.loading = true;
-        this._loadAndFilterOrders().subscribe((o: Order[]) => {
+        this._subscription = this._userService.getUserStream().switchMap(u => {
+            return this._getOrders()
+        }).switchMap((o: Order[]) => {
+            this._setAllOrders(o);
             this.loading = false;
-        })
+            return this._filterQuery;
+        }).subscribe((o: OrdersQueryAttributes) => {
+            this.filterQueryActive = o;
+            this._filterVisibleOrders(o);
+        });
     }
 
-    private _loadAndFilterOrders() {
-        return this._getOrders().switchMap((o: Order[]) => {
-            this._updateAllOrders(o);
-            this._updateVisibleOrders();
-            return Observable.of(o)
-        })
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
     }
+
+    changeName(v) {
+        this._navigate({user: v, status: this.filterQueryActive.status})
+    }
+
+    changeFilterStatus(s: OrderStatus) {
+        let status = (s === this.filterQueryActive.status) ? null : s;
+        this._navigate({user: this.filterQueryActive.user, status: status})
+    }
+
+    private _navigate(q:OrdersQueryAttributes){
+        this._router.navigate(["/orders"], {queryParams: q});
+    }
+
+    // refresh() {
+    //     this.loading = true;
+    //     this._loadAndFilterOrders().subscribe((o: Order[]) => {
+    //         this.loading = false;
+    //     })
+    // }
+
+    // private _loadAndFilterOrders() {
+    //     return this._getOrders().switchMap((o: Order[]) => {
+    //         this._setAllOrders(o);
+    //         this._updateVisibleOrders();
+    //         return Observable.of(o)
+    //     })
+    // }
 
     getStatusName(s: OrderStatus): string {
         return OrderStatusName.getName(s)
@@ -94,37 +110,47 @@ export class OrdersComponent implements OnInit {
     }
 
     delete(c: Order, orderc: any) {
-        orderc.__loading = true
+        orderc.__loading = true;
         this._backend.delete(c).switchMap(b => {
             return this._getOrders()
         }).subscribe((o: Order[]) => {
-            this._updateAllOrders(o);
-            this._updateVisibleOrders();
+            this._setAllOrders(o);
+            this._filterVisibleOrders(this.filterQueryActive);
         }, err => {
             console.log("Orders: delete err:", err);
             orderc.__loading = false
         })
     }
 
-    getReadableTime(o){
-        if(!o.details) {
+    getReadableTime(o) {
+        if (!o.details) {
             return "-";
         }
-        if(!o.details.date) {
+        if (!o.details.date) {
             return "-";
         }
         return new Date(o.details.date).toLocaleDateString() + " " + new Date(o.details.date).toLocaleTimeString()
     }
 
-    getTitle(c:Order){
-        if(!this.isConfirmed(c)){
+    getTitle(c: Order) {
+        if (!this.isConfirmed(c)) {
             return "Unconfirmed cart";
         }
-        if(c.details.name) {
+        if (c.details.name) {
             return c.details.name;
         }
         let d = new Date(c.details.date);
         return d.toLocaleDateString() + " " + c.authorName
+    }
+
+
+    changeOrderStatus(c: Order, s: OrderStatus, orderc: any) {
+        orderc.__loading = true;
+        this._orderService.changeStatus(c, s);
+        Observable.of(false).delay(1000).subscribe(b => {
+            c.status = s;
+            orderc.__loading = b;
+        })
     }
 
     isConfirmed(c: Order) {
@@ -143,19 +169,26 @@ export class OrdersComponent implements OnInit {
         return this._userService.isAdmin
     }
 
-    private _updateAllOrders(o: Order[]) {
+    get statusList() {
+        return OrderStatuses.asList.filter(s => s !== OrderStatuses.CART);
+    }
+
+    private _setAllOrders(o: Order[]) {
         if (!o.length) {
             return
         }
         this.ordersAll = o
     }
 
-    private _updateVisibleOrders() {
-        if (!this.selectedStatus) {
-            this.orders = this.ordersAll;
-            return
+    private _filterVisibleOrders(q: OrdersQueryAttributes) {
+        let o = this.ordersAll;
+        if (q.user) {
+            o = o.filter((c: Order) => c.authorName === q.user);
         }
-        this.orders = this.ordersAll.filter((c: Order) => c.status === this.selectedStatus)
+        if (q.status) {
+            o = o.filter((c: Order) => c.status === q.status);
+        }
+        this.orders = o;
     }
 
     private _getOrders(): Observable<Order[]> {
@@ -173,15 +206,6 @@ export class OrdersComponent implements OnInit {
                 return bdate - adate;
             });
             return Observable.of(o)
-        })
-    }
-
-    changeOrderStatus(c:Order, s: OrderStatus, orderc:any){
-        orderc.__loading = true;
-        this._orderService.changeStatus(c, s);
-        Observable.of(false).delay(1000).subscribe(b =>{
-            c.status = s;
-            orderc.__loading = b;
         })
     }
 
