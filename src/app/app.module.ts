@@ -44,6 +44,7 @@ import { RegistrationConfirmationComponent } from "./registration-confirmation/r
 import {MailService} from "./_services/mail.service";
 import { UsersComponent } from './users/users.component';
 import {BackendUserService} from "./_services/backend-user-service.service";
+import {AddressReadBlockComponent} from "./_components/address-block/address-read-block.component";
 
 export const ROUTES = [
     {
@@ -132,6 +133,7 @@ export const ROUTES = [
         AutogrowDirective,
         RegistrationConfirmationComponent,
         UsersComponent,
+        AddressReadBlockComponent,
     ],
     imports: [
         BrowserModule,

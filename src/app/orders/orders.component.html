@@ -69,33 +69,7 @@
                     </button>
                 </div>
                 <div class="row" *ngIf="actions.__open">
-                    <form class="msc-full-width">
-                        <div class="form-group">
-                            <md-input name="fullname" [value]="order.details?.address.fullname" disabled
-                                      placeholder="{{'Full Name' | i18n}}" class="msc-full-width"></md-input>
-                        </div>
-
-                        <div class="form-group">
-                            <md-input name="zip" [value]="order.details?.address.zip" disabled
-                                      placeholder="{{'Zip' | i18n}}" class="msc-full-width"></md-input>
-                        </div>
-
-                        <div class="form-group">
-                            <md-input name="city" [value]="order.details?.address.city" disabled
-                                      placeholder="{{'City' | i18n }}" class="msc-full-width"></md-input>
-
-                        </div>
-
-                        <div class="form-group">
-                            <md-input name="address" [value]="order.details?.address.address" disabled
-                                      placeholder="{{'Address' | i18n}}" class="msc-full-width"></md-input>
-                        </div>
-
-                        <div class="form-group">
-                            <md-input name="address2" [value]="order.details?.address.address2" disabled
-                                      placeholder="{{'Address 2' | i18n }}" class="msc-full-width"></md-input>
-                        </div>
-                    </form>
+                    <app-address-read-block [address]="order.details?.address"></app-address-read-block>
                 </div>
             </md-card-content>
             <md-progress-bar mode="indeterminate" *ngIf="orderc.__loading"></md-progress-bar>

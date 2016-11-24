@@ -25,7 +25,7 @@ export class RegistrationConfirmationComponent implements OnInit {
         if (!this._userService.getUser()) {
             this.loading = false;
         }
-        this._userService.loadUser().subscribe((u: User) => {
+        this._userService.getUserStream().subscribe((u: User) => {
             this.loading = false;
         });
     }

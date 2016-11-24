@@ -8,6 +8,7 @@ import {CartService} from "../_services/cart.service";
 import {OrderItem} from "../_models/order-item";
 import {User, Address} from "../_models/user";
 import {OrderStatuses} from "../_models/enums/order-status.enum";
+import {BackendUserService} from "../_services/backend-user-service.service";
 
 @Component({
     selector: "app-cart-confirm",
@@ -25,6 +26,7 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
     private add_address = false;
 
     constructor(protected userService: UserService,
+                protected userBackend: BackendUserService,
                 protected cart: CartService,
                 protected route: ActivatedRoute,
                 protected router: Router,
@@ -40,7 +42,7 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
             this.address = this.cart.getOrder().details.address;
             this.name = this.cart.getOrder().details.name;
         }
-        this._subscription = this.userService.loadUser().subscribe(u => {
+        this._subscription = this.userService.getUserStream().subscribe(u => {
             this.user = u;
             this._activateUserDefaultAddress();
             this.loading = false;

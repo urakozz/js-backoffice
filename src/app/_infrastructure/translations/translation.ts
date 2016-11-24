@@ -150,6 +150,12 @@ export const TRANSLATION = {
         },
         "Show color palette": {
             ru: "Показать палитру"
+        },
+        "Item will be shipped to this address":{
+            ru: "Заказ будет отправлен на этот адрес"
+        },
+        "Ship to this address" : {
+            ru: "Отправить на этот адрес"
         }
     }
 };

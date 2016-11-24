@@ -1,8 +1,9 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import {User} from "../_models/user";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute, Params} from "@angular/router";
 import {UserService} from "../_services/user.service";
-import {Subscription} from "rxjs";
+import {Subscription, Observable} from "rxjs";
+import {BackendUserService} from "../_services/backend-user-service.service";
 
 @Component({
     selector: "app-profile",
@@ -12,7 +13,7 @@ import {Subscription} from "rxjs";
 export class ProfileComponent implements OnInit, OnDestroy {
 
     private user: User = new User();
-    private _userBackup: User
+    private _userBackup: User;
     private loading: boolean = true;
     private editmode: boolean = false;
     private editpass: boolean = false;
@@ -22,16 +23,37 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
 
     constructor(private _router: Router,
-                private _userService: UserService) {
+                private _active: ActivatedRoute,
+                private _userService: UserService,
+                private _backend: BackendUserService) {
     }
 
     ngOnInit() {
-        this._subscription = this._userService.loadUser().subscribe(u => {
+        let name = "";
+        this._active.params.forEach((p: Params) => {
+            name = p["id"];
+        });
+
+        this._subscription = this._userService.getUserStream().switchMap((u: User) => {
+            if(!name || name === "me") {
+                name = u.name;
+            }
+            return this._backend.load(name, u);
+        }).switchMap((u:User) => {
+            if(this._userService.getUser().name === u.name) {
+                u.password = this._userService.getUser().password;
+            }
+            return Observable.of(u);
+        }).subscribe(u => {
             console.log("load profile", u);
             this.user = u;
             this._userBackup = Object.assign(new User(), u);
             this.loading = false;
         });
+    }
+
+    get isUserEdit(){
+        return this._userService.getUser() && this._userService.getUser().name === this.user.name;
     }
 
     ngOnDestroy() {
@@ -79,9 +101,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
         container.__editing = false;
     }
 
-    _save() {
+    protected _save() {
         this.saving = true;
-        this._userService.register(this.user).subscribe(o => {
+        this._backend.update(this.user, this._userService.getUser()).switchMap((o)=>{
+            if(this._userService.isAdmin){
+                return Observable.of(o);
+            }
+            return this._userService.login(this.user)
+        }).subscribe(o => {
             console.log("User saved", o);
             this.saving = false;
         }, err => {

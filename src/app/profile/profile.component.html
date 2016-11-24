@@ -1,9 +1,10 @@
 <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
 <md-card>
-    <md-card-title><h2 i18n>Profile</h2></md-card-title>
+    <md-card-title><span i18n>Profile</span></md-card-title>
+    <md-card-subtitle>{{user.name}}</md-card-subtitle>
     <md-card-content>
-        <md-card class="msc-v-margin">
+        <md-card class="msc-v-margin" *ngIf="isUserEdit">
             <button md-raised-button  color="warn" (click)="logout()">
                 <span i18n>Logout</span>
             </button>

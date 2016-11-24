@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {UserService} from "../_services/user.service";
 import {User} from "../_models/user";
 import {BackendUserService} from "../_services/backend-user-service.service";
@@ -9,7 +9,7 @@ import {Subscription, Observable} from "rxjs";
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
     private _allUsers: User[] = [];
     private _subsctionion: Subscription;
@@ -20,10 +20,7 @@ export class UsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._subsctionion = Observable.concat(
-            Observable.of(this._us.getUser()),
-            this._us.getLoginStream()
-        ).filter((u: User) => !!u).switchMap((u: User) => {
+        this._subsctionion = this._us.getUserStream().switchMap((u: User) => {
             return this.backend.getUsers(u);
         }).subscribe(u => {
             this._allUsers = u;
@@ -32,8 +29,12 @@ export class UsersComponent implements OnInit {
 
     }
 
-    get selectedUsers(){
+    get selectedUsers():User[]{
         return this._allUsers;
+    }
+
+    ngOnDestroy(){
+        this._subsctionion.unsubscribe()
     }
 
 }

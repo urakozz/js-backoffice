@@ -54,7 +54,9 @@ export class RegistrationBlockComponent implements OnInit {
         this.loading = true;
         let u = Object.assign(new User(), this.form.value);
         u.password = this.form.value.passwordGroup.password;
-        this._userService.register(u).subscribe(d => {
+        this._userService.register(u).switchMap(() => {
+            return this._userService.login(u);
+        }).subscribe(d => {
             console.log("Directive Signup: success");
             this._sendConfirm();
         }, err => {

@@ -47,15 +47,14 @@ export class BackendUserService {
         return this.http.request(new Request(o)).map(r => r.json())
     }
 
-    load(u: LoginUserInterface) {
+    load(name:string, u: LoginUserInterface) {
         let o = new RequestOptions({
             method: RequestMethod.Get,
-            url: this.host + "/_users/org.couchdb.user:" + u.name,
+            url: this.host + "/_users/org.couchdb.user:" + name,
             headers: this._getHeaders(u),
         });
         return this.http.request(new Request(o)).map(r => r.json()).switchMap(obj => {
             let user = new User().deserialize(obj);
-            user.password = u.password;
             return Observable.of(user);
         });
     }
@@ -88,21 +87,20 @@ export class BackendUserService {
         return this.http.request(new Request(o)).map(r => r.json());
     }
 
-    update(u: User): Observable<UpdateResponse> {
+    update(u: User, auth: LoginUserInterface): Observable<UpdateResponse> {
         let o = new RequestOptions({
             method: RequestMethod.Put,
             url: this.host + "/_users/org.couchdb.user:" + u.name,
             body: JSON.stringify(new SaveUser(u)),
-            headers: this._getHeaders(u),
+            headers: this._getHeaders(auth),
         });
         return this.http.request(new Request(o)).map(r => r.json());
     }
 
-    delete(u: User): Observable<UpdateResponse> {
+    delete(name:string, u: LoginUserInterface): Observable<UpdateResponse> {
         let o = new RequestOptions({
             method: RequestMethod.Delete,
-            url: this.host + "/_users/org.couchdb.user:" + u.name,
-            body: JSON.stringify(new SaveUser(u)),
+            url: this.host + "/_users/org.couchdb.user:" + name,
             headers: this._getHeaders(u),
         });
         return this.http.request(new Request(o)).map(r => r.json());

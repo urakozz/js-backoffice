@@ -11,8 +11,8 @@
                     <md-list-item *ngFor="let item of cart.getOrder().asList">
                         <img md-list-avatar [src]="item.product.image" [alt]="item.product.name">
                         <h3 md-line> {{item.product.name}} </h3>
-                        <p md-line><span>Amount:</span><b>{{item.amount}}</b></p>
-                        <p md-line><span>Price: </span><b>{{item.product.price * item.amount}}</b> Rub</p>
+                        <p md-line><span i18n>Amount</span>: <b>{{item.amount}}</b></p>
+                        <p md-line><span i18n>Price</span>: <b>{{item.product.price * item.amount}}</b> Rub</p>
                         <p md-line>
                             <span><span i18n>Color</span>: </span>
                             <span *ngFor="let attr of listAttributes(item)">
@@ -52,8 +52,8 @@
                     </md-card-content>
                     <md-card-actions>
                         <md-radio-button [checked]="item == address" [disabled]="loading">
-                            <span *ngIf="item == address"> Item will be shipped to this address </span>
-                            <span *ngIf="item != address"> Ship to this address </span>
+                            <span *ngIf="item == address" i18n> Item will be shipped to this address </span>
+                            <span *ngIf="item != address" i18n=""> Ship to this address </span>
                         </md-radio-button>
                     </md-card-actions>
                 </md-card>
@@ -72,7 +72,7 @@
                     </md-card-content>
                     <md-card-actions>
                         <md-radio-button [checked]="true" [disabled]="true">
-                            <span>Item will be shipped to this address</span>
+                            <span i18n>Item will be shipped to this address</span>
                         </md-radio-button>
                     </md-card-actions>
                     <md-card-actions>

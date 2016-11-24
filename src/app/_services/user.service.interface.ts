@@ -3,11 +3,10 @@ import {User} from "../_models/user";
 import {Headers} from "@angular/http";
 
 export interface IUserService {
-    getLoginStream(): Observable<User>;
+    // getLoginStream(): Observable<User>;
     getLogoutStream(): Observable<User>;
     // getHeaders(): Observable<Headers>;
     getUser(): User;
-    save(u: User): Observable<any>;
     register(u: User): Observable<any>;
     login(u: User): Observable<boolean>;
     logout(): Observable<boolean>;

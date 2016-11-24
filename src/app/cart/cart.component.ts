@@ -163,7 +163,7 @@ export class ConfirmOrderDialog {
     }
 
     ngOnInit(){
-        this._sub = this._userService.loadUser().subscribe(u => {
+        this._sub = this._userService.getUserStream().subscribe(u => {
             this.loading = false;
             this.user = u;
             this.user.address.forEach(a => {

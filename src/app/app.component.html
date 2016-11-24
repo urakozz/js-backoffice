@@ -24,6 +24,9 @@
         <button *ngIf="isAdmin" md-icon-button routerLink="/orders">
             <md-icon>assignment</md-icon>
         </button>
+        <button *ngIf="isAdmin" md-icon-button routerLink="/users">
+            <md-icon>supervisor_account</md-icon>
+        </button>
 
         <section *ngIf="!isGuest" class="msc-badge-button">
             <button md-icon-button routerLink="/cart/current">
@@ -32,7 +35,7 @@
             </button>
         </section>
         <button *ngIf="isGuest" md-icon-button routerLink="/login">
-            <md-icon>person</md-icon>
+            <md-icon>account_circle</md-icon>
         </button>
         <button *ngIf="!isGuest" md-icon-button [md-menu-trigger-for]="menu">
             <md-icon>person</md-icon>
@@ -44,7 +47,8 @@
             </button>
             <button md-menu-item routerLink="/profile/me">
                 <md-icon>person</md-icon>
-                <span i18n>My Profile</span>
+                <!--<span i18n>My Profile</span>-->
+                <span>{{userName}}</span>
             </button>
             <button md-menu-item routerLink="/cart/current">
                 <md-icon>shopping_cart</md-icon>
@@ -70,7 +74,7 @@
                     <span class="footer__item">&copy; Madam Scrap</span>
                     <span class="footer__item">
                         Made in Germany
-                        <!--by <a href="https://www.linkedin.com/in/urakozz" target="_blank">@urakozz</a>-->
+                        by <a href="https://www.linkedin.com/in/urakozz" target="_blank">@urakozz</a>
                     </span>
                 </div>
             </div>

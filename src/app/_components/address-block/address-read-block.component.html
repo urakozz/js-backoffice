@@ -1,0 +1,27 @@
+<form class="msc-full-width">
+    <div class="form-group">
+        <md-input name="fullname" [value]="address?.fullname" disabled
+                  placeholder="{{'Full Name' | i18n}}" class="msc-full-width"></md-input>
+    </div>
+
+    <div class="form-group">
+        <md-input name="zip" [value]="address?.zip" disabled
+                  placeholder="{{'Zip' | i18n}}" class="msc-full-width"></md-input>
+    </div>
+
+    <div class="form-group">
+        <md-input name="city" [value]="address?.city" disabled
+                  placeholder="{{'City' | i18n }}" class="msc-full-width"></md-input>
+
+    </div>
+
+    <div class="form-group">
+        <md-input name="address" [value]="address?.address" disabled
+                  placeholder="{{'Address' | i18n}}" class="msc-full-width"></md-input>
+    </div>
+
+    <div class="form-group">
+        <md-input name="address2" [value]="address?.address2" disabled
+                  placeholder="{{'Address 2' | i18n }}" class="msc-full-width"></md-input>
+    </div>
+</form>

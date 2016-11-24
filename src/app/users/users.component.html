@@ -4,11 +4,32 @@
     <md-card-title><span i18n>Users</span></md-card-title>
     <md-card-content>
 
-        <md-list>
-            <md-list-item *ngFor="let user of selectedUsers">
-                <h3 md-line> {{user.name}} </h3>
-                <p md-line> {{user.realname}} </p>
-            </md-list-item>
-        </md-list>
+        <md-card *ngFor="let user of selectedUsers" class="msc-v-margin">
+            <md-card-header>
+                <md-card-title>{{user.name}}</md-card-title>
+                <md-card-subtitle>
+                    <span>{{user.realname}}</span>
+                </md-card-subtitle>
+            </md-card-header>
+
+            <md-card-content #actions>
+                <div class="row">
+                    <button md-button (click)="actions.__open = !actions.__open">
+                        <md-icon class="msc-icon-middle" *ngIf="!actions.__open">keyboard_arrow_right</md-icon>
+                        <md-icon class="msc-icon-middle" *ngIf="actions.__open">keyboard_arrow_down</md-icon>
+                        <span i18n>Address</span>
+                    </button>
+                    <button md-mini-fab color="accent" [routerLink]="['/profile', user.name]">
+                        <md-icon>edit</md-icon>
+                    </button>
+                </div>
+                <div *ngIf="actions.__open">
+                    <div class="row" *ngFor="let addr of user.address">
+                        <app-address-read-block [address]="addr"></app-address-read-block>
+                    </div>
+                </div>
+            </md-card-content>
+        </md-card>
+
     </md-card-content>
 </md-card>

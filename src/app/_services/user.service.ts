@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {User, LoginUser, SaveUser} from "../_models/user";
+import {User, LoginUser, SaveUser, LoginUserInterface} from "../_models/user";
 import {Subject, Observable} from "rxjs";
 import {Http, RequestMethod, Headers, Request, RequestOptions} from "@angular/http";
-import {IUserService} from "./i-user-service";
+import {IUserService} from "./user.service.interface";
 import {Uuid} from "../_infrastructure/uuid";
 import {SessionResponse, BackendUserService} from "./backend-user-service.service";
 
@@ -20,25 +20,27 @@ export class UserService implements IUserService {
     private _loginStream = new Subject<User>();
     private _logoutStream = new Subject<boolean>();
 
-    private host = "https://couchdb.urakozz.me";
-
-    constructor(private backend:BackendUserService) {
+    constructor(private backend: BackendUserService) {
         this._initFromLocal();
     }
 
     activate(): Observable<any> {
         this._user.active = true;
         delete this._user.details["activationCode"];
-        return this.save(this._user);
+        return this.backend.update(this._user, this._user);
     }
 
-    login(u: User): Observable<boolean> {
+    login(u: LoginUserInterface): Observable<boolean> {
         return this.backend.session(u).switchMap((data, ix) => {
             return this._authenticate(u, data);
         }).switchMap(() => {
-            return this.backend.load(u);
+            return this.backend.load(u.name, u);
+        }).switchMap((user: User) => {
+            user.password = u.password;
+            return Observable.of(user);
         }).switchMap((user: User) => {
             this._user = user;
+            this._loginStream.next(user);
             return Observable.of(true);
         });
     }
@@ -53,32 +55,16 @@ export class UserService implements IUserService {
         return Observable.of(true);
     }
 
-    save(u: User): Observable<any> {
-        // New user
-        if (!u.uuid) {
-            u.uuid = Uuid.random();
-            u.details = u.details || {};
-            u.details["activationCode"] = Uuid.random();
-            return this.backend.create(u);
-        }
-        return this.backend.update(u);
-    }
-
     register(u: User): Observable<any> {
-        return this.save(u).switchMap((data, ix) => {
-            return this.login(u);
-        });
+        u.uuid = Uuid.random();
+        u.details = u.details || {};
+        u.details["activationCode"] = Uuid.random();
+        return this.backend.create(u);
     }
 
-    loadUser(): Observable<User> {
-        return Observable.of(this._user).switchMap(u => {
-            if (u) {
-                return Observable.of(u);
-            }
-            return this._loginStream;
-        }).first().switchMap(u => {
-            return this.backend.load(u);
-        });
+    getUserStream(): Observable<User> {
+        return Observable.concat(Observable.of(this._user), this._loginStream)
+            .filter((u: User) => !!u).first()
     }
 
     getLoginStream(): Observable<User> {
@@ -109,24 +95,17 @@ export class UserService implements IUserService {
         return this._role === Role.Guest;
     }
 
-    private _authenticate(u: User, data:SessionResponse): Observable<boolean> {
-        this._user = u;
+    private _authenticate(u: LoginUserInterface, data: SessionResponse): Observable<boolean> {
         localStorage.setItem("userObject", JSON.stringify(u));
         this._role = Role.User;
         if (data.roles.indexOf("_admin") >= 0) {
             this._role = Role.Admin;
         }
-        this._loginStream.next(u);
         return Observable.of(true);
     }
 
     getHeaders(): Observable<Headers> {
-        return Observable.of(this._user).switchMap(u => {
-            if (u) {
-                return Observable.of(u);
-            }
-            return this._loginStream;
-        }).first().switchMap(u => {
+        return this.getUserStream().switchMap(u => {
             return Observable.of(this._getHeaders());
         });
     }
