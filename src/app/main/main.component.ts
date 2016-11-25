@@ -73,6 +73,9 @@ export class MainComponent implements OnInit, OnDestroy {
             if (f.length === 0) {
                 f = arr.filter((prod: Product) => this._indexOf(prod.name, t) || this._indexOf(prod.description, t));
             }
+            if(f.length === 0) {
+                f = arr.filter((prod: Product) => this._indexOf(prod.image, t));
+            }
             f = f.slice(0, 40);
             this.products = f;
         });
@@ -118,7 +121,7 @@ export class MainComponent implements OnInit, OnDestroy {
         if (typeof(field) !== "string") {
             return false;
         }
-        return start ? field.toLowerCase().indexOf(term) === 0 : field.toLowerCase().indexOf(term) > -1;
+        return start ? field.toLowerCase().startsWith(term) : field.toLowerCase().includes(term);
     }
 
 

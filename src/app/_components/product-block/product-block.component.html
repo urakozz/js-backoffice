@@ -1,10 +1,11 @@
+<a [routerLink]="['/product', item.id]" class="msc-link-block">
 <md-card class="msc-v-margin">
-    <md-card-header class="msc-cursor-pointer" (click)="toPdp()">
+    <md-card-header>
         <md-card-title>{{item.name}}</md-card-title>
-        <md-card-subtitle>{{item.sku}}</md-card-subtitle>
     </md-card-header>
+    <md-card-subtitle>{{item.sku}}</md-card-subtitle>
 
-    <img md-card-image src="{{item.image}}"  class="msc-cursor-pointer" (click)="toPdp()">
+    <img md-card-image src="{{item.image}}"  class="msc-cursor-pointer" >
 
     <md-card-content>
         <div>
@@ -51,3 +52,4 @@
         </button>
     </md-card-actions>
 </md-card>
+</a>

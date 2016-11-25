@@ -30,3 +30,6 @@ md-card.msc-h-margin {
 .msc-icon-middle{
     vertical-align: middle;
 }
+.msc-link-block{
+    text-decoration: none;
+}
