@@ -14,4 +14,6 @@ interface Pace {
     trigger(event: string);
 }
 
+//declare var FirebaseDB: any;
+
 interface Window { Pace: Pace; }

@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {CartService} from "./_services/cart.service";
 import {Observable} from "rxjs";
 import {MdMenu} from "@angular/material";
+import {FirebaseDB} from "./_services/firebase-db.service";
 
 @Component({
     selector: "app-root",

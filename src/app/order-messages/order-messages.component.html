@@ -1,0 +1,18 @@
+<md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+
+<md-card>
+    <md-card-title><span i18n>Messages</span></md-card-title>
+    <md-card-subtitle>{{uuid}}</md-card-subtitle>
+    <md-card-content>
+        <md-list>
+            <md-list-item *ngFor="let mes of messages">
+                <h3 md-line> {{mes.name}} </h3>
+                <p md-line><span>{{mes.message}}</span></p>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+    <md-card-content>
+        <md-input [(ngModel)]="message"></md-input>
+        <button md-raised-button color="accent" (click)="send()">Send</button>
+    </md-card-content>
+</md-card>

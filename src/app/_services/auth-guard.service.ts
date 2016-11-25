@@ -3,12 +3,28 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate} from "
 import {UserService} from "./user.service";
 
 @Injectable()
-export class AuthGuardService implements CanActivate{
+export class AdminAuthGuardService implements CanActivate{
 
   constructor(private authService: UserService, private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.authService.isAdmin) {
+      return true;
+    }
+
+    this.router.navigate(['login']);
+    return false;
+  }
+
+}
+
+@Injectable()
+export class AuthGuardService implements CanActivate{
+
+  constructor(private authService: UserService, private router: Router) {}
+
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (!this.authService.isGuest) {
       return true;
     }
 

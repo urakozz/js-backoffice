@@ -45,13 +45,13 @@ import {MailService, SENDGRID_KEY} from "./_services/mail.service";
 import { UsersComponent } from './users/users.component';
 import {BackendUserService} from "./_services/backend-user-service.service";
 import {AddressReadBlockComponent} from "./_components/address-block/address-read-block.component";
-import {AuthGuardService} from "./_services/auth-guard.service";
+import {AdminAuthGuardService, AuthGuardService} from "./_services/auth-guard.service";
 import {environment} from "../environments/environment";
-import * as firebase from 'firebase';
-import {FirebaseDB} from "./_services/firebase-db.service";
-//
-// // Get a reference to the database service
-// var database = database();
+
+import {FirebaseDB, firebaseDbInitializer} from "./_services/firebase-db.service";
+import { OrderMessagesComponent } from './order-messages/order-messages.component';
+
+console.log(environment);
 
 export const ROUTES = [
     {
@@ -83,12 +83,16 @@ export const ROUTES = [
         component: OrdersComponent
     },
     {
+        path: "orders/:id/messages",
+        component: OrderMessagesComponent
+    },
+    {
         path: "profile/:id",
         component: ProfileComponent
     },
     {
         path: "users",
-        component: UsersComponent, canActivate: [AuthGuardService]
+        component: UsersComponent, canActivate: [AdminAuthGuardService]
     },
     {
         path: "product",
@@ -101,7 +105,7 @@ export const ROUTES = [
     },
     {
         path: "product-edit/:id",
-        component: ProductEditComponent, canActivate: [AuthGuardService]
+        component: ProductEditComponent, canActivate: [AdminAuthGuardService]
     },
     {path: "**", component: Page404Component}
 ];
@@ -141,6 +145,7 @@ export const ROUTES = [
         RegistrationConfirmationComponent,
         UsersComponent,
         AddressReadBlockComponent,
+        OrderMessagesComponent,
     ],
     imports: [
         BrowserModule,
@@ -153,20 +158,13 @@ export const ROUTES = [
     entryComponents: [DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog],
     providers: [
         UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService, BackendUserService,
-        AuthGuardService,
+        AdminAuthGuardService, AuthGuardService,
         MailService,
         {provide: I18nService, useFactory: () => new I18nService().init(TRANSLATION)},
         {provide: APP_BASE_HREF, useValue : "/" },
         {provide: SENDGRID_KEY, useValue: environment.MAIL_KEY},
         {provide: FirebaseDB, useFactory: () => {
-            let config = {
-                apiKey: environment.DATABASE_KEY,
-                authDomain: "madam-scrap.firebaseapp.com",
-                databaseURL: "https://madam-scrap.firebaseio.com/",
-            };
-            //noinspection TypeScriptUnresolvedFunction
-            firebase.initializeApp(config);
-            return firebase.database();
+            return firebaseDbInitializer(environment.DATABASE_KEY);
         }},
     ],
     bootstrap: [AppComponent]

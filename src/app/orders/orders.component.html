@@ -48,6 +48,11 @@
                             <md-icon *ngIf="!isActive(order)">remove</md-icon>
                             <md-icon *ngIf="isActive(order)">done</md-icon>
                         </button>
+                        <button md-mini-fab
+                                color="accent"
+                                [routerLink]="[order.uuid,'messages']">
+                            <md-icon>message</md-icon>
+                        </button>
                         <!--<button  md-mini-fab color="accent" (click)="preview(order)">-->
                         <!--<md-icon>visibility</md-icon>-->
                         <!--</button>-->
