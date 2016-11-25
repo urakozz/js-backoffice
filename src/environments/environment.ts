@@ -5,5 +5,6 @@
 
 export const environment = {
     production: false,
-    MAIL_KEY:null,
+    MAIL_KEY:"test",
+    DATABASE_KEY:"testdb"
 };

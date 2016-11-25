@@ -1,7 +1,8 @@
 import {Injectable, Inject} from "@angular/core";
 import {Http, Headers, RequestMethod, RequestOptions, Request} from "@angular/http";
 import {DOCUMENT} from "@angular/platform-browser";
-import {environment} from "../../environments/environment"
+
+export const SENDGRID_KEY: string = "";
 
 export interface HostDetails {
     schema: any;
@@ -14,7 +15,7 @@ export class MailService {
     private host = "https://api.sendgrid.com";
     private template = "937c1969-01ff-4c6d-a145-26d93946f52a";
 
-    constructor(private http: Http, @Inject(DOCUMENT) private document) {
+    constructor(private http: Http, @Inject(DOCUMENT) private document, @Inject(SENDGRID_KEY) private key) {
     }
 
     sendConfirmation(email, name, code) {
@@ -29,7 +30,7 @@ export class MailService {
     private _getHeaders(): Headers {
         let h = new Headers({
             "Content-Type": "application/json",
-            "Authorization": "Basic " + environment.MAIL_KEY
+            "Authorization": "Basic " + this.key
         });
 
         return h;

@@ -41,11 +41,17 @@ import {TRANSLATION} from "./_infrastructure/translations/translation";
 import { I18nDirective } from "./_infrastructure/directives/i18n.directive";
 import { AutogrowDirective } from "./_infrastructure/directives/autogrow.directive";
 import { RegistrationConfirmationComponent } from "./registration-confirmation/registration-confirmation.component";
-import {MailService} from "./_services/mail.service";
+import {MailService, SENDGRID_KEY} from "./_services/mail.service";
 import { UsersComponent } from './users/users.component';
 import {BackendUserService} from "./_services/backend-user-service.service";
 import {AddressReadBlockComponent} from "./_components/address-block/address-read-block.component";
 import {AuthGuardService} from "./_services/auth-guard.service";
+import {environment} from "../environments/environment";
+import * as firebase from 'firebase';
+import {FirebaseDB} from "./_services/firebase-db.service";
+//
+// // Get a reference to the database service
+// var database = database();
 
 export const ROUTES = [
     {
@@ -150,7 +156,18 @@ export const ROUTES = [
         AuthGuardService,
         MailService,
         {provide: I18nService, useFactory: () => new I18nService().init(TRANSLATION)},
-        {provide: APP_BASE_HREF, useValue : "/" }
+        {provide: APP_BASE_HREF, useValue : "/" },
+        {provide: SENDGRID_KEY, useValue: environment.MAIL_KEY},
+        {provide: FirebaseDB, useFactory: () => {
+            let config = {
+                apiKey: environment.DATABASE_KEY,
+                authDomain: "madam-scrap.firebaseapp.com",
+                databaseURL: "https://madam-scrap.firebaseio.com/",
+            };
+            //noinspection TypeScriptUnresolvedFunction
+            firebase.initializeApp(config);
+            return firebase.database();
+        }},
     ],
     bootstrap: [AppComponent]
 })
