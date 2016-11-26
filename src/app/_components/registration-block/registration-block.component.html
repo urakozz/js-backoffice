@@ -30,6 +30,18 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <md-input required
+                  formControlName="linkVk"
+                  autocomplete="off"
+                  placeholder="{{'VK link' | i18n}}"></md-input>
+        <div *ngIf="form.controls.linkVk.touched && form.controls.linkVk.errors">
+            <div *ngIf="form.controls.linkVk.hasError('required')">
+                VK link is required.
+            </div>
+        </div>
+    </div>
+
     <div formGroupName="passwordGroup">
 
         <div class="form-group">

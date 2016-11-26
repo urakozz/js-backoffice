@@ -22,6 +22,7 @@ export class RegistrationBlockComponent implements OnInit {
         this.form = this.fb.group({
             name: new FormControl("", [Validators.required, RegistrationBlockComponent.validateEmail]),
             realname: new FormControl("", [Validators.required]),
+            linkVk: new FormControl(""),
             passwordGroup: new FormGroup({
                 password: new FormControl("", [Validators.required, Validators.minLength(8)]),
                 password2: new FormControl("", [Validators.required])

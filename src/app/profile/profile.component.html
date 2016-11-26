@@ -33,6 +33,19 @@
                     </div>
 
                     <div class="form-group">
+                        <md-input [(ngModel)]="user.linkVk"
+                                  name="linkVk"
+                                  [disabled]="!editmode"
+                                  autocomplete="off"
+                                  placeholder="{{'VK link' | i18n}}" ></md-input>
+                        <div *ngIf="userForm.controls.linkVk && userForm.controls.linkVk.touched && userForm.controls.linkVk.errors">
+                            <div i18n *ngIf="userForm.controls.linkVk.hasError('required')">
+                                Vk link is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <md-input [(ngModel)]="user.password"
                                   required
                                   autocomplete="off"

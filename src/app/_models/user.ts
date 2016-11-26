@@ -4,6 +4,7 @@ export class User implements Serializable<User> {
     name: string;
     password: string;
     realname: string;
+    linkVk: string;
     address: Address[];
     orders: string[];
     uuid: string;

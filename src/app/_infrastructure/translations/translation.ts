@@ -156,6 +156,9 @@ export const TRANSLATION = {
         },
         "Ship to this address" : {
             ru: "Отправить на этот адрес"
+        },
+        "VK link" :{
+            ru: "Ссылка на Вконтакте"
         }
     }
 };
