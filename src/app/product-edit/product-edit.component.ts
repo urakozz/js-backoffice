@@ -154,9 +154,9 @@ export class ProductEditComponent implements OnInit {
     }
 
     private _loadProduct(): Observable<Product> {
-        let id = 0;
+        let id = "";
         this._route.params.forEach((params: Params) => {
-            id = +params["id"];
+            id = params["id"];
         });
         if (!id) {
             return Observable.of(new Product());

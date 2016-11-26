@@ -13,7 +13,7 @@ export class BackendProductService {
 
     }
 
-    get(id: number): Observable<Product> {
+    get(id: string): Observable<Product> {
         return this.backend.get(this.DB + id.toString()).map(res => res.json()).map(data => {
             return new Product().deserialize(data);
         });
