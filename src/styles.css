@@ -32,4 +32,5 @@ md-card.msc-h-margin {
 }
 .msc-link-block{
     text-decoration: none;
+    color:inherit;
 }

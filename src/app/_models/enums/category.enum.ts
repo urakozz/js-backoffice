@@ -45,7 +45,7 @@ export const CategoryName = {
     [CategoryType.SC]: "Сердечки",
     [CategoryType.CF]: "Салфетки",
     [CategoryType.UG]: "Уголки",
-    [CategoryType.F]: "Фигуры",
+    [CategoryType.F]: "Фигуры и фоны",
     [CategoryType.CV]: "Цветы",
     [CategoryType.OTHER]: "Другое",
     [CategoryType.TIS]: "Тиснение",

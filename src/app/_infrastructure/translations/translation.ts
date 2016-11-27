@@ -10,6 +10,9 @@ export const TRANSLATION = {
         "My Orders": {
             ru: "Мои заказы"
         },
+        "Orders": {
+            ru: "Заказы"
+        },
         "My Cart": {
             ru: "Моя корзина"
         },
@@ -159,6 +162,9 @@ export const TRANSLATION = {
         },
         "VK link" :{
             ru: "Ссылка на Вконтакте"
+        },
+        "Search":{
+            ru:"Поиск"
         }
     }
 };

@@ -5,7 +5,7 @@
         <div class="row center-xs">
             <div class="logo"></div>
         </div>
-        <md-input #term (keyup)="asyncSearch(term.value)" [(ngModel)]="_searchTerm" placeholder="Search"
+        <md-input #term (keyup)="asyncSearch(term.value)" [(ngModel)]="_searchTerm" placeholder="{{'Search' | i18n}}"
                   class="msc-full-width"></md-input>
         <div>
             <button md-raised-button

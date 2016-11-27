@@ -1,11 +1,14 @@
-<a [routerLink]="['/product', item.id]" class="msc-link-block">
 <md-card class="msc-v-margin">
     <md-card-header>
-        <md-card-title>{{item.name}}</md-card-title>
+        <a [routerLink]="['/product', item.id]" class="msc-link-block">
+            <md-card-title (click)="toPdp()" class="msc-cursor-pointer">{{item.name}}</md-card-title>
+        </a>
     </md-card-header>
     <md-card-subtitle>{{item.sku}}</md-card-subtitle>
 
-    <img md-card-image src="{{item.image}}"  class="msc-cursor-pointer" >
+    <!---->
+        <img md-card-image src="{{item.image}}" class="msc-cursor-pointer">
+    <!---->
 
     <md-card-content>
         <div>
@@ -25,7 +28,9 @@
             <div class="col-xs">
                 <section>
                     <b i18n>Color</b>
-                        <md-icon [md-tooltip]="'Show color palette' | i18n" tooltip-position="below" class="msc-inherit-font msc-cursor-pointer" (click)="showPalette()">info_outline</md-icon>
+                    <md-icon [md-tooltip]="'Show color palette' | i18n" tooltip-position="below"
+                             class="msc-inherit-font msc-cursor-pointer" (click)="showPalette()">info_outline
+                    </md-icon>
                 </section>
                 <section *ngFor="let attr of listAttributes">
                     <section>{{attr.readableName}}</section>
@@ -52,4 +57,3 @@
         </button>
     </md-card-actions>
 </md-card>
-</a>

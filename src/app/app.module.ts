@@ -50,6 +50,7 @@ import {environment} from "../environments/environment";
 
 import {FirebaseDB, firebaseDbInitializer} from "./_services/firebase-db.service";
 import { OrderMessagesComponent } from './order-messages/order-messages.component';
+import { CartSuccessComponent } from './cart-success/cart-success.component';
 
 console.log(environment);
 
@@ -77,6 +78,10 @@ export const ROUTES = [
     {
         path: "cart/:id/confirm",
         component: CartConfirmComponent
+    },
+    {
+        path: "cart/:id/success",
+        component: CartSuccessComponent
     },
     {
         path: "orders",
@@ -146,6 +151,7 @@ export const ROUTES = [
         UsersComponent,
         AddressReadBlockComponent,
         OrderMessagesComponent,
+        CartSuccessComponent,
     ],
     imports: [
         BrowserModule,

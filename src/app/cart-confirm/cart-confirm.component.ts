@@ -74,7 +74,7 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
         Observable.of(false).delay(500).subscribe(b => {
             this.loading = false;
             this.cart.setCart(new Order(this.userService.getUser().name));
-            this.router.navigate(["/orders"]);
+            this.router.navigate(["/cart",this.cart.getOrder().uuid, "success"]);
         })
     }
 

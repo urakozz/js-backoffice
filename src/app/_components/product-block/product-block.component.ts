@@ -71,6 +71,9 @@ export class ProductBlockComponent implements OnInit {
         }
         return CategoryName[this.item.category];
     }
+    toPdp(){
+        this.router.navigate(["/product",this.item.id])
+    }
 
     showPalette() {
         this.palette.next({});
