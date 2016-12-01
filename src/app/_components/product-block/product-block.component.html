@@ -6,9 +6,12 @@
     </md-card-header>
     <md-card-subtitle>{{item.sku}}</md-card-subtitle>
 
-    <!---->
-        <img md-card-image src="{{item.image}}" class="msc-cursor-pointer">
-    <!---->
+    <img md-card-image
+         class="msc-cursor-pointer ng2-lazyload"
+         src="/assets/loading.gif"
+         [routerLink]="['/product', item.id]"
+         [lazyLoad]="item.image">
+
 
     <md-card-content>
         <div>
@@ -41,6 +44,11 @@
                             {{i}}
                         </option>
                     </select>
+                </section>
+                <section>
+                    <button md-raised-button (click)="showPalette()" class="msc-button-margin">
+                        {{'Palette' | i18n}}
+                    </button>
                 </section>
             </div>
             <div class="col-xs">

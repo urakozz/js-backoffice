@@ -51,6 +51,7 @@ import {environment} from "../environments/environment";
 import {FirebaseDB, firebaseDbInitializer} from "./_services/firebase-db.service";
 import { OrderMessagesComponent } from './order-messages/order-messages.component';
 import { CartSuccessComponent } from './cart-success/cart-success.component';
+import {LazyLoadImageModule} from "ng2-lazyload-image";
 
 console.log(environment);
 
@@ -155,6 +156,7 @@ export const ROUTES = [
     ],
     imports: [
         BrowserModule,
+        LazyLoadImageModule,
         FormsModule,
         ReactiveFormsModule,
         HttpModule,

@@ -1,7 +1,8 @@
 <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
 
 
-<app-product-pdp-block [item]="product"
+<app-product-pdp-block *ngIf="product"
+                       [item]="product"
                        (loginPopup)="loginPopup($event);"
                        (palette)="showPalette()"></app-product-pdp-block>
 

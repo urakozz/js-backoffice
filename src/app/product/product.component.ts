@@ -15,7 +15,7 @@ import {DialogPaletteBlockComponent} from "../_components/dialog-palette-block/d
 export class ProductComponent implements OnInit {
 
     protected loading: boolean = true;
-    protected product:Product = new Product();
+    protected product: Product;
 
     private _dialogPalette: MdDialogRef<DialogPaletteBlockComponent>;
     private _dialogLogin: MdDialogRef<DialogLoginBlockComponent>;

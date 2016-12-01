@@ -100,7 +100,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     private initSearchStream(): Subscription {
         return this._searchTermStream
-            .debounceTime(100)
+            .debounceTime(200)
             .distinctUntilChanged()
             .subscribe((term: string) => {
                 console.log("search", term);

@@ -165,6 +165,21 @@ export const TRANSLATION = {
         },
         "Search":{
             ru:"Поиск"
+        },
+        "Order completed":{
+            ru:"Заказ создан"
+        },
+        "Order have been successfully placed":{
+            ru:"Заказ был успешно создан"
+        },
+        "You will receive the receipt by email soon!":{
+            ru:"Скоро вы получите счет на email"
+        },
+        "You can see your order here:":{
+            ru:"Вы можете посмотреть свои заказв здесь:"
+        },
+        "Palette": {
+            ru:"Палитра"
         }
     }
 };

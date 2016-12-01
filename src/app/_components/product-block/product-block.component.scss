@@ -1,0 +1,11 @@
+img.ng2-lazyload.ng2-lazyloaded {
+  opacity: 1;
+}
+img.ng2-lazyload {
+  transition: opacity 1s;
+  opacity: 0;
+}
+.msc-button-margin {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
