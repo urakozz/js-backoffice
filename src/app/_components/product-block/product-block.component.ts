@@ -26,6 +26,7 @@ export class ProductBlockComponent implements OnInit {
     });
 
     @Input() item: Product;
+    @Input() lazyImages: boolean = true;
     @Output() loginPopup = new EventEmitter();
     @Output() palette = new EventEmitter();
 

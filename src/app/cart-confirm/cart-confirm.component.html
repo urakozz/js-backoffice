@@ -11,7 +11,7 @@
                     <md-list-item *ngFor="let item of cart.getOrder().asList">
                         <img md-list-avatar [src]="item.product.image" [alt]="item.product.name">
                         <h3 md-line> {{item.product.name}} (x{{item.amount}})</h3>
-                        <p md-line><span i18n>Price</span>: <b>{{item.product.price * item.amount}}</b> Rub</p>
+                        <p md-line>{{item.product.sku}} <span i18n>Price</span>: <b>{{item.product.price * item.amount}}</b> Rub</p>
                         <p md-line>
                             <span><span i18n>Color</span>: </span>
                             <span *ngFor="let attr of listAttributes(item)">
