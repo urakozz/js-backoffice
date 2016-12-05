@@ -181,7 +181,7 @@ export class OrdersComponent implements OnInit {
     private _filterVisibleOrders(q: OrdersQueryAttributes) {
         let o = this.ordersAll;
         if (q.user) {
-            o = o.filter((c: Order) => c.authorName === q.user);
+            o = o.filter((c: Order) => c.authorName.startsWith(q.user));
         }
         if (q.status) {
             o = o.filter((c: Order) => c.status === q.status);

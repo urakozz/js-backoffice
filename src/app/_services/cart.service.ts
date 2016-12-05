@@ -27,13 +27,22 @@ export class CartService {
                 this._initFromLocal();
                 console.log("stream, cart for", u);
             });
+        userService.getLogoutStream().subscribe(() => {
+            localStorage.removeItem(this.LSKey);
+        })
     }
 
     private _initFromLocal() {
+        // Temporary cart have been already created on user log in
+
+        // Trying to load cart from stored uuid
         let uuid = localStorage.getItem(this.LSKey);
         if (uuid) {
             this._loadLocalCart(uuid);
-        } else {
+        }
+
+        // If if failed (stored uuid is not equal to current cart uuid) try to load last cart
+        if(this.cart.uuid !== uuid){
             this._loadLastCart();
         }
     }

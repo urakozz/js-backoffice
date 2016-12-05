@@ -70,7 +70,7 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
         d.date = new Date().toISOString();
         this.cart.setDetails(d);
         this.cart.changeStatus(OrderStatuses.NEW);
-        this._sendMetric();
+        this._sendMetric(this.cart.getOrder().uuid);
 
         Observable.of(false).delay(500).subscribe(b => {
             this.loading = false;
@@ -79,10 +79,13 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
         })
     }
 
-    private _sendMetric(): void {
+    private _sendMetric(uuid): void {
         window.dataLayer.push({
             "ecommerce": {
                 "currencyCode": "RUB",
+                "actionField": {
+                    "id" : uuid
+                },
                 "purchase": {
                     "products": this.cart.getOrder().asList.map((o:OrderItem) => {
                         return {
