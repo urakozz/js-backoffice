@@ -88,14 +88,6 @@ export class CartService {
         this.persist();
     }
 
-    /**
-     * @deprecated
-     * @returns {Order}
-     */
-    getCart(): Order {
-        return this.getOrder();
-    }
-
     getOrder() {
         return this.cart;
     }

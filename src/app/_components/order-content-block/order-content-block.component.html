@@ -15,7 +15,7 @@
                 </section>
             </div>
             <div class="col-xs">
-                <section><b>Amount:</b> <b>{{item.amount}}</b></section>
+                <section><b i18n>Amount</b>: <b>{{item.amount}}</b></section>
                 <select *ngIf="container.__editing" (change)="changeAmount(item.product, $event.target.value, item.selectedAttributes)">
                     <option disabled value>Amount</option>
                     <option *ngFor="let i of amount" [value]="i" [selected]="i == item.amount">

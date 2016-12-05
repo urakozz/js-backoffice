@@ -57,4 +57,7 @@ export class Product implements Serializable<Product> {
     getPrice(): number {
         return Number.parseFloat(<any>this.price);
     }
+    getCategories(): CategoryType[]{
+        return [this.category]
+    }
 }

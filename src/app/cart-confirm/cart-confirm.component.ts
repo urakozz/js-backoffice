@@ -70,12 +70,32 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
         d.date = new Date().toISOString();
         this.cart.setDetails(d);
         this.cart.changeStatus(OrderStatuses.NEW);
+        this._sendMetric();
 
         Observable.of(false).delay(500).subscribe(b => {
             this.loading = false;
             this.cart.setCart(new Order(this.userService.getUser().name));
             this.router.navigate(["/cart",this.cart.getOrder().uuid, "success"]);
         })
+    }
+
+    private _sendMetric(): void {
+        window.dataLayer.push({
+            "ecommerce": {
+                "currencyCode": "RUB",
+                "purchase": {
+                    "products": this.cart.getOrder().asList.map((o:OrderItem) => {
+                        return {
+                            "id": o.product.sku,
+                            "name": o.product.name,
+                            "price": o.product.getPrice(),
+                            "category": o.product.getCategories()[0] || "default",
+                            "quantity": o.amount
+                        };
+                    })
+                }
+            }
+        });
     }
 
     ngOnDestroy() {

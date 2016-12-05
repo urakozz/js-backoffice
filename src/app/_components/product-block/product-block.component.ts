@@ -31,7 +31,7 @@ export class ProductBlockComponent implements OnInit {
     @Output() palette = new EventEmitter();
 
     constructor(protected basket: CartService,
-                protected router:Router,
+                protected router: Router,
                 protected _userService: UserService) {
     }
 
@@ -84,15 +84,36 @@ export class ProductBlockComponent implements OnInit {
         if (this._userService.isGuest) {
             this.loginPopup.next({
                 "successAction": () => {
-                    this.basket.add(this.item, this.selectedAttributes, this.selectedAmount);
+                    this._doAdd();
                 }
             });
             return;
         }
-        this.basket.add(this.item, this.selectedAttributes, this.selectedAmount);
+        this._doAdd();
         this.justSaved = true;
         Observable.of(false).delay(500).subscribe(b => {
             this.justSaved = b;
+        });
+    }
+
+    _doAdd(){
+        this.basket.add(this.item, this.selectedAttributes, this.selectedAmount);
+        this._sendMetric()
+    }
+
+    private _sendMetric(): void {
+        window.dataLayer.push({
+            "ecommerce": {
+                "currencyCode": "RUB",
+                "add": {
+                    "products": [{
+                        "id": this.item.sku,
+                        "name": this.item.name,
+                        "price": this.item.getPrice(),
+                        "category": this.item.getCategories()[0] || "default"
+                    }]
+                }
+            }
         });
     }
 

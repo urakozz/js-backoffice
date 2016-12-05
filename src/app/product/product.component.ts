@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {Location} from "@angular/common"
 import {BackendProductService} from "../_services/backend-product.service";
@@ -12,7 +12,7 @@ import {DialogPaletteBlockComponent} from "../_components/dialog-palette-block/d
     templateUrl: './product.component.html',
     styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit{
 
     protected loading: boolean = true;
     protected product: Product;
@@ -34,12 +34,29 @@ export class ProductComponent implements OnInit {
         });
         this.productService.get(id).first().subscribe((p:Product)=>{
             this.product = p;
+            this.sendMetric();
         }, (err) => {
             console.log("Error loading product", err);
         },()=>{
             this.loading = false;
         })
 
+    }
+
+    sendMetric(): void {
+        window.dataLayer.push({
+            "ecommerce": {
+                "currencyCode": "RUB",
+                "detail": {
+                    "products": [{
+                        "id": this.product.sku,
+                        "name": this.product.name,
+                        "price": this.product.getPrice(),
+                        "category": this.product.getCategories()[0] || "default"
+                    }]
+                }
+            }
+        });
     }
 
     public showPalette(e) {

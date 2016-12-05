@@ -63,8 +63,28 @@ export class OrderContentBlockComponent implements OnInit, OnDestroy {
     }
 
     changeAmount(p: Product, q, attrs) {
-        this.order.changeAmount(p, attrs, Number.parseInt(q));
+        q = Number.parseInt(q);
+        this.order.changeAmount(p, attrs, q);
         this.service.persist(this.order);
+        if(q < 1) {
+            this._sendMetric(p);
+        }
+    }
+
+    private _sendMetric(item: Product): void {
+        window.dataLayer.push({
+            "ecommerce": {
+                "currencyCode": "RUB",
+                "remove": {
+                    "products": [{
+                        "id": item.sku,
+                        "name": item.name,
+                        "price": item.getPrice(),
+                        "category": item.getCategories()[0] || "default"
+                    }]
+                }
+            }
+        });
     }
 
 }
