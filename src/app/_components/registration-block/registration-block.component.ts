@@ -51,7 +51,6 @@ export class RegistrationBlockComponent implements OnInit {
     }
 
     register() {
-        debugger;
         this.loading = true;
         let u = Object.assign(new User(), this.form.value);
         u.password = this.form.value.passwordGroup.password;

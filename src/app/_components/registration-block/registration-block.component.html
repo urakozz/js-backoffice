@@ -65,7 +65,7 @@
                       formControlName="password2"
                       autocomplete="off"
                       type="password"
-                      placeholder="Repeat password"></md-input>
+                      placeholder="{{'Repeat password' | i18n}}"></md-input>
             <div *ngIf="form.controls.passwordGroup.controls.password2.touched && form.controls.passwordGroup.controls.password2.errors">
                 <div i18n *ngIf="form.controls.passwordGroup.controls.password2.hasError('required')">
                     Password is required.

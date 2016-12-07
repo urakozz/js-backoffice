@@ -186,6 +186,9 @@ export const TRANSLATION = {
         },
         "Customer":{
             ru:"Покупатель"
+        },
+        "Repeat password" : {
+            ru:"Повторите пароль"
         }
     }
 };

@@ -71,6 +71,7 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
         d.customer = this.userService.getUser();
         d.date = new Date().toISOString();
         this.cart.setDetails(d);
+        this._saveCustomAddress();
         this.cart.changeStatus(OrderStatuses.NEW);
         MetrikaService._purchase(this.cart.getOrder());
 
@@ -79,6 +80,18 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
             this.cart.setCart(new Order(this.userService.getUser().name));
             this.router.navigate(["/cart",this.cart.getOrder().uuid, "success"]);
         })
+    }
+
+    private _saveCustomAddress(){
+        if(this.user.address.length === 0 && this.custom_address) {
+            let user = new User().deserialize(JSON.parse(JSON.stringify(this.user)));
+            user.addAddress(this.custom_address);
+            this.userBackend.update(user, user).subscribe(o => {
+                console.log("User saved", o);
+            }, err => {
+                console.log("Saving error", err);
+            });
+        }
     }
 
     ngOnDestroy() {
