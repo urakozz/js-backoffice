@@ -11,7 +11,7 @@
                 [class.md-primary]="s === filterQueryActive.status">{{getStatusName(s)}}
         </button>
         <!--<button md-icon-button (click)="refresh()" [disabled]="loading">-->
-            <!--<md-icon>refresh</md-icon>-->
+        <!--<md-icon>refresh</md-icon>-->
         <!--</button>-->
     </div>
     <md-input #term (keyup)="changeName(term.value)" [ngModel]="modelUser" placeholder="User name"
@@ -70,14 +70,18 @@
             </md-card-content>
             <md-card-content #actions *ngIf="order.details?.address">
                 <div class="row">
-                    <button md-button (click)="actions.__open = !actions.__open">
-                        <md-icon class="msc-icon-middle" *ngIf="!actions.__open">keyboard_arrow_right</md-icon>
-                        <md-icon class="msc-icon-middle" *ngIf="actions.__open">keyboard_arrow_down</md-icon>
-                        <span i18n>Address</span>
-                    </button>
+                    <div class="col-xs">
+                        <button md-button (click)="actions.__open = !actions.__open">
+                            <md-icon class="msc-icon-middle" *ngIf="!actions.__open">keyboard_arrow_right</md-icon>
+                            <md-icon class="msc-icon-middle" *ngIf="actions.__open">keyboard_arrow_down</md-icon>
+                            <span i18n>Address</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="row" *ngIf="actions.__open">
-                    <app-address-read-block [address]="order.details?.address"></app-address-read-block>
+                    <div class="col-xs">
+                        <app-address-read-block [address]="order.details?.address"></app-address-read-block>
+                    </div>
                 </div>
             </md-card-content>
             <md-progress-bar mode="indeterminate" *ngIf="orderc.__loading"></md-progress-bar>

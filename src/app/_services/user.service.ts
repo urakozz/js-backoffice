@@ -63,8 +63,7 @@ export class UserService implements IUserService {
     }
 
     getUserStream(): Observable<User> {
-        return Observable.concat(Observable.of(this._user), this._loginStream)
-            .filter((u: User) => !!u).first()
+        return this._loginStream.startWith(this._user).filter((u: User) => !!u).first()
     }
 
     getLoginStream(): Observable<User> {

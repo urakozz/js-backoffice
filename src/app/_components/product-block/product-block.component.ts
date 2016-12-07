@@ -9,6 +9,7 @@ import {UserService} from "../../_services/user.service";
 import {CartService} from "../../_services/cart.service";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
+import {MetrikaService} from "../../_services/metrika.service";
 
 @Component({
     selector: "app-product-block",
@@ -98,23 +99,7 @@ export class ProductBlockComponent implements OnInit {
 
     _doAdd(){
         this.basket.add(this.item, this.selectedAttributes, this.selectedAmount);
-        this._sendMetric()
-    }
-
-    private _sendMetric(): void {
-        window.dataLayer.push({
-            "ecommerce": {
-                "currencyCode": "RUB",
-                "add": {
-                    "products": [{
-                        "id": this.item.sku,
-                        "name": this.item.name,
-                        "price": this.item.getPrice(),
-                        "category": this.item.getCategories()[0] || "default"
-                    }]
-                }
-            }
-        });
+        MetrikaService._add(this.item, this.selectedAmount);
     }
 
 

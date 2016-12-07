@@ -134,7 +134,6 @@ export class ProductEditComponent implements OnInit {
     addAttribute(e) {
         e.stopPropagation();
         e.preventDefault();
-        console.log("add");
         this._addAttributeControl("");
         // this.attributes.updateValueAndValidity({emitEvent: true});
     }

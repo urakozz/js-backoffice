@@ -131,8 +131,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
         this._dialogPalette = this.dialog.open(DialogPaletteBlockComponent, config);
 
-        let s = this._dialogPalette.afterClosed().subscribe(result => {
-            console.log("result: " + result);
+        let s = this._dialogPalette.afterClosed().subscribe(() => {
             this._dialogPalette = null;
             s.unsubscribe();
         });

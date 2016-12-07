@@ -51,9 +51,8 @@ import {environment} from "../environments/environment";
 import {FirebaseDB, firebaseDbInitializer} from "./_services/firebase-db.service";
 import { OrderMessagesComponent } from './order-messages/order-messages.component';
 import { CartSuccessComponent } from './cart-success/cart-success.component';
-import {LazyLoadImageModule} from "ng2-lazyload-image";
-
-console.log(environment);
+import {LazyLoadImageModule} from "./_infrastructure/modules/image-lazy-load.module";
+import {MetrikaService} from "./_services/metrika.service";
 
 export const ROUTES = [
     {
@@ -168,6 +167,7 @@ export const ROUTES = [
         UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService, BackendUserService,
         AdminAuthGuardService, AuthGuardService,
         MailService,
+        MetrikaService,
         {provide: I18nService, useFactory: () => new I18nService().init(TRANSLATION)},
         {provide: APP_BASE_HREF, useValue : "/" },
         {provide: SENDGRID_KEY, useValue: environment.MAIL_KEY},

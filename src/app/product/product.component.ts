@@ -6,13 +6,15 @@ import {Product} from "../_models/product";
 import {MdDialogConfig, MdDialog, MdDialogRef} from "@angular/material";
 import {DialogLoginBlockComponent} from "../_components/dialog-login-block/dialog-login-block.component";
 import {DialogPaletteBlockComponent} from "../_components/dialog-palette-block/dialog-palette-block.component";
+import {CategoryName} from "../_models/enums/category.enum";
+import {MetrikaService} from "../_services/metrika.service";
 
 @Component({
     selector: 'app-product',
     templateUrl: './product.component.html',
     styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit{
+export class ProductComponent implements OnInit {
 
     protected loading: boolean = true;
     protected product: Product;
@@ -32,31 +34,15 @@ export class ProductComponent implements OnInit{
         this.route.params.forEach((params: Params) => {
             id = params['id'];
         });
-        this.productService.get(id).first().subscribe((p:Product)=>{
+        this.productService.get(id).first().subscribe((p: Product) => {
             this.product = p;
-            this.sendMetric();
+            MetrikaService._detail(p);
         }, (err) => {
             console.log("Error loading product", err);
-        },()=>{
+        }, () => {
             this.loading = false;
         })
 
-    }
-
-    sendMetric(): void {
-        window.dataLayer.push({
-            "ecommerce": {
-                "currencyCode": "RUB",
-                "detail": {
-                    "products": [{
-                        "id": this.product.sku,
-                        "name": this.product.name,
-                        "price": this.product.getPrice(),
-                        "category": this.product.getCategories()[0] || "default"
-                    }]
-                }
-            }
-        });
     }
 
     public showPalette(e) {
@@ -82,7 +68,7 @@ export class ProductComponent implements OnInit{
         this._dialogLogin.afterClosed().subscribe(result => {
             console.log('result: ' + result);
             this._dialogLogin = null;
-            if(result && typeof(e["successAction"]) === "function" ){
+            if (result && typeof(e["successAction"]) === "function") {
                 console.log(e);
                 e["successAction"]()
             }

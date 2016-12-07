@@ -1,4 +1,4 @@
-import {Address} from "./user";
+import {Address, User} from "./user";
 import {Serializable} from "./serializable";
 import {OrderStatus, OrderStatuses} from "./enums/order-status.enum";
 import {OrderItem} from "./order-item";
@@ -139,6 +139,7 @@ export class OrderDetails implements Serializable<OrderDetails> {
     name: string;
     date: string;
     address: Address;
+    customer: User;
 
     static newFromJSON(jsonObj: Object): OrderDetails {
         return new OrderDetails().deserialize(jsonObj);
@@ -148,6 +149,9 @@ export class OrderDetails implements Serializable<OrderDetails> {
         let d = Object.assign(new OrderDetails(), o);
         if (o.address instanceof Object) {
             d.address = new Address().deserialize(o.address);
+        }
+        if (o.customer instanceof Object) {
+            d.customer = new User().deserialize(o.customer);
         }
         return d;
     }

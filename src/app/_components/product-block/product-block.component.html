@@ -10,7 +10,8 @@
          class="msc-cursor-pointer ng2-lazyload"
          src="/assets/loading.gif"
          [routerLink]="['/product', item.id]"
-         [lazyLoad]="item.image">
+         [lazyLoad]="item.image"
+         [offset]="300">
     <img md-card-image *ngIf="!lazyImages"
          class="msc-cursor-pointer"
          [src]="item.image"

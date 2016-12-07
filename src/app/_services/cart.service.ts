@@ -20,11 +20,11 @@ export class CartService {
                 private service: OrderService,
                 private userService: UserService) {
 
-        Observable.concat(Observable.of(userService.getUser()), userService.getLoginStream())
+        userService.getLoginStream().startWith(userService.getUser())
             .filter((u: User) => !!u)
             .subscribe((u: User) => {
                 this.cart = new Order(u.name);
-                this._initFromLocal();
+                this._AwesomeInitFromLocal();
                 console.log("stream, cart for", u);
             });
         userService.getLogoutStream().subscribe(() => {
@@ -32,45 +32,36 @@ export class CartService {
         })
     }
 
-    private _initFromLocal() {
-        // Temporary cart have been already created on user log in
 
-        // Trying to load cart from stored uuid
-        let uuid = localStorage.getItem(this.LSKey);
-        if (uuid) {
-            this._loadLocalCart(uuid);
-        }
-
-        // If if failed (stored uuid is not equal to current cart uuid) try to load last cart
-        if(this.cart.uuid !== uuid){
-            this._loadLastCart();
-        }
+    private _AwesomeInitFromLocal() {
+        this._loadLocalCartObservable(localStorage.getItem(this.LSKey)).catch((e:Error) => {
+            localStorage.removeItem(this.LSKey);
+            return this._loadLastCartObservable()
+        }).subscribe((c) => {
+            this.setCart(c);
+        })
     }
 
-    private _loadLocalCart(uuid) {
-        console.log("loc uuid", uuid);
-        this.backend.getOrder(uuid).switchMap(c => {
+    private _loadLocalCartObservable(uuid): Observable<Order> {
+        if (!uuid) {
+            return Observable.throw(new Error("empty uuid"))
+        }
+        return this.backend.getOrder(uuid).switchMap(c => {
             if (c.authorName !== this.userService.getUser().name) {
-                throw new Error("cart belongs to other user");
+                return Observable.throw(new Error("cart belongs to other user"));
             }
             return Observable.of(c);
-        }).subscribe(c => {
-            this.setCart(c);
-        }, err => {
-            localStorage.removeItem(this.LSKey);
-        });
+        })
     }
 
-    private _loadLastCart() {
-        this.backend.getUserOrders(this.userService.getUser().name).switchMap((o: Order[]) => {
+    private _loadLastCartObservable() {
+        return this.backend.getUserOrders(this.userService.getUser().name).switchMap((o: Order[]) => {
             o = o.filter((c: Order) => c.status === OrderStatuses.CART);
             if (o.length === 0) {
                 return Observable.empty();
             }
             return Observable.of(o[0]);
-        }).subscribe((c: Order) => {
-            this.setCart(c);
-        });
+        })
     }
 
     changeStatus(s: OrderStatus) {
@@ -106,15 +97,6 @@ export class CartService {
         let items = this.getOrder().getItems();
         Object.keys(items).forEach(k => {
             i = i + items[k].amount;
-        });
-        return i;
-    }
-
-    get cost() {
-        let i = 0;
-        let items = this.getOrder().getItems();
-        Object.keys(items).forEach(k => {
-            i = i + (items[k].amount * items[k].product.price);
         });
         return i;
     }

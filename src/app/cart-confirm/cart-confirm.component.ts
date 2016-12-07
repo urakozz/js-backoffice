@@ -9,6 +9,7 @@ import {OrderItem} from "../_models/order-item";
 import {User, Address} from "../_models/user";
 import {OrderStatuses} from "../_models/enums/order-status.enum";
 import {BackendUserService} from "../_services/backend-user-service.service";
+import {MetrikaService} from "../_services/metrika.service";
 
 @Component({
     selector: "app-cart-confirm",
@@ -67,38 +68,17 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
         let d = new OrderDetails();
         d.name = this.name;
         d.address = this.address;
+        d.customer = this.userService.getUser();
         d.date = new Date().toISOString();
         this.cart.setDetails(d);
         this.cart.changeStatus(OrderStatuses.NEW);
-        this._sendMetric(this.cart.getOrder().uuid);
+        MetrikaService._purchase(this.cart.getOrder());
 
         Observable.of(false).delay(500).subscribe(b => {
             this.loading = false;
             this.cart.setCart(new Order(this.userService.getUser().name));
             this.router.navigate(["/cart",this.cart.getOrder().uuid, "success"]);
         })
-    }
-
-    private _sendMetric(uuid): void {
-        window.dataLayer.push({
-            "ecommerce": {
-                "currencyCode": "RUB",
-                "actionField": {
-                    "id" : uuid
-                },
-                "purchase": {
-                    "products": this.cart.getOrder().asList.map((o:OrderItem) => {
-                        return {
-                            "id": o.product.sku,
-                            "name": o.product.name,
-                            "price": o.product.getPrice(),
-                            "category": o.product.getCategories()[0] || "default",
-                            "quantity": o.amount
-                        };
-                    })
-                }
-            }
-        });
     }
 
     ngOnDestroy() {

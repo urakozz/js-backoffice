@@ -11,6 +11,8 @@ import {OrderStatuses} from "../../_models/enums/order-status.enum";
 import {OrderService} from "../../_services/order.service";
 import {UserService} from "../../_services/user.service";
 import {Product} from "../../_models/product";
+import {CategoryName} from "../../_models/enums/category.enum";
+import {MetrikaService} from "../../_services/metrika.service";
 
 @Component({
     selector: 'app-order-content-block',
@@ -67,24 +69,9 @@ export class OrderContentBlockComponent implements OnInit, OnDestroy {
         this.order.changeAmount(p, attrs, q);
         this.service.persist(this.order);
         if(q < 1) {
-            this._sendMetric(p);
+            MetrikaService._remove(p);
         }
     }
 
-    private _sendMetric(item: Product): void {
-        window.dataLayer.push({
-            "ecommerce": {
-                "currencyCode": "RUB",
-                "remove": {
-                    "products": [{
-                        "id": item.sku,
-                        "name": item.name,
-                        "price": item.getPrice(),
-                        "category": item.getCategories()[0] || "default"
-                    }]
-                }
-            }
-        });
-    }
 
 }
