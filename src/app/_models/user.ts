@@ -6,15 +6,10 @@ export class User implements Serializable<User> {
     realname: string;
     linkVk: string;
     address: Address[];
-    orders: string[];
     uuid: string;
     active: boolean;
     _rev: string;
     details: any;
-
-    // static newFromJSON(jsonObj: Object): User {
-    //     return new User().deserialize(jsonObj);
-    // }
 
     constructor() {
     }
@@ -22,14 +17,9 @@ export class User implements Serializable<User> {
 
     deserialize(o): User {
         o.details = o.details || {};
-        o.orders = Array.isArray(o.orders) ? o.orders : [];
         o.address = Array.isArray(o.address) ? o.address : [];
         o.address = o.address.map(a => new Address().deserialize(a));
         return Object.assign(new User(), o);
-    }
-
-    addOrderID(id: string) {
-        this.orders.push(id);
     }
 
     addAddress(a: Address) {

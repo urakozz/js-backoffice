@@ -26,8 +26,9 @@
             <md-card-header>
                 <md-card-title>{{getTitle(order)}}</md-card-title>
                 <md-card-subtitle>
-                    <span *ngIf="isAdmin">{{ order.authorName }}</span>
-                    <span>{{ order.uuid }}</span></md-card-subtitle>
+                    <span *ngIf="isAdmin">{{ order.details?.customer?.realname || order.authorName }} /</span>
+                    <span>{{ order.uuid }}</span>
+                </md-card-subtitle>
             </md-card-header>
             <md-card-content>
                 <div class="row">

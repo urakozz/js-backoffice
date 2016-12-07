@@ -132,7 +132,7 @@ export class OrdersComponent implements OnInit {
 
     getTitle(c: Order) {
         if (!this.isConfirmed(c)) {
-            return "Unconfirmed cart";
+            return "Cart [" + c.authorName + "]";
         }
         if (c.details.name) {
             return c.details.name;
