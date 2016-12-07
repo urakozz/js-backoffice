@@ -68,19 +68,32 @@
                     </div>
                 </div>
             </md-card-content>
-            <md-card-content #actions *ngIf="order.details?.address">
+            <md-card-content #actions *ngIf="order.details">
                 <div class="row">
                     <div class="col-xs">
                         <button md-button (click)="actions.__open = !actions.__open">
                             <md-icon class="msc-icon-middle" *ngIf="!actions.__open">keyboard_arrow_right</md-icon>
                             <md-icon class="msc-icon-middle" *ngIf="actions.__open">keyboard_arrow_down</md-icon>
-                            <span i18n>Address</span>
+                            <span i18n>Order details</span>
                         </button>
                     </div>
                 </div>
                 <div class="row" *ngIf="actions.__open">
                     <div class="col-xs">
-                        <app-address-read-block [address]="order.details?.address"></app-address-read-block>
+                        <md-tab-group>
+                            <md-tab>
+                                <template md-tab-label><span i18n>Address</span></template>
+                                <template md-tab-content>
+                                    <app-address-read-block [address]="order.details?.address"></app-address-read-block>
+                                </template>
+                            </md-tab>
+                            <md-tab *ngIf="isAdmin && order.details?.customer">
+                                <template md-tab-label><span i18n>Customer</span></template>
+                                <template md-tab-content>
+                                    <app-user-read-block [user]="order.details?.customer"></app-user-read-block>
+                                </template>
+                            </md-tab>
+                        </md-tab-group>
                     </div>
                 </div>
             </md-card-content>

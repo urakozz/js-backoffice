@@ -1,0 +1,16 @@
+<form class="msc-full-width">
+  <div class="form-group">
+    <md-input [value]="user?.name" name="name" disabled class="msc-full-width"></md-input>
+  </div>
+  <div class="form-group">
+    <md-input [value]="user?.realname" class="msc-full-width"
+              name="realname" disabled
+              placeholder="{{'Full Name' | i18n}}" ></md-input>
+  </div>
+
+  <div class="form-group">
+    <md-input [value]="user?.linkVk" class="msc-full-width"
+              name="linkVk" disabled
+              placeholder="{{'VK link' | i18n}}" ></md-input>
+  </div>
+</form>

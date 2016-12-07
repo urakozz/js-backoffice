@@ -1,4 +1,4 @@
-import {BrowserModule} from "@angular/platform-browser";
+import {BrowserModule, Title} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
@@ -53,6 +53,7 @@ import { OrderMessagesComponent } from './order-messages/order-messages.componen
 import { CartSuccessComponent } from './cart-success/cart-success.component';
 import {LazyLoadImageModule} from "./_infrastructure/modules/image-lazy-load.module";
 import {MetrikaService} from "./_services/metrika.service";
+import { UserReadBlockComponent } from './_components/user-read-block/user-read-block.component';
 
 export const ROUTES = [
     {
@@ -152,6 +153,7 @@ export const ROUTES = [
         AddressReadBlockComponent,
         OrderMessagesComponent,
         CartSuccessComponent,
+        UserReadBlockComponent,
     ],
     imports: [
         BrowserModule,
@@ -168,6 +170,7 @@ export const ROUTES = [
         AdminAuthGuardService, AuthGuardService,
         MailService,
         MetrikaService,
+        Title,
         {provide: I18nService, useFactory: () => new I18nService().init(TRANSLATION)},
         {provide: APP_BASE_HREF, useValue : "/" },
         {provide: SENDGRID_KEY, useValue: environment.MAIL_KEY},

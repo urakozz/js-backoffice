@@ -168,6 +168,9 @@ export class OrdersComponent implements OnInit {
     }
 
     get statusList() {
+        if(this.isAdmin){
+            return OrderStatuses.asList
+        }
         return OrderStatuses.asList.filter(s => s !== OrderStatuses.CART);
     }
 

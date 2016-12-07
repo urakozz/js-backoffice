@@ -180,6 +180,12 @@ export const TRANSLATION = {
         },
         "Palette": {
             ru:"Палитра"
+        },
+        "Order details":{
+            ru:"Детали заказа"
+        },
+        "Customer":{
+            ru:"Покупатель"
         }
     }
 };
