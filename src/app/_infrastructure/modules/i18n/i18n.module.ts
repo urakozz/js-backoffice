@@ -6,7 +6,7 @@ import {TRANSLATION} from "./translations/translation";
 
 @NgModule({
     declarations: [I18nPipe, I18nDirective],
-    exports: [I18nPipe, I18nDirective, I18nService],
+    exports: [I18nPipe, I18nDirective],
     providers:[
         {provide: I18nService, useFactory: () => new I18nService().init(TRANSLATION)},
     ]

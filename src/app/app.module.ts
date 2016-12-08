@@ -35,10 +35,6 @@ import {ProductPdpBlockComponent} from "./_components/product-pdp-block/product-
 import {DialogPaletteBlockComponent} from "./_components/dialog-palette-block/dialog-palette-block.component";
 import {DialogLoginBlockComponent} from "./_components/dialog-login-block/dialog-login-block.component";
 import {LowercaseDirective} from "./_infrastructure/directives/lowercase.directive";
-import {I18nService} from "./_infrastructure/modules/i18n/i18n.service";
-import {I18nPipe} from "./_infrastructure/modules/i18n/i18n.pipe";
-import {TRANSLATION} from "./_infrastructure/modules/i18n/translations/translation";
-import { I18nDirective } from "./_infrastructure/modules/i18n/i18n.directive";
 import { AutogrowDirective } from "./_infrastructure/directives/autogrow.directive";
 import { RegistrationConfirmationComponent } from "./registration-confirmation/registration-confirmation.component";
 import {MailService, SENDGRID_KEY} from "./_services/mail.service";
@@ -55,6 +51,7 @@ import {LazyLoadImageModule} from "./_infrastructure/modules/image-lazy-load/ima
 import {MetrikaService} from "./_services/metrika.service";
 import { UserReadBlockComponent } from './_components/user-read-block/user-read-block.component';
 import {ImageZoomModule} from "./_infrastructure/modules/image-zoom/image-zoom.module";
+import {I18nModule} from "./_infrastructure/modules/i18n/i18n.module";
 
 export const ROUTES = [
     {
@@ -146,8 +143,6 @@ export const ROUTES = [
         DialogPaletteBlockComponent,
         DialogLoginBlockComponent,
         LowercaseDirective,
-        I18nPipe,
-        I18nDirective,
         AutogrowDirective,
         RegistrationConfirmationComponent,
         UsersComponent,
@@ -164,7 +159,8 @@ export const ROUTES = [
         HttpModule,
         RouterModule.forRoot(ROUTES),
         MaterialModule.forRoot(),
-        ImageZoomModule
+        ImageZoomModule,
+        I18nModule
     ],
     entryComponents: [DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog],
     providers: [
@@ -173,7 +169,6 @@ export const ROUTES = [
         MailService,
         MetrikaService,
         Title,
-        {provide: I18nService, useFactory: () => new I18nService().init(TRANSLATION)},
         {provide: APP_BASE_HREF, useValue : "/" },
         {provide: SENDGRID_KEY, useValue: environment.MAIL_KEY},
         {provide: FirebaseDB, useFactory: () => {

@@ -189,6 +189,9 @@ export const TRANSLATION = {
         },
         "Repeat password" : {
             ru:"Повторите пароль"
+        },
+        "Minimal order price is 400 rub" : {
+            ru:"Минимальная стоимость заказа - 400 руб"
         }
     }
 };

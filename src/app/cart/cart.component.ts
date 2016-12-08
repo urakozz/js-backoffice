@@ -66,6 +66,14 @@ export class CartComponent implements OnInit {
         return !this.cart || this.cart.isEmpty()
     }
 
+    get canConfirmCard(){
+        return this.cart.count > 0 && this.cart.getOrder().totalPrice >= 400
+    }
+
+    get cartErrors(){
+        return [].concat(this.cart.getOrder().totalPrice < 400 ? ["Minimal order price is 400 rub"] : [])
+    }
+
     newCart() {
         this.cart.setCart(new Order(this.userService.getUser().name))
     }
