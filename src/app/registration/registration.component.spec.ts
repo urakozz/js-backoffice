@@ -6,7 +6,7 @@ import {DebugElement} from "@angular/core";
 import {RegistrationComponent} from "./registration.component";
 import {MaterialModule} from "@angular/material";
 import {RegistrationBlockComponent} from "../_components/registration-block/registration-block.component";
-import {I18nPipe} from "../_infrastructure/pipes/i18n.pipe";
+import {I18nPipe} from "../_infrastructure/modules/i18n/i18n.pipe";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {ROUTES} from "../app.module";
@@ -31,7 +31,7 @@ import {ProductEditComponent} from "../product-edit/product-edit.component";
 import {ProfileComponent} from "../profile/profile.component";
 import {AppComponent} from "../app.component";
 import {LoginBlockComponent} from "../_components/login-block/login.component";
-import {I18nDirective} from "../_infrastructure/directives/i18n.directive";
+import {I18nDirective} from "../_infrastructure/modules/i18n/i18n.directive";
 import {HttpModule} from "@angular/http";
 import {APP_BASE_HREF} from "@angular/common";
 import {UserService} from "../_services/user.service";
@@ -40,8 +40,8 @@ import {CartService} from "../_services/cart.service";
 import {BackendService} from "../_services/backend.service";
 import {BackendProductService} from "../_services/backend-product.service";
 import {BackendOrderService} from "../_services/backend-order.service";
-import {I18nService} from "../_services/i18n.service";
-import {TRANSLATION} from "../_infrastructure/translations/translation";
+import {I18nService} from "../_infrastructure/modules/i18n/i18n.service";
+import {TRANSLATION} from "../_infrastructure/modules/i18n/translations/translation";
 
 describe("RegistrationComponent", () => {
     let component: RegistrationComponent;

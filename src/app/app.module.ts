@@ -35,10 +35,10 @@ import {ProductPdpBlockComponent} from "./_components/product-pdp-block/product-
 import {DialogPaletteBlockComponent} from "./_components/dialog-palette-block/dialog-palette-block.component";
 import {DialogLoginBlockComponent} from "./_components/dialog-login-block/dialog-login-block.component";
 import {LowercaseDirective} from "./_infrastructure/directives/lowercase.directive";
-import {I18nService} from "./_services/i18n.service";
-import {I18nPipe} from "./_infrastructure/pipes/i18n.pipe";
-import {TRANSLATION} from "./_infrastructure/translations/translation";
-import { I18nDirective } from "./_infrastructure/directives/i18n.directive";
+import {I18nService} from "./_infrastructure/modules/i18n/i18n.service";
+import {I18nPipe} from "./_infrastructure/modules/i18n/i18n.pipe";
+import {TRANSLATION} from "./_infrastructure/modules/i18n/translations/translation";
+import { I18nDirective } from "./_infrastructure/modules/i18n/i18n.directive";
 import { AutogrowDirective } from "./_infrastructure/directives/autogrow.directive";
 import { RegistrationConfirmationComponent } from "./registration-confirmation/registration-confirmation.component";
 import {MailService, SENDGRID_KEY} from "./_services/mail.service";
@@ -51,9 +51,10 @@ import {environment} from "../environments/environment";
 import {FirebaseDB, firebaseDbInitializer} from "./_services/firebase-db.service";
 import { OrderMessagesComponent } from './order-messages/order-messages.component';
 import { CartSuccessComponent } from './cart-success/cart-success.component';
-import {LazyLoadImageModule} from "./_infrastructure/modules/image-lazy-load.module";
+import {LazyLoadImageModule} from "./_infrastructure/modules/image-lazy-load/image-lazy-load.module";
 import {MetrikaService} from "./_services/metrika.service";
 import { UserReadBlockComponent } from './_components/user-read-block/user-read-block.component';
+import {ImageZoomModule} from "./_infrastructure/modules/image-zoom/image-zoom.module";
 
 export const ROUTES = [
     {
@@ -163,6 +164,7 @@ export const ROUTES = [
         HttpModule,
         RouterModule.forRoot(ROUTES),
         MaterialModule.forRoot(),
+        ImageZoomModule
     ],
     entryComponents: [DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog],
     providers: [

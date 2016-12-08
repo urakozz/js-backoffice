@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Renderer, AfterContentInit} from "@angular/core";
-import {I18nService} from "../../_services/i18n.service";
+import {I18nService} from "./i18n.service";
 
 @Directive({
     selector: "[i18n]"

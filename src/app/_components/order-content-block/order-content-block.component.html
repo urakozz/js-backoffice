@@ -1,6 +1,6 @@
 <md-card *ngFor="let item of order.asList" class="msc-v-margin" #container ><!-- [@flyInOut]="true" -->
     <md-card-header>
-        <img md-card-avatar [src]="item.product.image">
+        <img md-card-avatar [src]="item.product.image" [imageZoom]="item.product.image">
         <md-card-title>{{item.product.name}}</md-card-title>
         <!--<md-card-subtitle><span [innerHTML]="item.product.description | linkly"></span></md-card-subtitle>-->
         <md-card-subtitle>{{item.product.sku}} <span i18n>Price</span>: <b>{{item.product.price * item.amount}}</b> Rub</md-card-subtitle>

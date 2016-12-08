@@ -25,22 +25,22 @@ import {AllowNumbersDirective} from "../_infrastructure/directives/allow-numbers
 import {ProductPdpBlockComponent} from "../_components/product-pdp-block/product-pdp-block.component";
 import {DialogLoginBlockComponent} from "../_components/dialog-login-block/dialog-login-block.component";
 import {LowercaseDirective} from "../_infrastructure/directives/lowercase.directive";
-import {I18nPipe} from "../_infrastructure/pipes/i18n.pipe";
-import {I18nDirective} from "../_infrastructure/directives/i18n.directive";
+import {I18nPipe} from "../_infrastructure/modules/i18n/i18n.pipe";
+import {I18nDirective} from "../_infrastructure/modules/i18n/i18n.directive";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
 import {MaterialModule} from "@angular/material";
 import {ROUTES} from "../app.module";
 import {UserService} from "../_services/user.service";
-import {I18nService} from "../_services/i18n.service";
+import {I18nService} from "../_infrastructure/modules/i18n/i18n.service";
 import {APP_BASE_HREF} from "@angular/common";
 import {OrderService} from "../_services/order.service";
 import {CartService} from "../_services/cart.service";
 import {BackendService} from "../_services/backend.service";
 import {BackendProductService} from "../_services/backend-product.service";
 import {BackendOrderService} from "../_services/backend-order.service";
-import {TRANSLATION} from "../_infrastructure/translations/translation";
+import {TRANSLATION} from "../_infrastructure/modules/i18n/translations/translation";
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;

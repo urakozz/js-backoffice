@@ -23,6 +23,7 @@
     "@angular/router": "~3.1.0",
     "@types/autolinker": "^0.24.28",
     "@types/numeral": "0.0.18",
+    "angular2-image-zoom": "^1.0.3",
     "autolinker": "^1.2.1",
     "core-js": "^2.4.1",
     "firebase": "^3.6.1",
