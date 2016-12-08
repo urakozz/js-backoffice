@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {TRANSLATION} from "./translations/translation";
 
 @Injectable()
 export class I18nService {
@@ -9,6 +10,9 @@ export class I18nService {
     // private lang: any;
 
     constructor() {
+
+        this.init(TRANSLATION)
+
     }
 
     setUserLang(lang: string): void {

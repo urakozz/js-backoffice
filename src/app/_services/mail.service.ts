@@ -1,6 +1,7 @@
 import {Injectable, Inject} from "@angular/core";
-import {Http, Headers, RequestMethod, RequestOptions, Request} from "@angular/http";
+import {Http, Headers, RequestMethod, RequestOptions, Request, Response} from "@angular/http";
 import {DOCUMENT} from "@angular/platform-browser";
+import {Observable} from "rxjs";
 
 export const SENDGRID_KEY: string = "";
 
@@ -18,7 +19,7 @@ export class MailService {
     constructor(private http: Http, @Inject(DOCUMENT) private document, @Inject(SENDGRID_KEY) private key) {
     }
 
-    sendConfirmation(email, name, code) {
+    sendConfirmation(email, name, code):Observable<Response> {
         return this.http.request(new Request(new RequestOptions({
             method: RequestMethod.Put,
             url: this.host + "/v3/mail/send",

@@ -52,7 +52,7 @@ export class OrderSelectedAttribute implements Serializable<OrderSelectedAttribu
     }
 
 
-    deserialize(jsonObj: Object) {
+    deserialize(jsonObj: Object):OrderSelectedAttribute {
         let o = Object.assign(new OrderSelectedAttribute(), jsonObj);
         o.attribute = ProductSelectableAttribute.newFromJSON(o.attribute);
         return o;

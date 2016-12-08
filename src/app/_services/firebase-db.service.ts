@@ -3,6 +3,9 @@
  */
 
 import * as firebase from "firebase";
+import {OpaqueToken, Inject} from "@angular/core";
+
+export let FIREBASE_KEY = new OpaqueToken("firebase.key");
 
 
 export class FirebaseDB {

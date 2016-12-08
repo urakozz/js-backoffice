@@ -10,6 +10,7 @@ import {User, Address} from "../_models/user";
 import {OrderStatuses} from "../_models/enums/order-status.enum";
 import {BackendUserService} from "../_services/backend-user-service.service";
 import {MetrikaService} from "../_services/metrika.service";
+import {OrderSelectedAttribute} from "../_models/category";
 
 @Component({
     selector: "app-cart-confirm",
@@ -98,7 +99,7 @@ export class CartConfirmComponent implements OnInit, OnDestroy {
         this._subscription.unsubscribe();
     }
 
-    listAttributes(item: OrderItem) {
+    listAttributes(item: OrderItem):OrderSelectedAttribute[] {
         return item ? item.selectedAttributes.getList() : [];
     }
 

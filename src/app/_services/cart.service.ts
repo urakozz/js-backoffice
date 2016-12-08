@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 import {OrderStatuses, OrderStatus} from "../_models/enums/order-status.enum";
 import {Product} from "../_models/product";
 import {OrderSelectedAttributeList} from "../_models/category";
+import {OrderItem} from "../_models/order-item";
 
 @Injectable()
 export class CartService {
@@ -34,7 +35,7 @@ export class CartService {
 
 
     private _AwesomeInitFromLocal() {
-        this._loadLocalCartObservable(localStorage.getItem(this.LSKey)).catch((e:Error) => {
+        this._loadLocalCartObservable(localStorage.getItem(this.LSKey)).catch((e: Error) => {
             localStorage.removeItem(this.LSKey);
             return this._loadLastCartObservable()
         }).subscribe((c) => {
@@ -47,10 +48,13 @@ export class CartService {
             return Observable.throw(new Error("empty uuid"))
         }
         return this.backend.getOrder(uuid).switchMap(c => {
-            if (c.authorName !== this.userService.getUser().name) {
-                return Observable.throw(new Error("cart belongs to other user"));
+            if (c.authorName === this.userService.getUser().name) {
+                return Observable.of(c);
             }
-            return Observable.of(c);
+            if (this.userService.isAdmin) {
+                return Observable.of(c);
+            }
+            return Observable.throw(new Error("cart belongs to other user"));
         })
     }
 
@@ -101,7 +105,7 @@ export class CartService {
         return i;
     }
 
-    get asList() {
+    get asList():OrderItem[] {
         return this.cart.asList;
     }
 

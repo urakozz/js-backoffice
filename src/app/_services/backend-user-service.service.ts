@@ -4,7 +4,7 @@ import {LoginUser, User, LoginUserInterface, SaveUser} from "../_models/user";
 import {Observable} from "rxjs";
 import {RequestMethod, Request, Http, Headers, RequestOptions, URLSearchParams} from "@angular/http";
 
-interface OkResponse{
+export interface OkResponse{
     ok: string;
 }
 export interface SessionResponse extends OkResponse {

@@ -44,7 +44,7 @@ import {AddressReadBlockComponent} from "./_components/address-block/address-rea
 import {AdminAuthGuardService, AuthGuardService} from "./_services/auth-guard.service";
 import {environment} from "../environments/environment";
 
-import {FirebaseDB, firebaseDbInitializer} from "./_services/firebase-db.service";
+import {FirebaseDB, firebaseDbInitializer, FIREBASE_KEY} from "./_services/firebase-db.service";
 import { OrderMessagesComponent } from './order-messages/order-messages.component';
 import { CartSuccessComponent } from './cart-success/cart-success.component';
 import {LazyLoadImageModule} from "./_infrastructure/modules/image-lazy-load/image-lazy-load.module";
@@ -170,10 +170,9 @@ export const ROUTES = [
         MetrikaService,
         Title,
         {provide: APP_BASE_HREF, useValue : "/" },
+        {provide: FIREBASE_KEY, useValue : environment.DATABASE_KEY },
         {provide: SENDGRID_KEY, useValue: environment.MAIL_KEY},
-        {provide: FirebaseDB, useFactory: () => {
-            return firebaseDbInitializer(environment.DATABASE_KEY);
-        }},
+        {provide: FirebaseDB, useFactory: firebaseDbInitializer, deps:[FIREBASE_KEY]},
     ],
     bootstrap: [AppComponent]
 })

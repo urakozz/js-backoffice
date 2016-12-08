@@ -4,7 +4,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {Subscription, Observable} from "rxjs";
 import {UserService} from "../_services/user.service";
 
-interface MessageObject {
+export interface MessageObject {
     name: string;
     message: string;
 }

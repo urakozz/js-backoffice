@@ -33,7 +33,7 @@
         </button>
     </md-card-actions>
 
-    <md-card-content class="msc-errors">
+    <md-card-content class="msc-errors" *ngIf="cartErrors.length">
         <md-list>
             <md-list-item *ngFor="let err of cartErrors">
                 <span>{{err | i18n}}</span>

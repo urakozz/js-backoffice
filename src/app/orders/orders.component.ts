@@ -9,7 +9,7 @@ import {UserService} from "../_services/user.service";
 import {MdDialog} from "@angular/material";
 import {Observable, Subscription, Subject} from "rxjs";
 
-interface OrdersQueryAttributes {
+export interface OrdersQueryAttributes {
     user: string;
     status: OrderStatus;
 }

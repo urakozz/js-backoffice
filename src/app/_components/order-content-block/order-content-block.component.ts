@@ -11,8 +11,9 @@ import {OrderStatuses} from "../../_models/enums/order-status.enum";
 import {OrderService} from "../../_services/order.service";
 import {UserService} from "../../_services/user.service";
 import {Product} from "../../_models/product";
-import {CategoryName} from "../../_models/enums/category.enum";
 import {MetrikaService} from "../../_services/metrika.service";
+import {OrderSelectedAttribute} from "../../_models/category";
+
 
 @Component({
     selector: 'app-order-content-block',
@@ -52,7 +53,7 @@ export class OrderContentBlockComponent implements OnInit, OnDestroy {
         return attr ? attr.value : null;
     }
 
-    listAttributes(item: OrderItem) {
+    listAttributes(item: OrderItem):OrderSelectedAttribute[] {
         return item ? item.selectedAttributes.getList() : []
     }
 
