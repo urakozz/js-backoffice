@@ -22,10 +22,11 @@ export enum CategoryType {
     F,
     CV,
     OTHER,
-    TIS
+    TIS,
+    FON
 }
 export const CategoryName = {
-    [CategoryType.BN]: "Бантики",
+    // [CategoryType.BN]: "Бантики",
     [CategoryType.BAB]: "Бабочки",
     [CategoryType.B]: "Бордюры",
     [CategoryType.VET]: "Веточки",
@@ -45,7 +46,8 @@ export const CategoryName = {
     [CategoryType.SC]: "Сердечки",
     [CategoryType.CF]: "Салфетки",
     [CategoryType.UG]: "Уголки",
-    [CategoryType.F]: "Фигуры и фоны",
+    [CategoryType.F]: "Фигуры",
+    [CategoryType.FON]: "Фоны",
     [CategoryType.CV]: "Цветы",
     [CategoryType.OTHER]: "Другое",
     [CategoryType.TIS]: "Тиснение",
@@ -72,31 +74,41 @@ export const CategoryArticleCode: {[key: number]: string[]} = {
     [CategoryType.CF]: ["Сф"],
     [CategoryType.UG]: ["Уг"],
     [CategoryType.F]: ["Ф"],
+    [CategoryType.FON]: ["Фон"],
     [CategoryType.CV]: ["Цв"],
     [CategoryType.OTHER]: ["ДР"],
     [CategoryType.TIS]: ["Тис"],
+};
+
+export interface CategoryDetails {
+    key: number;
+    name: string;
+    codes: string[];
 }
 
-export const CategoryList = Object.keys(CategoryName)
-    .map(k => new Object({
-        key: parseInt(k, 10),
-        name: CategoryName[k],
-        codes: CategoryArticleCode[k].map(s => s.toUpperCase())
-    }));
+export const CategoryList: CategoryDetails[] = Object.keys(CategoryName)
+    .map(k => {
+        return {
+            key: parseInt(k, 10),
+            name: CategoryName[k],
+            codes: CategoryArticleCode[k].map(s => s.toUpperCase())
+        }
+    });
 
-export class Category {
 
-    static getNames() {
-        return Object.keys(CategoryType).filter(v => isNaN(parseInt(v, 10)));
-    }
-
-    static getValues() {
-        return Object.keys(CategoryType).map(v => parseInt(v, 10)).filter(v => !isNaN(v));
-    }
-
-    static getNamesAndValues() {
-        return Category.getValues().map(v => {
-            return {name: CategoryType[v] as string, value: v};
-        });
-    }
-}
+// export class Category {
+//
+//     static getNames() {
+//         return Object.keys(CategoryType).filter(v => isNaN(parseInt(v, 10)));
+//     }
+//
+//     static getValues() {
+//         return Object.keys(CategoryType).map(v => parseInt(v, 10)).filter(v => !isNaN(v));
+//     }
+//
+//     static getNamesAndValues() {
+//         return Category.getValues().map(v => {
+//             return {name: CategoryType[v] as string, value: v};
+//         });
+//     }
+// }

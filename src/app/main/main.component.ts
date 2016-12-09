@@ -3,7 +3,7 @@ import {Location} from "@angular/common";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Product} from "../_models/product";
 import {Subject, Observable, Subscription} from "rxjs";
-import {CategoryList, CategoryType} from "../_models/enums/category.enum";
+import {CategoryList, CategoryType, CategoryDetails} from "../_models/enums/category.enum";
 import {BackendProductService} from "../_services/backend-product.service";
 import {ProductSorter} from "../_infrastructure/product-sorter";
 import {MdDialog, MdDialogConfig, MdDialogRef} from "@angular/material";
@@ -25,7 +25,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private _dialogLogin: MdDialogRef<DialogLoginBlockComponent>;
 
     protected productsAll: Product[] = [];
-    categoryList = CategoryList;
+    categoryList: CategoryDetails[] = CategoryList;
     products: Product[] = [];
 
     loading = true;
@@ -39,10 +39,10 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        let category = 0;
+        let category = CategoryList[0].key;
         let search = "";
         this._route.queryParams.forEach((params: Params) => {
-            category = +params["category"] || 0;
+            category = +params["category"] || category;
             search = decodeURIComponent(params["search"] || "") ;
         });
         this._storage.getAllDocs().first().subscribe(docs => {

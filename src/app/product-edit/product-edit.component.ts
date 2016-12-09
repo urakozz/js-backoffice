@@ -5,7 +5,7 @@ import {Subject, Observable} from "rxjs";
 import {FormGroup, FormBuilder, Validators, FormControl, FormArray} from "@angular/forms";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {AttributeTypes, ProductSelectableAttribute} from "../_models/category";
-import {CategoryList} from "../_models/enums/category.enum";
+import {CategoryList, CategoryDetails} from "../_models/enums/category.enum";
 import {BackendProductService} from "../_services/backend-product.service";
 import {Uuid} from "../_infrastructure/uuid";
 
@@ -25,6 +25,8 @@ export class ProductEditComponent implements OnInit {
     public form: FormGroup;
     private attributesDefault: FormArray;
     private attributes: FormArray;
+
+    public catList:CategoryDetails[] = CategoryList;
 
     constructor(private _router: Router,
                 private _route: ActivatedRoute,
@@ -116,10 +118,6 @@ export class ProductEditComponent implements OnInit {
 
     get colorKeys() {
         return Object.keys(this.attributes.controls);
-    }
-
-    get catList() {
-        return CategoryList;
     }
 
     delete(e) {
