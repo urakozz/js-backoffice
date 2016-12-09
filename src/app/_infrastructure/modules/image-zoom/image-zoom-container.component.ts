@@ -8,7 +8,7 @@ import {ImageZoomDirective} from './image-zoom.directive';
     selector: 'image-zoom-container',
     template: `
 <div class="image-zoom-wrapper" [style.height]="displayHeight + 'px'" [style.margin-top]="marginTop + 'px'">
-    <img class="image-zoom-wrapper__img" [src]="src" >
+    <img class="image-zoom-wrapper__img" [src]="src" *ngIf="src">
 </div>`,
     styles: [`
         :host {
