@@ -1,3 +1,6 @@
 .msc-button-margin {
     margin: 5px;
 }
+md-card-header{
+    height: auto;
+}
