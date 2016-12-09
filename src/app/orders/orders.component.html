@@ -82,17 +82,15 @@
                 <div class="row" *ngIf="actions.__open">
                     <div class="col-xs">
                         <md-tab-group>
-                            <md-tab>
-                                <template md-tab-label><span i18n>Address</span></template>
-                                <template md-tab-content>
-                                    <app-address-read-block [address]="order.details?.address"></app-address-read-block>
-                                </template>
+                            <md-tab label="{{'Address' | i18n}}">
+
+                                <app-address-read-block [address]="order.details?.address"></app-address-read-block>
+
                             </md-tab>
-                            <md-tab *ngIf="isAdmin && order.details?.customer">
-                                <template md-tab-label><span i18n>Customer</span></template>
-                                <template md-tab-content>
-                                    <app-user-read-block [user]="order.details?.customer"></app-user-read-block>
-                                </template>
+                            <md-tab *ngIf="isAdmin && order.details?.customer" label="{{'Customer' | i18n}}">
+
+                                <app-user-read-block [user]="order.details?.customer"></app-user-read-block>
+
                             </md-tab>
                         </md-tab-group>
                     </div>
