@@ -4,7 +4,6 @@ import {Router} from "@angular/router";
 import {CartService} from "./_services/cart.service";
 import {Observable} from "rxjs";
 import {MdMenu} from "@angular/material";
-import {FirebaseDB} from "./_services/firebase-db.service";
 
 @Component({
     selector: "app-root",
@@ -43,11 +42,10 @@ export class AppComponent implements OnInit {
     }
 
     logout(m: MdMenu) {
-        let s = m.close.subscribe(() => {
-            s.unsubscribe();
+        // m.close.first().subscribe(() => {
             this.userService.logout();
             this.router.navigate(["/"]);
-        });
+        // });
     }
 
 }
