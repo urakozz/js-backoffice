@@ -1,8 +1,9 @@
 import {ErrorHandler} from "@angular/core";
 import * as Raven from 'raven-js';
+import {environment} from '../../environments/environment';
 
 Raven
-    .config('https://d400d891cab8491da2779e7ca3504d17@sentry.io/121302')
+    .config(environment.RAVEN_URL)
     .install();
 
 export class CustomErrorHandler implements ErrorHandler {

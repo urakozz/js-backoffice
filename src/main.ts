@@ -9,6 +9,7 @@ if (environment.production) {
     enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule).catch((e) => {
+var boot = platformBrowserDynamic().bootstrapModule(AppModule);
+boot.catch((e) => {
     document.querySelector("app-kaput").classList.remove("hidden")
 });
