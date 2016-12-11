@@ -25,6 +25,14 @@
     display: none;
 }
 
+.msc-loading__text{
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
 .msc-loading__logo{
     display: block;
     margin-top: 5px;

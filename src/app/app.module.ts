@@ -1,5 +1,5 @@
 import {BrowserModule, Title} from "@angular/platform-browser";
-import {NgModule} from "@angular/core";
+import {NgModule, ErrorHandler} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {MaterialModule} from "@angular/material";
@@ -52,6 +52,8 @@ import {MetrikaService} from "./_services/metrika.service";
 import { UserReadBlockComponent } from './_components/user-read-block/user-read-block.component';
 import {ImageZoomModule} from "./_infrastructure/modules/image-zoom/image-zoom.module";
 import {I18nModule} from "./_infrastructure/modules/i18n/i18n.module";
+import {CustomErrorHandler} from "./_infrastructure/error-handler";
+import {RAVEN_URL, RavenLoggerService} from "./_services/raven-logger.service";
 
 export const ROUTES = [
     {
@@ -169,10 +171,13 @@ export const ROUTES = [
         MailService,
         MetrikaService,
         Title,
+        RavenLoggerService,
         {provide: APP_BASE_HREF, useValue : "/" },
         {provide: FIREBASE_KEY, useValue : environment.DATABASE_KEY },
         {provide: SENDGRID_KEY, useValue: environment.MAIL_KEY},
+        {provide: RAVEN_URL, useValue: environment.RAVEN_URL},
         {provide: FirebaseDB, useFactory: firebaseDbInitializer, deps:[FIREBASE_KEY]},
+        {provide: ErrorHandler, useClass: CustomErrorHandler}
     ],
     bootstrap: [AppComponent]
 })

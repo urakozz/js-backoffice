@@ -14,6 +14,7 @@ interface Pace {
     trigger(event: string);
 }
 
-//declare var FirebaseDB: any;
+// declare module 'raven-js';
+
 
 interface Window { Pace: Pace; dataLayer:Array<any>}

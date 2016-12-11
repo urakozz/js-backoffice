@@ -25,7 +25,9 @@ export class AppComponent implements OnInit {
                 window.Pace.stop();
                 window.Pace = null;
             }
-            document.querySelector("app-loading").remove();
+            // document.querySelector("app-loading").remove();
+            let appLoad = document.querySelector("app-loading");
+            appLoad.parentNode.removeChild(appLoad);
         });
     }
 

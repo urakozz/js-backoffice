@@ -2,7 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Madam Scrap</title>
+    <title>Madam Scrap. Скрапбукинг: вырубка и тиснение.</title>
+    <meta name="description"
+          content="Огромный выбор качественной вырубки и тиснения из красивой и разнообразной бумаги. Бесплатная доставка по РФ.">
     <base href="/">
     <script data-pace-options='{ "target": "app-loading"}' src="/assets/pace.js"></script>
     <link href="/assets/pace.css" rel="stylesheet"/>
@@ -16,40 +18,64 @@
 </head>
 <body>
 <app-loading></app-loading>
+<app-kaput class="hidden">
+    <div class="msc-loading">
+        <div class="msc-loading__text">
+            <p>Oops, looks like your browser is too old. </p>
+            <p>We did all the best to create our website, but you need to update your browser to make this website
+                work.</p>
+            <p>
+                <a href="https://www.google.com/chrome/">
+                    <img height="32" width="32" src="/assets/google-chrome-icon.png">
+                    Click here to download latest Google Chrome
+                </a>
+            </p>
+        </div>
+        <div class="msc-loading__logo"></div>
+    </div>
+</app-kaput>
 <app-root>
     <div class="msc-loading">
         <div class="msc-loading__logo"></div>
     </div>
 </app-root>
+
 </body>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
+        (w[c] = w[c] || []).push(function () {
             try {
                 w.yaCounter41367379 = new Ya.Metrika({
-                    id:41367379,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    trackHash:true,
-                    ecommerce:"dataLayer"
+                    id: 41367379,
+                    clickmap: true,
+                    trackLinks: true,
+                    accurateTrackBounce: true,
+                    trackHash: true,
+                    ecommerce: "dataLayer"
                 });
-            } catch(e) { }
+            } catch (e) {
+            }
         });
 
         var n = d.getElementsByTagName("script")[0],
             s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
+            f = function () {
+                n.parentNode.insertBefore(s, n);
+            };
         s.type = "text/javascript";
         s.async = true;
         s.src = "https://mc.yandex.ru/metrika/watch.js";
 
         if (w.opera == "[object Opera]") {
             d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
+        } else {
+            f();
+        }
     })(document, window, "yandex_metrika_callbacks");
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/41367379" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript>
+    <div><img src="https://mc.yandex.ru/watch/41367379" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
 <!-- /Yandex.Metrika counter -->
 </html>

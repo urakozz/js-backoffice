@@ -6,5 +6,6 @@
 export const environment = {
     production: false,
     MAIL_KEY:"test",
-    DATABASE_KEY:"testdb"
+    DATABASE_KEY:"testdb",
+    RAVEN_URL:"",
 };
