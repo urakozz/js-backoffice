@@ -1,4 +1,7 @@
-import {Component, OnInit, OnDestroy, ViewContainerRef} from "@angular/core";
+import {
+    Component, OnInit, OnDestroy, ViewContainerRef, ChangeDetectorRef,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {Location} from "@angular/common";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Product} from "../_models/product";
@@ -14,7 +17,8 @@ import {isNullOrUndefined} from "util";
 @Component({
     selector: "app-main",
     templateUrl: "./main.component.html",
-    styleUrls: ["./main.component.scss"]
+    styleUrls: ["./main.component.scss"],
+    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent implements OnInit, OnDestroy {
     private _searchTermStream = new Subject<string>();
@@ -35,7 +39,8 @@ export class MainComponent implements OnInit, OnDestroy {
                 private dialog: MdDialog,
                 private viewContainerRef: ViewContainerRef,
                 private _route: ActivatedRoute,
-                private _location: Location) {
+                private _location: Location,
+                private cd: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -65,7 +70,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this._searchTermStream.next(term);
     }
 
-    searchTermChange(t: string) {
+    protected searchTermChange(t: string) {
         console.log("searchTermChange", t);
         this._location.go("/", "search=" + encodeURIComponent(t));
         Observable.of(this.productsAll).subscribe((arr) => {
@@ -78,14 +83,17 @@ export class MainComponent implements OnInit, OnDestroy {
             }
             f = f.slice(0, 40);
             this.products = f;
+            // this.cd.markForCheck();
         });
     }
 
 
     categoryChange(cat: CategoryType) {
         if (isNullOrUndefined(cat) || isNaN(cat) || <string><any>cat === "") {
+            // what have i wrote here
             this.selectedCategory = null;
             this.products = [];
+            // this.cd.markForCheck();
         } else {
             this._location.go("/", "category=" + cat);
             this.selectedCategory = cat;
@@ -94,6 +102,7 @@ export class MainComponent implements OnInit, OnDestroy {
             this._searchTerm = "";
             Observable.of(this.productsAll).subscribe(p => {
                 this.products = p.filter((p_: Product) => p_.category === cat);
+                // this.cd.markForCheck();
             });
         }
     }
@@ -134,6 +143,7 @@ export class MainComponent implements OnInit, OnDestroy {
         let s = this._dialogPalette.afterClosed().subscribe(() => {
             this._dialogPalette = null;
             s.unsubscribe();
+            // this.cd.markForCheck();
         });
 
     }

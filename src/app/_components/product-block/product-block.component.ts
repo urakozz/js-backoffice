@@ -1,4 +1,7 @@
-import {Component, OnInit, Input, EventEmitter, Output} from "@angular/core";
+import {
+    Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy,
+    ChangeDetectorRef
+} from "@angular/core";
 import {
     OrderSelectedAttributeList, ColorOptions, OrderSelectedAttribute,
     ProductSelectableAttribute
@@ -14,10 +17,12 @@ import {MetrikaService} from "../../_services/metrika.service";
 @Component({
     selector: "app-product-block",
     templateUrl: "./product-block.component.html",
-    styleUrls: ["./product-block.component.scss"]
+    styleUrls: ["./product-block.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductBlockComponent implements OnInit {
 
+    public colorOptions = ColorOptions;
     selectedAmount: number = 1;
     defaultSelectedColor: number = 0;
     selectedAttributes: OrderSelectedAttributeList = new OrderSelectedAttributeList();
@@ -33,17 +38,14 @@ export class ProductBlockComponent implements OnInit {
 
     constructor(protected basket: CartService,
                 protected router: Router,
-                protected _userService: UserService) {
+                protected _userService: UserService,
+                protected cd: ChangeDetectorRef) {
     }
 
     ngOnInit() {
         this.listAttributes.forEach(a => {
             this.selectedAttributes.push(new OrderSelectedAttribute(a, this.defaultSelectedColor));
         });
-    }
-
-    get colorOptions() {
-        return ColorOptions;
     }
 
     get listAttributes() {
@@ -94,10 +96,12 @@ export class ProductBlockComponent implements OnInit {
         this.justSaved = true;
         Observable.of(false).delay(500).subscribe(b => {
             this.justSaved = b;
+            this.cd.markForCheck();
         });
     }
 
     _doAdd(){
+        console.log(this.item, this.selectedAttributes, this.selectedAmount);
         this.basket.add(this.item, this.selectedAttributes, this.selectedAmount);
         MetrikaService._add(this.item, this.selectedAmount);
     }

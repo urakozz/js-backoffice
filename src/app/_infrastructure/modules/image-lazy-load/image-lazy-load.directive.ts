@@ -1,4 +1,4 @@
-import {Directive, Input, ElementRef, AfterContentInit} from '@angular/core';
+import {Directive, Input, ElementRef, AfterContentInit, ChangeDetectorRef, NgZone} from '@angular/core';
 import {Observable} from "rxjs";
 
 @Directive({
@@ -19,7 +19,7 @@ export class ImageLazyLoadDirective implements AfterContentInit {
     elementRef: ElementRef;
     scrollSubscription;
 
-    constructor(el: ElementRef) {
+    constructor(el: ElementRef, private cd: ChangeDetectorRef) {
         this.elementRef = el;
     }
 
@@ -31,7 +31,10 @@ export class ImageLazyLoadDirective implements AfterContentInit {
             .take(1)
             .switchMap(() => this.loadImage(this.lazyImage))
             .do(() => this.setImage(this.lazyImage))
-            .finally(() => this.setLoadedStyle())
+            .finally(() => {
+                this.setLoadedStyle();
+                this.cd.markForCheck();
+            })
             .subscribe(
                 () => this.ngOnDestroy(),
                 error => {
