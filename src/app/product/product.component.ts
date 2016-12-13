@@ -46,8 +46,8 @@ export class ProductComponent implements OnInit {
     }
 
     public showPalette(e) {
-        e.stopPropagation();
-        e.preventDefault();
+        
+        //e.preventDefault();
         console.log("main show palette");
         let config = new MdDialogConfig();
         config.viewContainerRef = this.viewContainerRef;
