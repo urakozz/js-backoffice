@@ -192,6 +192,9 @@ export const TRANSLATION = {
         },
         "Minimal order price is 400 rub" : {
             ru:"Минимальная стоимость заказа - 400 руб"
+        },
+        "Rub" :{
+            ru:"Руб"
         }
     }
 };

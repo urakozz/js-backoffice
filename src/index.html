@@ -15,7 +15,15 @@
     <meta name="yandex-verification" content="cf519adabb9837ac" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/assets/favicons/favicon.ico">
+    <link rel="icon" type="image/png" href="/assets/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/assets/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/assets/favicons/manifest.json">
+    <link rel="mask-icon" href="/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+
     <script type="text/javascript">
         window.dataLayer = window.dataLayer || [];
     </script>
@@ -29,7 +37,6 @@
             <p>Мы приложили все усилия, чтобы создать максимально функциональный сайт, но вам необходимо обновить свой браузер, чтобы он заработал</p>
             <p>
                 <a href="https://www.google.com/chrome/">
-                    <img height="32" width="32" src="/assets/google-chrome-icon.png">
                     Здесь можно скачать свежий Google Chrome
                 </a>
             </p>
@@ -37,7 +44,7 @@
                 <a href="https://browser.yandex.ru/">Yandex Browser</a>,
                 <a href="http://firefox.com/">Mozilla Firefox</a></p>
         </div>
-        <div class="msc-loading__logo"></div>
+        <img height="200" width="310" style=";display:block; margin: 0 auto" src="/assets/madam-scrap-logo@2x.png">
     </div>
 </app-kaput>
 <app-root>
@@ -58,6 +65,7 @@
                     trackLinks: true,
                     accurateTrackBounce: true,
                     trackHash: true,
+                    webvisor:true,
                     ecommerce: "dataLayer"
                 });
             } catch (e) {
