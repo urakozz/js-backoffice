@@ -10,16 +10,15 @@ export class Product implements Serializable<Product> {
     sku: string;
     description: string;
     image: string;
-    category: CategoryType;
+    // category: CategoryType;
+    categories: CategoryType[];
+    sortingScore: number;
     selectableAttributes: ProductSelectableAttributeList;
     _rev: string;
 
-    static newFromJSON(jsonObj: Object): Product {
-        return new Product().deserialize(jsonObj);
-    }
-
     constructor() {
         this.selectableAttributes = new ProductSelectableAttributeList();
+        this.categories = [];
         this.applyDefaultAttributes();
     }
 
@@ -30,20 +29,25 @@ export class Product implements Serializable<Product> {
             p[propName] = jsonObj[propName];
             if (propName === "category") {
                 if (jsonObj[propName] === null || jsonObj[propName] === "") {
-                    p[propName] = undefined;
+                    jsonObj[propName] = null;
                 } else {
-                    p[propName] = parseInt(jsonObj[propName], 10);
+                    jsonObj[propName] = Number.parseInt(jsonObj[propName]) || null;
+                    p.categories = [jsonObj[propName]]
                 }
             }
+            if (propName === "categories" && Array.isArray(jsonObj["categories"])) {
+                p.categories = jsonObj["categories"].map(v => Number.parseInt(v)).filter(v => !isNaN(v))
+            }
             if (propName === "selectableAttributes") {
-                p[propName] = ProductSelectableAttributeList.newFromJSON(p[propName]);
+                p.selectableAttributes = ProductSelectableAttributeList.newFromJSON(p.selectableAttributes);
             }
         }
+        p.sortingScore = Number.parseInt(<any>p.sortingScore) || 0;
         p.applyDefaultAttributes();
         return p;
     }
 
-    hasOnlyDefaultAttributes():boolean{
+    hasOnlyDefaultAttributes(): boolean {
         return this.selectableAttributes.length === 1 && !!this.selectableAttributes.getByName(ProductAttributeName)
     }
 
@@ -57,7 +61,9 @@ export class Product implements Serializable<Product> {
     getPrice(): number {
         return Number.parseFloat(<any>this.price);
     }
-    getCategories(): CategoryType[]{
-        return [this.category]
+
+
+    getCategories(): CategoryType[] {
+        return this.categories
     }
 }

@@ -49,16 +49,43 @@
                 <h4 i18n>Category</h4>
             </div>
             <div class="row">
-                <select formControlName="category" required>
-                    <option disabled>Category</option>
-                    <option *ngFor="let c of catList" [value]="c.key">{{c.name}} | {{c.codes.join(", ")}}</option>
-                </select>
-                <div *ngIf="form.controls.category.errors && form.controls.category.touched">
-                    <div *ngIf="form.controls.category.hasError('required')">
-                        Category is required.
-                    </div>
-                </div>
+                <!--<select formControlName="category" required>-->
+                    <!--<option disabled>Category</option>-->
+                    <!--<option *ngFor="let c of catList" [value]="c.key">{{c.name}} | {{c.codes.join(", ")}}</option>-->
+                <!--</select>-->
+                <!--<div *ngIf="form.controls.category.errors && form.controls.category.touched">-->
+                    <!--<div *ngIf="form.controls.category.hasError('required')">-->
+                        <!--Category is required.-->
+                    <!--</div>-->
+                <!--</div>-->
+                <md-list>
+                    <md-list-item *ngFor="let cat of form.controls.categories.controls; let i = index">
+
+                        <select [formControl]="cat" required>
+                            <option disabled>Category</option>
+                            <option *ngFor="let c of catList" [value]="c.key">{{c.name}} | {{c.codes.join(", ")}}</option>
+                        </select>
+                        <div *ngIf="cat.errors && cat.touched">
+                            <div *ngIf="cat.hasError('required')">
+                                Category is required.
+                            </div>
+                        </div>
+                        <button md-mini-fab
+                                color="primary"
+                                (click)="deleteCategory($event, i)">
+                            <md-icon>delete_forever</md-icon>
+                        </button>
+                    </md-list-item>
+                    <md-list-item>
+                        <button md-raised-button
+                                color="primary"
+                                (click)="addCategory($event)">
+                            Add category
+                        </button>
+                    </md-list-item>
+                </md-list>
             </div>
+
             <div class="row">
                 <md-input formControlName="image" id="image" autocomplete="off" placeholder="Image"
                           class="msc-full-width"></md-input>

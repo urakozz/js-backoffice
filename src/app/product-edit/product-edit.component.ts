@@ -5,7 +5,7 @@ import {Subject, Observable} from "rxjs";
 import {FormGroup, FormBuilder, Validators, FormControl, FormArray} from "@angular/forms";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {AttributeTypes, ProductSelectableAttribute} from "../_models/category";
-import {CategoryList, CategoryDetails} from "../_models/enums/category.enum";
+import {CategoryList, CategoryDetails, CategoryType} from "../_models/enums/category.enum";
 import {BackendProductService} from "../_services/backend-product.service";
 import {Uuid} from "../_infrastructure/uuid";
 
@@ -25,6 +25,7 @@ export class ProductEditComponent implements OnInit {
     public form: FormGroup;
     private attributesDefault: FormArray;
     private attributes: FormArray;
+    private categories: FormArray;
 
     public catList:CategoryDetails[] = CategoryList;
 
@@ -36,6 +37,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.categories = new FormArray([new FormControl("", Validators.required)]);
         this.attributes = new FormArray([]);
         this.attributesDefault = new FormArray([]);
         this.form = this._fb.group({
@@ -43,10 +45,11 @@ export class ProductEditComponent implements OnInit {
             description: new FormControl(this.product.description, Validators.nullValidator),
             image: new FormControl(this.product.image, Validators.nullValidator),
             sku: new FormControl(this.product.sku, Validators.required),
-            category: new FormControl(this.product.category, Validators.required),
+            // category: new FormControl(this.product.category, Validators.required),
             price: new FormControl(this.product.price, Validators.required),
             attributes: this.attributes,
             attributesDefault: this.attributesDefault,
+            categories: this.categories,
         });
         this.product.selectableAttributes.getList().forEach(a => {
             this.attributesDefault.push(new FormControl(a.name, Validators.nullValidator));
@@ -77,7 +80,7 @@ export class ProductEditComponent implements OnInit {
         this.product.description = this.form.value.description;
         this.product.image = this.form.value.image;
         this.product.sku = this.form.value.sku;
-        this.product.category = Number.parseInt(this.form.value.category);
+        // this.product.category = Number.parseInt(this.form.value.category);
         this.product.price = Number.parseInt(this.form.value.price);
 
 
@@ -88,7 +91,6 @@ export class ProductEditComponent implements OnInit {
         if (!this.useCustomAttributes) {
             attrs = this.attributesDefault.value;
         }
-        console.log(attrs);
         this.product.selectableAttributes.reset();
 
         attrs.forEach(v => {
@@ -96,6 +98,12 @@ export class ProductEditComponent implements OnInit {
                 new ProductSelectableAttribute(AttributeTypes.OPTION, v)
             );
         });
+        this.product.categories = this.form.value.categories
+            .map(v => Number.parseInt(v))
+            .filter((v, i, a) => a.indexOf(v) === i)
+            .filter(v => !isNaN(v));
+        delete this.product["category"];
+        console.log(this.product);
     }
 
     save() {
@@ -143,6 +151,17 @@ export class ProductEditComponent implements OnInit {
         // this.attributes.updateValueAndValidity({emitEvent: true})
     }
 
+    addCategory(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._addCategoriesControl("");
+    }
+    deleteCategory(e, i){
+        e.stopPropagation();
+        e.preventDefault();
+        this.categories.removeAt(i);
+    }
+
     setUseCustomAttributes(b: boolean) {
         this.useCustomAttributes = b;
         if (b && this.attributes.controls.length === 0) {
@@ -167,7 +186,7 @@ export class ProductEditComponent implements OnInit {
             description: p.description,
             image: p.image,
             sku: p.sku,
-            category: p.category,
+            // category: p.category,
             price: p.price,
         });
     }
@@ -189,8 +208,21 @@ export class ProductEditComponent implements OnInit {
         // this.attributes.updateValueAndValidity({emitEvent: true})
     }
 
+    private _setCategoriesFromProduct(p: Product) {
+        Object.keys(this.categories.controls).forEach(() => {
+            this.categories.removeAt(0);
+        });
+        let cat:CategoryType[] = p.getCategories().length ? p.getCategories() : [null];
+        cat.forEach((v) => {
+            this._addCategoriesControl(<any>v)
+        })
+    }
+
     private  _addAttributeControl(value: string) {
         this.attributes.push(new FormControl(value, Validators.nullValidator));
+    }
+    private  _addCategoriesControl(value: string) {
+        this.categories.push(new FormControl(value, Validators.required));
     }
 
     private _initSkuStream() {
@@ -220,6 +252,7 @@ export class ProductEditComponent implements OnInit {
         this.product = p;
         this._setAttributesFromProduct(p);
         this._setDetailsFromProduct(p);
+        this._setCategoriesFromProduct(p);
     }
 
     private _justSaved() {

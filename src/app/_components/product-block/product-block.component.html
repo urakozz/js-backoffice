@@ -12,7 +12,7 @@
          [routerLink]="['/product', item.id]"
          [lazyLoad]="item.image"
          [offset]="300">
-    <img md-card-image *ngIf="!lazyImages"
+    <img md-card-image *ngIf="!lazyImages && item.image"
          class="msc-cursor-pointer"
          [src]="item.image"
          [routerLink]="['/product', item.id]">

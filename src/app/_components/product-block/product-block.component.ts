@@ -7,7 +7,6 @@ import {
     ProductSelectableAttribute
 } from "../../_models/category";
 import {Product} from "../../_models/product";
-import {CategoryName} from "../../_models/enums/category.enum";
 import {UserService} from "../../_services/user.service";
 import {CartService} from "../../_services/cart.service";
 import {Observable} from "rxjs";
@@ -69,12 +68,6 @@ export class ProductBlockComponent implements OnInit {
         console.log(attr, n, this.selectedAttributes);
     }
 
-    getCategory() {
-        if (this.item.category === undefined) {
-            return "";
-        }
-        return CategoryName[this.item.category];
-    }
     toPdp(){
         this.router.navigate(["/product",this.item.id])
     }

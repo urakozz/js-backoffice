@@ -101,7 +101,7 @@ export class MainComponent implements OnInit, OnDestroy {
             // funny hacks
             this._searchTerm = "";
             Observable.of(this.productsAll).subscribe(p => {
-                this.products = p.filter((p_: Product) => p_.category === cat);
+                this.products = p.filter((p_: Product) => p_.getCategories().indexOf(cat) > -1);
                 // this.cd.markForCheck();
             });
         }
