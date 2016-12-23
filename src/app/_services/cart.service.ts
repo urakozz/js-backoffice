@@ -38,7 +38,7 @@ export class CartService {
         this._loadLocalCartObservable(localStorage.getItem(this.LSKey)).catch((e: Error) => {
             localStorage.removeItem(this.LSKey);
             return this._loadLastCartObservable()
-        }).subscribe((c) => {
+        }).subscribe((c:Order) => {
             this.setCart(c);
         })
     }
@@ -58,7 +58,7 @@ export class CartService {
         })
     }
 
-    private _loadLastCartObservable() {
+    private _loadLastCartObservable(): Observable<Order> {
         return this.backend.getUserOrders(this.userService.getUser().name).switchMap((o: Order[]) => {
             o = o.filter((c: Order) => c.status === OrderStatuses.CART);
             if (o.length === 0) {

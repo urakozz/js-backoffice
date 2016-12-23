@@ -3,7 +3,7 @@ import {User} from "../_models/user";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {UserService} from "../_services/user.service";
 import {Subscription, Observable} from "rxjs";
-import {BackendUserService} from "../_services/backend-user-service.service";
+import {BackendUserService, UpdateResponse} from "../_services/backend-user-service.service";
 
 @Component({
     selector: "app-profile",
@@ -106,9 +106,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     protected _save() {
         this.saving = true;
-        this._backend.update(this.user, this._userService.getUser()).switchMap((o)=>{
+        this._backend.update(this.user, this._userService.getUser()).switchMap((o:UpdateResponse) => {
             if(this._userService.isAdmin){
-                return Observable.of(o);
+                return Observable.of(true);
             }
             return this._userService.login(this.user)
         }).subscribe(o => {
