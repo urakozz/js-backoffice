@@ -71,7 +71,7 @@ export class StateAutomataConfig {
 }
 
 class StateAutomata {
-    private _check: boolean = false
+    private _check: boolean = false;
 
     constructor(private c: Order) {
 
@@ -94,6 +94,9 @@ class StateAutomata {
 
 
     _doCheck(s: OrderStatus): boolean {
+        if (s === this.c.status) {
+            return true;
+        }
         return StateAutomataConfig.getPossibleTransitions(this.c).indexOf(s) !== -1;
     }
 

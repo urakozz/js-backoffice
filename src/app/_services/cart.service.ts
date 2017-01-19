@@ -9,6 +9,7 @@ import {OrderStatuses, OrderStatus} from "../_models/enums/order-status.enum";
 import {Product} from "../_models/product";
 import {OrderSelectedAttributeList} from "../_models/category";
 import {OrderItem} from "../_models/order-item";
+import {LocalStorageService} from "./local-storage.service";
 
 @Injectable()
 export class CartService {
@@ -19,7 +20,8 @@ export class CartService {
 
     constructor(private backend: BackendOrderService,
                 private service: OrderService,
-                private userService: UserService) {
+                private userService: UserService,
+                private ls: LocalStorageService) {
 
         userService.getLoginStream().startWith(userService.getUser())
             .filter((u: User) => !!u)
@@ -28,15 +30,12 @@ export class CartService {
                 this._AwesomeInitFromLocal();
                 console.log("stream, cart for", u);
             });
-        userService.getLogoutStream().subscribe(() => {
-            localStorage.removeItem(this.LSKey);
-        })
     }
 
 
     private _AwesomeInitFromLocal() {
-        this._loadLocalCartObservable(localStorage.getItem(this.LSKey)).catch((e: Error) => {
-            localStorage.removeItem(this.LSKey);
+        this._loadLocalCartObservable(this.ls.getItem(this.LSKey)).catch((e: Error) => {
+            this.ls.removeItem(this.LSKey);
             return this._loadLastCartObservable()
         }).subscribe((c:Order) => {
             this.setCart(c);
@@ -78,7 +77,7 @@ export class CartService {
 
     setCart(c: Order) {
         this.cart = c;
-        localStorage.setItem(this.LSKey, this.cart.uuid);
+        this.ls.setItem(this.LSKey, this.cart.uuid);
     }
 
 
@@ -118,7 +117,7 @@ export class CartService {
     }
 
     persist() {
-        localStorage.setItem(this.LSKey, this.cart.uuid);
+        this.ls.setItem(this.LSKey, this.cart.uuid);
         this.service.persist(this.cart);
     }
 }

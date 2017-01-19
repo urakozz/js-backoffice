@@ -5,6 +5,7 @@ import {Http, RequestMethod, Headers, Request, RequestOptions} from "@angular/ht
 import {IUserService} from "./user.service.interface";
 import {Uuid} from "../_infrastructure/uuid";
 import {SessionResponse, BackendUserService} from "./backend-user-service.service";
+import {LocalStorageService} from "./local-storage.service";
 
 export enum Role {
     Guest = 0,
@@ -20,7 +21,7 @@ export class UserService implements IUserService {
     private _loginStream = new Subject<User>();
     private _logoutStream = new Subject<boolean>();
 
-    constructor(private backend: BackendUserService) {
+    constructor(private backend: BackendUserService, private ls: LocalStorageService) {
         this._initFromLocal();
     }
 
@@ -49,7 +50,7 @@ export class UserService implements IUserService {
         this.backend.deleteSession(this._user).subscribe();
         this._user = undefined;
         this._role = Role.Guest;
-        localStorage.removeItem("userObject");
+        this.ls.clear();
         this._logoutStream.next(true);
 
         return Observable.of(true);
@@ -95,7 +96,7 @@ export class UserService implements IUserService {
     }
 
     private _authenticate(u: LoginUserInterface, data: SessionResponse): Observable<boolean> {
-        localStorage.setItem("userObject", JSON.stringify(u));
+        this.ls.setItem("userObject", JSON.stringify(u));
         this._role = Role.User;
         if (data.roles.indexOf("_admin") >= 0) {
             this._role = Role.Admin;
@@ -118,7 +119,7 @@ export class UserService implements IUserService {
     }
 
     private _initFromLocal() {
-        let userStr = localStorage.getItem("userObject");
+        let userStr = this.ls.getItem("userObject");
         if (userStr) {
             let obj = JSON.parse(userStr);
             let user = new User();

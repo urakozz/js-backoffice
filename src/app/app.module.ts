@@ -54,6 +54,7 @@ import {ImageZoomModule} from "./_infrastructure/modules/image-zoom/image-zoom.m
 import {I18nModule} from "./_infrastructure/modules/i18n/i18n.module";
 import {CustomErrorHandler} from "./_infrastructure/error-handler";
 import {RAVEN_URL, RavenLoggerService} from "./_services/raven-logger.service";
+import {LocalStorageService} from "./_services/local-storage.service";
 
 export const ROUTES = [
     {
@@ -172,6 +173,7 @@ export const ROUTES = [
         MetrikaService,
         Title,
         RavenLoggerService,
+        LocalStorageService,
         {provide: APP_BASE_HREF, useValue : "/" },
         {provide: FIREBASE_KEY, useValue : environment.DATABASE_KEY },
         {provide: SENDGRID_KEY, useValue: environment.MAIL_KEY},
