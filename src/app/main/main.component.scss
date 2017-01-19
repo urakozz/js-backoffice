@@ -1,12 +1,16 @@
 .msc-button-margin {
-    margin: 5px;
+  margin: 5px;
 }
 
 $images: "/assets";
 
-.logo{
-    width: 310px;
-    height: 200px;
-    background-image: -webkit-image-set( url($images + "/madam-scrap-logo.png") 1x, url($images + "/madam-scrap-logo@2x.png") 2x);
+.logo {
+  width: 310px;
+  height: 200px;
+  background-image: url($images + "/madam-scrap-logo.png");
+  background-image: -webkit-image-set(
+                  url($images + "/madam-scrap-logo.png") 1x,
+                  url($images + "/madam-scrap-logo@2x.png") 2x
+  );
 }
 
