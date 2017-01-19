@@ -17,4 +17,4 @@ interface Pace {
 // declare module 'raven-js';
 
 
-interface Window { Pace: Pace; dataLayer:Array<any>}
+interface Window { Pace: Pace; dataLayer: Array<any>, URLPolyfill: any}

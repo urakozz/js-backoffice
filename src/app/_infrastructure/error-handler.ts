@@ -8,7 +8,7 @@ Raven
 
 export class CustomErrorHandler implements ErrorHandler {
     handleError(error) {
-        console.log("here  i am", error);
+        console.error(error);
         Raven.captureException(error.originalError);
     }
 }
