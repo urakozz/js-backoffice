@@ -3,19 +3,33 @@ import {OrderStatus, OrderStatuses} from "../_models/enums/order-status.enum";
 import {UserService} from "./user.service";
 import {Order} from "../_models/order";
 import {BackendOrderService} from "./backend-order.service";
+import {Subject, Observable} from "rxjs";
 
 @Injectable()
-
 export class OrderService {
 
-    constructor(private backend: BackendOrderService) {
+    private stream = new Subject<Order>();
 
+    constructor(private backend: BackendOrderService) {
+        this.stream.concatMap((v: Order) => {
+            return Observable.defer(() => {
+                return this.backend.set(v)
+            })
+        }).subscribe(
+            (res) => {
+                // console.log("res", res)
+            },
+            (err) => {
+                // console.log("err", err)
+            },
+            () => {
+                // console.log("done")
+            }
+        )
     }
 
     persist(o: Order) {
-        this.backend.set(o).subscribe(c => {
-            console.log("Cart, saved", c);
-        });
+        this.stream.next(o)
     }
 
     changeStatus(o: Order, s: OrderStatus) {
