@@ -55,6 +55,7 @@ import {I18nModule} from "./_infrastructure/modules/i18n/i18n.module";
 import {CustomErrorHandler} from "./_infrastructure/error-handler";
 import {RAVEN_URL, RavenLoggerService} from "./_services/raven-logger.service";
 import {LocalStorageService} from "./_services/local-storage.service";
+import { DialogMainPopupBlockComponent } from './_components/dialog-main-popup-block/dialog-main-popup-block.component';
 
 export const ROUTES = [
     {
@@ -153,6 +154,7 @@ export const ROUTES = [
         OrderMessagesComponent,
         CartSuccessComponent,
         UserReadBlockComponent,
+        DialogMainPopupBlockComponent,
     ],
     imports: [
         BrowserModule,
@@ -165,7 +167,7 @@ export const ROUTES = [
         ImageZoomModule,
         I18nModule
     ],
-    entryComponents: [DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog],
+    entryComponents: [DialogPaletteBlockComponent, DialogLoginBlockComponent, ClearCartDialog, ConfirmOrderDialog, DialogMainPopupBlockComponent],
     providers: [
         UserService, OrderService, CartService, BackendService, BackendProductService, BackendOrderService, BackendUserService,
         AdminAuthGuardService, AuthGuardService,

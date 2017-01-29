@@ -198,6 +198,6 @@ export class OrderSelectedAttributeList implements Serializable<OrderSelectedAtt
 
 }
 
-export const ColorOptions = Array.apply(null, Array(31)).map(function (_, i) {
-    return i;
-});
+export const ColorOptions = Array.apply(null, Array(73)).map(function (_, i) {
+    return i+1;
+}).filter(v => v !== 70);

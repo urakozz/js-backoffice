@@ -23,7 +23,7 @@ export class ProductBlockComponent implements OnInit {
 
     public colorOptions = ColorOptions;
     selectedAmount: number = 1;
-    defaultSelectedColor: number = 0;
+    defaultSelectedColor: number = 1;
     selectedAttributes: OrderSelectedAttributeList = new OrderSelectedAttributeList();
     justSaved: boolean = false;
     amount: number[] = Array.apply(null, Array(50)).map(function (_, i) {

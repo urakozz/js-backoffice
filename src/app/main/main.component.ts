@@ -1,6 +1,6 @@
 import {
     Component, OnInit, OnDestroy, ViewContainerRef, ChangeDetectorRef,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy, AfterViewChecked
 } from "@angular/core";
 import {Location} from "@angular/common";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -13,6 +13,7 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from "@angular/material";
 import {DialogPaletteBlockComponent} from "../_components/dialog-palette-block/dialog-palette-block.component";
 import {DialogLoginBlockComponent} from "../_components/dialog-login-block/dialog-login-block.component";
 import {isNullOrUndefined} from "util";
+import {DialogMainPopupBlockComponent} from "../_components/dialog-main-popup-block/dialog-main-popup-block.component";
 
 @Component({
     selector: "app-main",
@@ -27,6 +28,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private _sub: Subscription;
     private _dialogPalette: MdDialogRef<DialogPaletteBlockComponent>;
     private _dialogLogin: MdDialogRef<DialogLoginBlockComponent>;
+    private _dialogMainPopup: MdDialogRef<DialogMainPopupBlockComponent>;
 
     protected productsAll: Product[] = [];
     categoryList: CategoryDetails[] = CategoryList;
@@ -48,7 +50,7 @@ export class MainComponent implements OnInit, OnDestroy {
         let search = "";
         this._route.queryParams.forEach((params: Params) => {
             category = +params["category"] || category;
-            search = decodeURIComponent(params["search"] || "") ;
+            search = decodeURIComponent(params["search"] || "");
         });
         this._storage.getAllDocs().first().subscribe(docs => {
             this.productsAll = docs.sort(ProductSorter.sort);
@@ -60,6 +62,10 @@ export class MainComponent implements OnInit, OnDestroy {
             }
         });
         this._sub = this.initSearchStream();
+
+        if (!localStorage.getItem("infoPopupViewed")) {
+            this.infoPopup();
+        }
     }
 
     ngOnDestroy() {
@@ -78,7 +84,7 @@ export class MainComponent implements OnInit, OnDestroy {
             if (f.length === 0) {
                 f = arr.filter((prod: Product) => this._indexOf(prod.name, t) || this._indexOf(prod.description, t));
             }
-            if(f.length === 0) {
+            if (f.length === 0) {
                 f = arr.filter((prod: Product) => this._indexOf(prod.image, t));
             }
             f = f.slice(0, 40);
@@ -160,6 +166,17 @@ export class MainComponent implements OnInit, OnDestroy {
                 e["successAction"]();
             }
             s.unsubscribe();
+        });
+    }
+
+    public infoPopup(e?: any) {
+        let config = new MdDialogConfig();
+        config.viewContainerRef = this.viewContainerRef;
+        this._dialogMainPopup = this.dialog.open(DialogMainPopupBlockComponent, config);
+        let s = this._dialogMainPopup.afterClosed().subscribe(() => {
+            this._dialogMainPopup = null;
+            s.unsubscribe();
+            localStorage.setItem("infoPopupViewed", "1")
         });
     }
 }

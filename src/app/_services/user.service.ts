@@ -47,6 +47,9 @@ export class UserService implements IUserService {
     }
 
     logout(): Observable<boolean> {
+        if(!this._user) {
+            return Observable.of(false);
+        }
         this.backend.deleteSession(this._user).subscribe();
         this._user = undefined;
         this._role = Role.Guest;
