@@ -63,9 +63,9 @@ export class MainComponent implements OnInit, OnDestroy {
         });
         this._sub = this.initSearchStream();
 
-        if (!localStorage.getItem("infoPopupViewed")) {
-            this.infoPopup();
-        }
+        // if (!localStorage.getItem("infoPopupViewed")) {
+        //     this.infoPopup();
+        // }
     }
 
     ngOnDestroy() {
