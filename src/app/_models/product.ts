@@ -44,6 +44,7 @@ export class Product implements Serializable<Product> {
         }
         p.sortingScore = Number.parseInt(<any>p.sortingScore) || 0;
         p.applyDefaultAttributes();
+        p.image = (p.image || "").replace("pp.vk.me", "pp.userapi.com");
         return p;
     }
 

@@ -67,7 +67,8 @@ export class CartComponent implements OnInit {
     }
 
     get canConfirmCard(){
-        return this.cart.count > 0 && this.cart.getOrder().totalPrice >= 400
+        // return this.cart.count > 0 && this.cart.getOrder().totalPrice >= 400
+        return this.cart.count > 0
     }
 
     get cartErrors(){

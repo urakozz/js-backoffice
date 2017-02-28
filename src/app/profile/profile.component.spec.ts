@@ -13,7 +13,6 @@ import {ProductComponent} from "../product/product.component";
 import {ProductEditComponent} from "../product-edit/product-edit.component";
 import {RegistrationComponent} from "../registration/registration.component";
 import {LoginBlockComponent} from "../_components/login-block/login.component";
-import {RegistrationBlockComponent} from "../_components/registration-block/registration-block.component";
 import {AddressBlockComponent} from "../_components/address-block/address-block.component";
 import {ProductBlockComponent} from "../_components/product-block/product-block.component";
 import {LinklyPipe} from "../_infrastructure/pipes/linkly.pipe";
@@ -61,7 +60,6 @@ describe('ProfileComponent', () => {
         RegistrationComponent,
         LoginComponent,
         LoginBlockComponent,
-        RegistrationBlockComponent,
         AddressBlockComponent,
         ProductBlockComponent,
         LinklyPipe,
