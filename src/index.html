@@ -24,6 +24,18 @@
     <link rel="mask-icon" href="/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="theme-color" content="#ffffff">
 
+    <script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+    <!--[if lte IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flexibility/2.0.1/flexibility.js"></script>
+    <script>
+        (function(){
+            var ef = function(){};
+            window.console = window.console || {log:ef,warn:ef,error:ef,dir:ef};
+            window.console.debug = window.console.debug || window.console.log || ef;
+        }());
+    </script>
+    <![endif]-->
+
     <script type="text/javascript">
         window.dataLayer = window.dataLayer || [];
     </script>
