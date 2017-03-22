@@ -2,7 +2,10 @@
 
 <md-card>
     <md-card-title><span i18n>Cart</span></md-card-title>
-    <md-card-subtitle>Id: {{cartUuid}}</md-card-subtitle>
+    <md-card-subtitle>
+        <span>Id: {{cartUuid}} </span>
+        <span *ngIf="isAdmin && !isEmptyCart">/ User: {{order.authorName}} <i *ngIf="order.details">{{order.details.customer.realname}}</i></span>
+    </md-card-subtitle>
 
     <md-card-content *ngIf="isEmptyCart">
         <p i18n>No products</p>
