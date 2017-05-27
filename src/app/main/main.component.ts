@@ -63,9 +63,9 @@ export class MainComponent implements OnInit, OnDestroy {
         });
         this._sub = this.initSearchStream();
 
-        // if (!localStorage.getItem("infoPopupViewed")) {
-        //     this.infoPopup();
-        // }
+        if (!localStorage.getItem("infoPopupViewed1") && new Date() < new Date("2017-06-05")) {
+            this.infoPopup();
+        }
     }
 
     ngOnDestroy() {
@@ -176,7 +176,7 @@ export class MainComponent implements OnInit, OnDestroy {
         let s = this._dialogMainPopup.afterClosed().subscribe(() => {
             this._dialogMainPopup = null;
             s.unsubscribe();
-            localStorage.setItem("infoPopupViewed", "1")
+            localStorage.setItem("infoPopupViewed1", "1");
         });
     }
 }

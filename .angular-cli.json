@@ -13,6 +13,7 @@
       ],
       "index": "index.html",
       "main": "main.ts",
+      "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
       "prefix": "app",
@@ -59,5 +60,6 @@
       "pipe": true,
       "service": true
     }
-  }
+  },
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json"
 }

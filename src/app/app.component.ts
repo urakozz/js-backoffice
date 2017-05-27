@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     }
 
     get userName(){
-        return this.userService.getUser() ? this.userService.getUser().name : null
+        return this.userService.getUser() ? this.userService.getUser().name : null;
     }
 
     get isAdmin() {
