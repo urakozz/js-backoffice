@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 @Injectable()
 export class BackendService {
 
-    private host = "https://couchdb.urakozz.me";
+    private host = "https://couchdb.urakozz.it";
 
     constructor(private http: Http,
                 private _userService: UserService) {

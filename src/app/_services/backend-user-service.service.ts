@@ -1,16 +1,17 @@
 import {Injectable} from '@angular/core';
-import {BackendService} from "./backend.service";
-import {LoginUser, User, LoginUserInterface, SaveUser} from "../_models/user";
+import {LoginUser, LoginUserInterface, SaveUser, User} from "../_models/user";
 import {Observable} from "rxjs";
-import {RequestMethod, Request, Http, Headers, RequestOptions, URLSearchParams} from "@angular/http";
+import {Headers, Http, Request, RequestMethod, RequestOptions, URLSearchParams} from "@angular/http";
 
-export interface OkResponse{
+export interface OkResponse {
     ok: string;
 }
+
 export interface SessionResponse extends OkResponse {
     name: string;
     roles: string[];
 }
+
 export interface UpdateResponse extends OkResponse {
     ok: string;
     id: string;
@@ -18,11 +19,10 @@ export interface UpdateResponse extends OkResponse {
 }
 
 
-
 @Injectable()
 export class BackendUserService {
 
-    private host = "https://couchdb.urakozz.me";
+    private host = "https://couchdb.urakozz.it";
 
     constructor(private http: Http) {
     }
@@ -34,20 +34,20 @@ export class BackendUserService {
             body: JSON.stringify(new LoginUser(u)),
             headers: this._getHeaders(u),
         });
-        return this.http.request(new Request(o)).map(r => r.json())
+        return this.http.request(new Request(o)).map(r => r.json());
     }
 
-    deleteSession(u: LoginUserInterface): Observable<OkResponse>  {
+    deleteSession(u: LoginUserInterface): Observable<OkResponse> {
         let o = new RequestOptions({
             method: RequestMethod.Delete,
             url: this.host + "/_session",
             body: JSON.stringify(new LoginUser(u)),
             headers: this._getHeaders(u),
         });
-        return this.http.request(new Request(o)).map(r => r.json())
+        return this.http.request(new Request(o)).map(r => r.json());
     }
 
-    load(name:string, u: LoginUserInterface) {
+    load(name: string, u: LoginUserInterface) {
         let o = new RequestOptions({
             method: RequestMethod.Get,
             url: this.host + "/_users/org.couchdb.user:" + name,
@@ -97,7 +97,7 @@ export class BackendUserService {
         return this.http.request(new Request(o)).map(r => r.json());
     }
 
-    delete(name:string, u: LoginUserInterface): Observable<UpdateResponse> {
+    delete(name: string, u: LoginUserInterface): Observable<UpdateResponse> {
         let o = new RequestOptions({
             method: RequestMethod.Delete,
             url: this.host + "/_users/org.couchdb.user:" + name,
