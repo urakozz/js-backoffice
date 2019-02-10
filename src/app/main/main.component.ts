@@ -63,7 +63,7 @@ export class MainComponent implements OnInit, OnDestroy {
         });
         this._sub = this.initSearchStream();
 
-        if (!localStorage.getItem("infoPopupViewed2") && new Date() < new Date("2017-10-08")) {
+        if (!localStorage.getItem("infoPopupViewed3")) {
             this.infoPopup();
         }
     }
@@ -176,7 +176,7 @@ export class MainComponent implements OnInit, OnDestroy {
         let s = this._dialogMainPopup.afterClosed().subscribe(() => {
             this._dialogMainPopup = null;
             s.unsubscribe();
-            localStorage.setItem("infoPopupViewed2", "1");
+            localStorage.setItem("infoPopupViewed3", "1");
         });
     }
 }
