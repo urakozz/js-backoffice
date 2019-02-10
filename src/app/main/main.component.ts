@@ -63,7 +63,7 @@ export class MainComponent implements OnInit, OnDestroy {
         });
         this._sub = this.initSearchStream();
 
-        if (!localStorage.getItem("infoPopupViewed3")) {
+        if (!localStorage.getItem("infoPopupViewed4")) {
             this.infoPopup();
         }
     }
@@ -173,11 +173,11 @@ export class MainComponent implements OnInit, OnDestroy {
         let config = new MdDialogConfig();
         config.viewContainerRef = this.viewContainerRef;
         this._dialogMainPopup = this.dialog.open(DialogMainPopupBlockComponent, config);
-        let s = this._dialogMainPopup.afterClosed().subscribe(() => {
-            this._dialogMainPopup = null;
-            s.unsubscribe();
-            localStorage.setItem("infoPopupViewed3", "1");
-        });
+        // let s = this._dialogMainPopup.afterClosed().subscribe(() => {
+        //     this._dialogMainPopup = null;
+        //     s.unsubscribe();
+        //     localStorage.setItem("infoPopupViewed4", "1");
+        // });
     }
 }
 
